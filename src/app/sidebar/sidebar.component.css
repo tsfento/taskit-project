@@ -1,0 +1,20 @@
+.sidebar-div {
+  height: 100%;
+  border-right: 1px solid lightgrey;
+}
+
+.logo-text-one {
+  font-size: 30px;
+  font-weight: bolder;
+  color: limegreen;
+}
+
+.logo-text-two {
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.btn-success {
+  background-color: limegreen;
+  border: none;
+}
