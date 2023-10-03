@@ -1,1 +1,52 @@
-<p>tasks-list works!</p>
+<div class="container mt-5">
+  <h1 class="mb-4">Task List</h1>
+  <div class="d-flex flex-row mb-3 top-bar">
+    <label class="me-2 mt-2" style="font-weight: bold;">Filters:</label>
+    <select class="select-box me-2 mt-2">
+      <option class="text-center">Status</option>
+      <option class="option-text">To Do</option>
+    </select>
+    <select class="select-box me-2 mt-2">
+      <option class="text-center">Date</option>
+      <option class="option-text">10/02/23</option>
+    </select>
+    <select class="select-box mt-2">
+      <option class="text-center">Priority</option>
+      <option class="option-text">Low</option>
+      <option class="option-text">Medium</option>
+      <option class="option-text">High</option>
+    </select>
+    <span class="flex-grow-1"></span>
+    <button class="btn btn-success">Add New Task</button>
+  </div>
+</div>
+<div class="container">
+  <div class="table-responsive card">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Priority</th>
+          <th scope="col">Status</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{{ tasks[0].title }}</th>
+          <th>{{ tasks[0].dueDate }}</th>
+          <th>{{ tasks[0].priority }}</th>
+          <th>{{ tasks[0].status }}</th>
+        </tr>
+        <tr>
+
+        </tr>
+        <tr>
+
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>

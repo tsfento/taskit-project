@@ -1,0 +1,12 @@
+.user-info-box {
+  border-top: 1px solid lightgrey;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.email {
+  font-size: 11px;
+}
