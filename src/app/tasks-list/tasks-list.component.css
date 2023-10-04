@@ -27,6 +27,6 @@ th, td {
   cursor: pointer;
 }
 
-.bi:hover {
+.action:hover {
   color: darkgrey;
 }

@@ -16,15 +16,17 @@
         <tr *ngFor="let task of tasks">
         <th scope="row">{{ task.title }}</th>
         <td>{{ task.dueDate }}</td>
-        <td><span class="bi bi-circle-fill {{ task.priority.toLowerCase() }}">&nbsp;</span>{{ task.priority }}</td>
+        <td><span
+          *ngIf="task.priority !== ''"
+          class="bi bi-circle-fill {{ task.priority.toLowerCase() }}">&nbsp;</span>{{ task.priority }}</td>
         <td>
           <!-- Change to dropdown -->
           {{ task.status }}
         </td>
         <td class="d-flex text-center justify-content-evenly">
-          <i class="bi bi-eye" title="View" (click)="''"></i>
-          <i class="bi bi-pencil-square" title="Edit" (click)="''"></i>
-          <i class="bi bi-trash" title="Delete" (click)="onDelete(task)"></i>
+          <i class="bi bi-eye action" title="View" (click)="''"></i>
+          <i class="bi bi-pencil-square action" title="Edit" (click)="''"></i>
+          <i class="bi bi-trash action" title="Delete" (click)="onDelete(task)"></i>
         </td>
         </tr>
       </tbody>
