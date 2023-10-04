@@ -13,6 +13,7 @@
 
 .logout {
   color: darkgrey;
+  font-size: 18px;
 }
 
 .logout:hover {
