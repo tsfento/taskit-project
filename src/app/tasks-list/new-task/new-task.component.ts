@@ -13,7 +13,7 @@ export class NewTaskComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.newTaskModal = new window.bootstrap.Modal(document.getElementById('newTaskModal'));
-    this.newTaskModal.show();
+    // this.newTaskModal.show();
   }
 
   ngOnChanges(toShow) {
