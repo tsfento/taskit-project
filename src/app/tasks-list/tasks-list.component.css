@@ -11,6 +11,10 @@ th, td {
   border: none;
 }
 
+.header {
+  background-color: lightgrey;
+}
+
 .low {
   color: limegreen;
 }
