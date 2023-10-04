@@ -10,3 +10,11 @@
 .email {
   font-size: 11px;
 }
+
+.logout {
+  color: darkgrey;
+}
+
+.logout:hover {
+  color: lightgrey;
+}
