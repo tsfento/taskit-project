@@ -22,3 +22,11 @@ th, td {
 .high {
   color: crimson;
 }
+
+.bi {
+  cursor: pointer;
+}
+
+.bi:hover {
+  color: darkgrey;
+}

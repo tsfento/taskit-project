@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Task } from '../../shared/task.model';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-tasks-list-bar',
@@ -7,4 +6,10 @@ import { Task } from '../../shared/task.model';
   styleUrls: ['./tasks-list-bar.component.css']
 })
 export class TasksListBarComponent {
+  @Output() addNewTesk = new EventEmitter<boolean>();
+  newTask: boolean = false;
+
+  onNewTask(bool) {
+    this.addNewTesk.emit(bool);
+  }
 }

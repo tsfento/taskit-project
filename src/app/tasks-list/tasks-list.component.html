@@ -1,6 +1,8 @@
+<app-new-task [toShow]="showBool"></app-new-task>
+<app-tasks-list-bar (addNewTesk)="showModal($event)"></app-tasks-list-bar>
 <div class="container">
   <div class="table-responsive">
-    <table class="table table-bordered table-hover rounded-3">
+    <table class="table table-bordered table-hover rounded-3 text-center">
       <thead>
         <tr>
           <th scope="col">Task</th>
@@ -16,8 +18,13 @@
         <td>{{ task.dueDate }}</td>
         <td><span class="bi bi-circle-fill {{ task.priority.toLowerCase() }}">&nbsp;</span>{{ task.priority }}</td>
         <td>
-          <!-- Chane to dropdown -->
+          <!-- Change to dropdown -->
           {{ task.status }}
+        </td>
+        <td class="d-flex text-center justify-content-evenly">
+          <i class="bi bi-eye" title="View" (click)="''"></i>
+          <i class="bi bi-pencil-square" title="Edit" (click)="''"></i>
+          <i class="bi bi-trash" title="Delete" (click)="onDelete(task)"></i>
         </td>
         </tr>
       </tbody>
