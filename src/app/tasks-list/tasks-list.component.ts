@@ -1,5 +1,7 @@
-import { Component, Output } from '@angular/core';
+import { Component, Output, ViewChild } from '@angular/core';
 import { Task } from '../shared/task.model';
+import { ViewTaskComponent } from './view-task/view-task.component';
+import { EditTaskComponent } from './edit-task/edit-task.component';
 
 @Component({
   selector: 'app-tasks-list',
@@ -7,6 +9,8 @@ import { Task } from '../shared/task.model';
   styleUrls: ['./tasks-list.component.css']
 })
 export class TasksListComponent {
+  @ViewChild(ViewTaskComponent) viewTaskChild;
+  @ViewChild(EditTaskComponent) editTaskChild;
   showNewBool: boolean;
   showEditBool: boolean;
   showViewBool: boolean;
@@ -25,12 +29,12 @@ export class TasksListComponent {
     this.showNewBool = bool;
   }
 
-  showEditModal(bool) {
-    this.showEditBool = bool;
+  showEditModal() {
+    this.editTaskChild.editTask();
   }
 
-  showViewModal(bool) {
-    this.showViewBool = bool;
+  showViewModal() {
+    this.viewTaskChild.viewTask();
   }
 
   onDelete(value) {

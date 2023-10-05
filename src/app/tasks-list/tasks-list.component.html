@@ -1,6 +1,6 @@
 <app-new-task [toShowNew]="showNewBool" (sendTask)="addTask($event)"></app-new-task>
-<app-view-task [toShowView]="showViewBool"></app-view-task>
-<app-edit-task [toShowEdit]="showEditBool"></app-edit-task>
+<app-view-task></app-view-task>
+<app-edit-task></app-edit-task>
 <app-tasks-list-bar (addNewTesk)="showNewModal($event)"></app-tasks-list-bar>
 <div class="container">
   <div class="table-responsive">
@@ -26,8 +26,8 @@
           {{ task.status }}
         </td>
         <td class="d-flex text-center justify-content-evenly">
-          <i class="bi bi-eye action" title="View" (click)="showViewModal($event)"></i>
-          <i class="bi bi-pencil-square action" title="Edit" (click)="showEditModal($event)"></i>
+          <i class="bi bi-eye action" title="View" (click)="showViewModal()"></i>
+          <i class="bi bi-pencil-square action" title="Edit" (click)="showEditModal()"></i>
           <i class="bi bi-trash action" title="Delete" (click)="onDelete(task)"></i>
         </td>
         </tr>

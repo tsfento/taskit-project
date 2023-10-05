@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Task } from 'src/app/shared/task.model';
 
 declare var window;
@@ -8,17 +8,14 @@ declare var window;
   templateUrl: './view-task.component.html',
   styleUrls: ['./view-task.component.css']
 })
-export class ViewTaskComponent implements OnInit, OnChanges {
-  @Input() toShowView: boolean;
+export class ViewTaskComponent implements OnInit {
   viewTaskModal;
 
   ngOnInit() {
     this.viewTaskModal = new window.bootstrap.Modal(document.getElementById('viewTaskModal'));
   }
 
-  ngOnChanges(toShowEdit) {
-    if (toShowEdit) {
-      this.viewTaskModal.show();
-    }
+  viewTask() {
+    this.viewTaskModal.show();
   }
 }
