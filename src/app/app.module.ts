@@ -8,6 +8,8 @@ import { TasksListComponent } from './tasks-list/tasks-list.component';
 import { TasksListBarComponent } from './tasks-list/tasks-list-bar/tasks-list-bar.component';
 import { UserInfoBoxComponent } from './sidebar/user-info-box/user-info-box.component';
 import { NewTaskComponent } from './tasks-list/new-task/new-task.component';
+import { ViewTaskComponent } from './tasks-list/view-task/view-task.component';
+import { EditTaskComponent } from './tasks-list/edit-task/edit-task.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { NewTaskComponent } from './tasks-list/new-task/new-task.component';
     TasksListComponent,
     TasksListBarComponent,
     UserInfoBoxComponent,
-    NewTaskComponent
+    NewTaskComponent,
+    ViewTaskComponent,
+    EditTaskComponent
   ],
   imports: [
     BrowserModule,

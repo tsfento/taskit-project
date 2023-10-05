@@ -1,0 +1,35 @@
+.dropdown {
+  color: lightgrey;;
+}
+
+.dropdown-menu {
+  min-width: 225px;
+}
+
+.dropdown-toggle {
+  border-color: #dee2e6;
+}
+
+.dropdown-toggle::after {
+  margin-left: 190px;
+}
+
+.low {
+  color: limegreen;
+}
+
+.med {
+  color: gold;
+}
+
+.high {
+  color: crimson;
+}
+
+.text {
+  color: black;
+}
+
+.op {
+  font-family: 'Bootstrap-icons';
+}

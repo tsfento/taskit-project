@@ -7,17 +7,30 @@ import { Task } from '../shared/task.model';
   styleUrls: ['./tasks-list.component.css']
 })
 export class TasksListComponent {
-  showBool: boolean;
+  showNewBool: boolean;
+  showEditBool: boolean;
+  showViewBool: boolean;
 
   tasks: Task[] = [
-    new Task('Clean Out Garage', '10/02/23', 'Low', 'To Do'),
-    new Task('Do Dishes', '10/04/23', 'Medium', 'To Do'),
-    new Task('Pay Bills', '10/10/23', 'High', 'To Do'),
-    new Task('', '', '', '')
+    new Task(0, 'Delete Me', 'Try to delete me.', '10/5/23', 'High', 'In Progress'),
   ];
 
-  showModal(bool) {
-    this.showBool = bool;
+  addTask(sentTask: Task) {
+    const newTask: Task = sentTask;
+    this.tasks.push(newTask);
+    console.log(this.tasks);
+  }
+
+  showNewModal(bool) {
+    this.showNewBool = bool;
+  }
+
+  showEditModal(bool) {
+    this.showEditBool = bool;
+  }
+
+  showViewModal(bool) {
+    this.showViewBool = bool;
   }
 
   onDelete(value) {

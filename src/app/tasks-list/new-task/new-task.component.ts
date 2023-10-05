@@ -10,18 +10,17 @@ declare var window;
 })
 export class NewTaskComponent implements OnInit, OnChanges {
   @Output() sendTask = new EventEmitter<Task>();
-  task: Task = new Task('','','','');
 
-  @Input() toShow: boolean;
+  @Input() toShowNew: boolean;
   newTaskModal;
 
   ngOnInit() {
     this.newTaskModal = new window.bootstrap.Modal(document.getElementById('newTaskModal'));
-    this.newTaskModal.show();
+    // this.newTaskModal.show();
   }
 
-  ngOnChanges(toShow) {
-    if (toShow) {
+  ngOnChanges(toShowNew) {
+    if (toShowNew) {
       this.newTaskModal.show();
     }
   }
@@ -34,11 +33,10 @@ export class NewTaskComponent implements OnInit, OnChanges {
     const taskPriority: HTMLInputElement = document.querySelector('#inputPriority');
     const taskStatus: HTMLInputElement = document.querySelector('#inputStatus');
 
-    this.task.title = taskName.value;
-    this.task.dueDate = taskDueDate.value;
-    this.task.priority = taskPriority.value;
-    this.task.status = taskStatus.value;
+    const task: Task = new Task(Date.now(), taskName.value, taskDetails.value, taskDueDate.value, taskPriority.value, taskStatus.value);
 
     form.reset();
+
+    this.sendTask.emit(task);
   }
 }
