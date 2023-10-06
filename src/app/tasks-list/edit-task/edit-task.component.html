@@ -1,16 +1,51 @@
 <div class="modal fade" id="editTaskModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="editTaskModalLabel">Edit Task</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
       </div>
       <div class="modal-body">
-        ...
+        <form class="row g-3" id="editTaskForm">
+          <div class="col-12">
+            <label for="inputEditTaskName" class="form-label">Task</label>
+            <input type="text" class="form-control" id="inputEditTaskName" maxlength="25" placeholder="Name the task">
+          </div>
+          <div class="col-12">
+            <label for="inputEditDetails" class="form-label">Details</label>
+            <textarea type="text" class="form-control" id="inputEditDetails" maxlength="400" placeholder="Describe the task" style="height: 160px; resize: none;"></textarea>
+          </div>
+          <div class="col-md-6">
+            <label for="inputEditDueDate" class="form-label">Due Date</label>
+            <input type="text" class="form-control" id="inputEditDueDate">
+          </div>
+          <div class="col-md-6">
+            <label for="inputEditPriority" class="form-label">Priority</label>
+            <div>
+              <select class="form-select" aria-label="Priority" id="inputEditPriority">
+                <option selected value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6">
+            <label for="inputEditStatus" class="form-label">Status</label>
+            <div>
+              <select class="form-select" aria-label="Status" id="inputEditStatus">
+                <option selected value="To Do">To Do</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Done">Done</option>
+              </select>
+            </div>
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm()">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveChanges()">Save Changes</button>
       </div>
     </div>
   </div>

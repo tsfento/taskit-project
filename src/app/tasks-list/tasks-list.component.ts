@@ -15,7 +15,7 @@ export class TasksListComponent {
   showEditBool: boolean;
   showViewBool: boolean;
 
-  tasks: Task[] = [
+  @Output() tasks: Task[] = [
     new Task(0, 'Delete Me', 'Try to delete me.', '10/5/23', 'High', 'In Progress'),
   ];
 
@@ -29,15 +29,17 @@ export class TasksListComponent {
     this.showNewBool = bool;
   }
 
-  showEditModal() {
+  showEditModal(id: number[]) {
     this.editTaskChild.editTask();
+    console.log(id);
   }
 
-  showViewModal() {
+  showViewModal(id: number[]) {
     this.viewTaskChild.viewTask();
+    console.log(id);
   }
 
-  onDelete(value) {
-    this.tasks = this.tasks.slice(value);
+  showDeleteModal(id: number[]) {
+    console.log(id);
   }
 }

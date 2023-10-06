@@ -9,7 +9,7 @@ declare var window;
   styleUrls: ['./new-task.component.css']
 })
 export class NewTaskComponent implements OnInit, OnChanges {
-  @Output() sendTask = new EventEmitter<Task>();
+  @Output() sendNewTask = new EventEmitter<Task>();
 
   @Input() toShowNew: boolean;
   newTaskModal;
@@ -26,22 +26,22 @@ export class NewTaskComponent implements OnInit, OnChanges {
   }
 
   addTask() {
-    const form: HTMLFormElement = document.querySelector('#taskForm');
-    const taskName: HTMLInputElement = document.querySelector('#inputTaskName');
-    const taskDetails: HTMLInputElement = document.querySelector('#inputDetails');
-    const taskDueDate: HTMLInputElement = document.querySelector('#inputDueDate');
-    const taskPriority: HTMLInputElement = document.querySelector('#inputPriority');
-    const taskStatus: HTMLInputElement = document.querySelector('#inputStatus');
+    const newForm: HTMLFormElement = document.querySelector('#newTaskForm');
+    const taskNewName: HTMLInputElement = document.querySelector('#inputNewTaskName');
+    const taskNewDetails: HTMLInputElement = document.querySelector('#inputNewDetails');
+    const taskNewDueDate: HTMLInputElement = document.querySelector('#inputNewDueDate');
+    const taskNewPriority: HTMLInputElement = document.querySelector('#inputNewPriority');
+    const taskNewStatus: HTMLInputElement = document.querySelector('#inputNewStatus');
 
-    const task: Task = new Task(Date.now(), taskName.value, taskDetails.value, taskDueDate.value, taskPriority.value, taskStatus.value);
+    const task: Task = new Task(Date.now(), taskNewName.value, taskNewDetails.value, taskNewDueDate.value, taskNewPriority.value, taskNewStatus.value);
 
-    form.reset();
+    newForm.reset();
 
-    this.sendTask.emit(task);
+    this.sendNewTask.emit(task);
   }
 
   resetForm() {
-    const form: HTMLFormElement = document.querySelector('#taskForm');
-    form.reset();
+    const newForm: HTMLFormElement = document.querySelector('#newTaskForm');
+    newForm.reset();
   }
 }

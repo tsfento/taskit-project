@@ -6,23 +6,23 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
       </div>
       <div class="modal-body">
-        <form class="row g-3" id="taskForm">
+        <form class="row g-3" id="newTaskForm">
           <div class="col-12">
-            <label for="inputTaskName" class="form-label">Task</label>
-            <input type="text" class="form-control" id="inputTaskName" maxlength="25" placeholder="Name the task">
+            <label for="inputNewTaskName" class="form-label">Task</label>
+            <input type="text" class="form-control" id="inputNewTaskName" maxlength="25" placeholder="Name the task">
           </div>
           <div class="col-12">
-            <label for="inputDetails" class="form-label">Details</label>
-            <textarea type="text" class="form-control" id="inputDetails" maxlength="400" placeholder="Describe the task" style="height: 160px; resize: none;"></textarea>
+            <label for="inputNewDetails" class="form-label">Details</label>
+            <textarea type="text" class="form-control" id="inputNewDetails" maxlength="400" placeholder="Describe the task" style="height: 160px; resize: none;"></textarea>
           </div>
           <div class="col-md-6">
-            <label for="inputDueDate" class="form-label">Due Date</label>
-            <input type="text" class="form-control" id="inputDueDate">
+            <label for="inputNewDueDate" class="form-label">Due Date</label>
+            <input type="text" class="form-control" id="inputNewDueDate">
           </div>
           <div class="col-md-6">
-            <label for="inputPriority" class="form-label">Priority</label>
+            <label for="inputNewPriority" class="form-label">Priority</label>
             <div>
-              <select class="form-select" aria-label="Priority" id="inputPriority">
+              <select class="form-select" aria-label="Priority" id="inputNewPriority">
                 <option selected value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
@@ -32,9 +32,9 @@
           <div class="col-md-6">
           </div>
           <div class="col-md-6">
-            <label for="inputStatus" class="form-label">Status</label>
+            <label for="inputNewStatus" class="form-label">Status</label>
             <div>
-              <select class="form-select" aria-label="Status" id="inputStatus">
+              <select class="form-select" aria-label="Status" id="inputNewStatus">
                 <option selected value="To Do">To Do</option>
                 <option value="In Progress">In Progress</option>
                 <option value="Done">Done</option>
