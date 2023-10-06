@@ -39,4 +39,9 @@ export class NewTaskComponent implements OnInit, OnChanges {
 
     this.sendTask.emit(task);
   }
+
+  resetForm() {
+    const form: HTMLFormElement = document.querySelector('#taskForm');
+    form.reset();
+  }
 }
