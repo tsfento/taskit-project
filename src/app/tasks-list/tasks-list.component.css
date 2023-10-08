@@ -11,6 +11,18 @@ th, td {
   border: none;
 }
 
+tr.border-bottom:not(:last-child) td {
+  border-bottom: 1px solid darkgrey;
+}
+
+tr.border-bottom:not(:last-child) th {
+  border-bottom: 1px solid darkgrey;
+}
+
+td:empty::after {
+  content: "\00a0";
+}
+
 .header {
   background-color: lightgrey;
 }

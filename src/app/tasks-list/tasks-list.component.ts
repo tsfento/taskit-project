@@ -11,6 +11,7 @@ import { TasksService } from '../shared/tasks.service';
 })
 export class TasksListComponent implements OnInit {
   tasks: Task[] = [];
+  idToDelete: number;
 
   constructor(private tasksService: TasksService) {}
 
@@ -18,15 +19,20 @@ export class TasksListComponent implements OnInit {
     this.tasks = this.tasksService.tasks;
   }
 
-  showEditModal(/*id: number*/) {
-    this.tasksService.showTaskModal('editTaskModal'/*, id*/);
+  showEditModal(id: number) {
+    this.tasksService.showTaskModal('editTaskModal', id);
   }
 
   showViewModal(id: number) {
-    this.tasksService.showTaskModal('viewTaskModal'/*, id*/);
+    this.tasksService.showTaskModal('viewTaskModal', id);
   }
 
   showDeleteModal(id: number) {
-    console.log(id);
+    this.idToDelete = id;
+    this.tasksService.showTaskModal('deleteTaskModal', id);
+  }
+
+  deleteTask(id: number) {
+    this.tasksService.deleteTask(id);
   }
 }

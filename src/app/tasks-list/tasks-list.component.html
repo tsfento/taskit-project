@@ -1,7 +1,25 @@
 <app-new-task></app-new-task>
 <app-view-task></app-view-task>
 <app-edit-task></app-edit-task>
-<!-- Delete Confirmation Modal Here -->
+<!-- Begin Delete Confirmation Modal -->
+<div class="modal fade" id="deleteTaskModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: crimson; color: white;">
+        <h1 class="modal-title fs-5">Delete?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 22px;">Are you sure you want to delete this task?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteTask(idToDelete)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Delete Confirmation -->
 <app-tasks-list-bar></app-tasks-list-bar>
 <div class="container">
   <div class="table-responsive">
@@ -16,21 +34,25 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let task of tasks">
-        <th scope="row">{{ task.title }}</th>
-        <td>{{ task.dueDate }}</td>
-        <td><span
-          *ngIf="task.priority !== ''"
-          class="bi bi-circle-fill {{ task.priority.toLowerCase() }}">&nbsp;</span>{{ task.priority }}</td>
-        <td>
-          <!-- Change to dropdown -->
-          {{ task.status }}
-        </td>
-        <td class="d-flex text-center justify-content-evenly">
-          <i class="bi bi-eye action" title="View" (click)="showViewModal(task.id)"></i>
-          <i class="bi bi-pencil-square action" title="Edit" (click)="showEditModal(task.id)"></i>
-          <i class="bi bi-trash action" title="Delete" (click)="showDeleteModal(task.id)"></i>
-        </td>
+        <tr class="border-bottom"
+        *ngFor="let task of tasks">
+          <th scope="row">{{ task.title }}</th>
+          <td>{{ task.dueDate }}</td>
+          <td><span
+            *ngIf="task.priority !== ''"
+            class="bi bi-circle-fill {{ task.priority.toLowerCase() }}">&nbsp;</span>{{ task.priority }}</td>
+          <td>
+            <!-- Change to dropdown -->
+            {{ task.status }}
+          </td>
+          <td>
+            <div class="d-flex text-center justify-content-evenly"
+            *ngIf="task.title !== ''">
+              <i class="bi bi-eye action" title="View" (click)="showViewModal(task.id)"></i>
+              <i class="bi bi-pencil-square action" title="Edit" (click)="showEditModal(task.id)"></i>
+              <i class="bi bi-trash action" title="Delete" (click)="showDeleteModal(task.id)"></i>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
