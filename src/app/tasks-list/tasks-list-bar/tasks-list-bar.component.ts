@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { TasksService } from 'src/app/shared/tasks.service';
 
 @Component({
   selector: 'app-tasks-list-bar',
@@ -6,10 +7,9 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./tasks-list-bar.component.css']
 })
 export class TasksListBarComponent {
-  @Output() addNewTesk = new EventEmitter<boolean>();
-  newTask: boolean = false;
+  constructor(private tasksService: TasksService) {}
 
-  onNewTask(bool) {
-    this.addNewTesk.emit(bool);
+  onNewTask() {
+    this.tasksService.showTaskModal('newTaskModal');
   }
 }

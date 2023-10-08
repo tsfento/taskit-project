@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { Task } from 'src/app/shared/task.model';
+import { TasksService } from 'src/app/shared/tasks.service';
 
 declare var window;
 
@@ -8,24 +9,10 @@ declare var window;
   templateUrl: './new-task.component.html',
   styleUrls: ['./new-task.component.css']
 })
-export class NewTaskComponent implements OnInit, OnChanges {
-  @Output() sendNewTask = new EventEmitter<Task>();
+export class NewTaskComponent {
+  constructor(private tasksService: TasksService) {}
 
-  @Input() toShowNew: boolean;
-  newTaskModal;
-
-  ngOnInit() {
-    this.newTaskModal = new window.bootstrap.Modal(document.getElementById('newTaskModal'));
-    // this.newTaskModal.show();
-  }
-
-  ngOnChanges(toShowNew) {
-    if (toShowNew) {
-      this.newTaskModal.show();
-    }
-  }
-
-  addTask() {
+  newTask() {
     const newForm: HTMLFormElement = document.querySelector('#newTaskForm');
     const taskNewName: HTMLInputElement = document.querySelector('#inputNewTaskName');
     const taskNewDetails: HTMLInputElement = document.querySelector('#inputNewDetails');
@@ -37,11 +24,10 @@ export class NewTaskComponent implements OnInit, OnChanges {
 
     newForm.reset();
 
-    this.sendNewTask.emit(task);
+    this.tasksService.addTask(task);
   }
 
   resetForm() {
-    const newForm: HTMLFormElement = document.querySelector('#newTaskForm');
-    newForm.reset();
+    this.tasksService.resetForm('#newTaskForm');
   }
 }

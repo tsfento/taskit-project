@@ -1,7 +1,8 @@
-<app-new-task [toShowNew]="showNewBool" (sendNewTask)="addTask($event)"></app-new-task>
+<app-new-task></app-new-task>
 <app-view-task></app-view-task>
 <app-edit-task></app-edit-task>
-<app-tasks-list-bar (addNewTesk)="showNewModal($event)"></app-tasks-list-bar>
+<!-- Delete Confirmation Modal Here -->
+<app-tasks-list-bar></app-tasks-list-bar>
 <div class="container">
   <div class="table-responsive">
     <table class="table table-bordered table-hover rounded-3 text-center">

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { Task } from 'src/app/shared/task.model';
+import { TasksService } from 'src/app/shared/tasks.service';
 
 declare var window;
 
@@ -8,31 +9,15 @@ declare var window;
   templateUrl: './edit-task.component.html',
   styleUrls: ['./edit-task.component.css']
 })
-export class EditTaskComponent implements OnInit {
-  @Output() sendEditedTask = new EventEmitter<Task>();
-
-  editTaskModal;
-
-  ngOnInit() {
-    this.editTaskModal = new window.bootstrap.Modal(document.getElementById('editTaskModal'));
-  }
+export class EditTaskComponent {
+  constructor(private tasksService: TasksService) {}
 
   editTask() {
-    const editForm: HTMLFormElement = document.querySelector('#editTaskForm');
-    const taskEditName: HTMLInputElement = document.querySelector('#inputEditTaskName');
-    const taskEditDetails: HTMLInputElement = document.querySelector('#inputEditDetails');
-    const taskEditDueDate: HTMLInputElement = document.querySelector('#inputEditDueDate');
-    const taskEditPriority: HTMLInputElement = document.querySelector('#inputEditPriority');
-    const taskEditStatus: HTMLInputElement = document.querySelector('#inputEditStatus');
-
-    // taskEditName.value = 'foo';
-
-    this.editTaskModal.show();
+    this.tasksService.showTaskModal('editTaskModal');
   }
 
   resetForm() {
-    const editForm: HTMLFormElement = document.querySelector('#editTaskForm');
-    editForm.reset();
+    this.tasksService.resetForm('#editTaskForm');
   }
 
   saveChanges() {
@@ -47,6 +32,6 @@ export class EditTaskComponent implements OnInit {
 
     editForm.reset();
 
-    this.sendEditedTask.emit(editedTask);
+    this.tasksService.editTask(editedTask);
   }
 }
