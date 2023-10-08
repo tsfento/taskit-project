@@ -5,14 +5,21 @@ declare var window;
 
 export class TasksService {
   tasks: Task[] = [
-    new Task(0, 'Delete Me', 'Try to delete me.', '10/5/23', 'High', 'In Progress'),
-    new Task(0, '', '', '', '', ''),
-    new Task(0, '', '', '', '', ''),
-    new Task(0, '', '', '', '', ''),
-    new Task(0, '', '', '', '', ''),
-    new Task(0, '', '', '', '', ''),
-    new Task(0, '', '', '', '', ''),
-    new Task(0, '', '', '', '', ''),
+    new Task(1, 'Delete Me', 'Try to delete me.', '10/5/23', 'High', 'In Progress'),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
+    // new Task(0, '', '', '', '', ''),
   ];
   taskIndex: number;
 
