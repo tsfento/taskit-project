@@ -21,9 +21,11 @@ export class TasksService {
 
     if (id !== undefined) {
       if (modalType === 'editTaskModal') {
-        this.fillForm('Edit', id);
+        this.fillModal('Edit', id);
       } else if (modalType === 'viewTaskModal') {
-        this.fillForm('View', id);
+        this.fillModal('View', id);
+      } else if (modalType === 'deleteTaskModal') {
+        console.log('delete' + id);
       }
     }
 
@@ -35,20 +37,23 @@ export class TasksService {
     taskForm.reset();
   }
 
-  fillForm(formType: string, id: number) {
-    const editForm: HTMLFormElement = document.querySelector(`#${formType.toLowerCase()}TaskForm`);
-    const taskName: HTMLInputElement = document.querySelector(`#input${formType}TaskName`);
-    const taskDetails: HTMLInputElement = document.querySelector(`#input${formType}Details`);
-    const taskDueDate: HTMLInputElement = document.querySelector(`#input${formType}DueDate`);
-    const taskPriority: HTMLInputElement = document.querySelector(`#input${formType}Priority`);
-    const taskStatus: HTMLInputElement = document.querySelector(`#input${formType}Status`);
-    this.taskIndex = this.tasks.findIndex(i => i.id === id);
+  fillModal(modalType: string, id: number) {
+    if (modalType === 'Edit') {
+      const form: HTMLFormElement = document.querySelector(`#${modalType.toLowerCase()}TaskForm`);
+      const taskName: HTMLInputElement = document.querySelector(`#input${modalType}TaskName`);
+      const taskDetails: HTMLInputElement = document.querySelector(`#input${modalType}Details`);
+      const taskDueDate: HTMLInputElement = document.querySelector(`#input${modalType}DueDate`);
+      const taskPriority: HTMLInputElement = document.querySelector(`#input${modalType}Priority`);
+      const taskStatus: HTMLInputElement = document.querySelector(`#input${modalType}Status`);
+      this.taskIndex = this.tasks.findIndex(i => i.id === id);
+      taskName.value = this.tasks[this.taskIndex].title;
+      taskDetails.value = this.tasks[this.taskIndex].details;
+      taskDueDate.value = this.tasks[this.taskIndex].dueDate;
+      taskPriority.value = this.tasks[this.taskIndex].priority;
+      taskStatus.value = this.tasks[this.taskIndex].status;
+    } else if (modalType === 'View') {
 
-    taskName.value = this.tasks[this.taskIndex].title;
-    taskDetails.value = this.tasks[this.taskIndex].details;
-    taskDueDate.value = this.tasks[this.taskIndex].dueDate;
-    taskPriority.value = this.tasks[this.taskIndex].priority;
-    taskStatus.value = this.tasks[this.taskIndex].status;
+    }
   }
 
   addTask(sentTask: Task) {

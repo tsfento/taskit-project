@@ -10,7 +10,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p style="font-size: 22px;">Are you sure you want to delete this task?</p>
+        <p *ngIf="deleteIndex !== undefined"
+        style="font-size: 22px;">Are you sure you want to delete task '{{ tasks[deleteIndex].title }}'?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -47,7 +48,7 @@
           </td>
           <td>
             <div class="d-flex text-center justify-content-evenly"
-            *ngIf="task.title !== ''">
+            *ngIf="task.priority !== ''">
               <i class="bi bi-eye action" title="View" (click)="showViewModal(task.id)"></i>
               <i class="bi bi-pencil-square action" title="Edit" (click)="showEditModal(task.id)"></i>
               <i class="bi bi-trash action" title="Delete" (click)="showDeleteModal(task.id)"></i>

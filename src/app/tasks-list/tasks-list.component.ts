@@ -11,6 +11,7 @@ import { TasksService } from '../shared/tasks.service';
 })
 export class TasksListComponent implements OnInit {
   tasks: Task[] = [];
+  deleteIndex: number;
   idToDelete: number;
 
   constructor(private tasksService: TasksService) {}
@@ -29,6 +30,7 @@ export class TasksListComponent implements OnInit {
 
   showDeleteModal(id: number) {
     this.idToDelete = id;
+    this.deleteIndex = this.tasks.findIndex(i => i.id === this.idToDelete);
     this.tasksService.showTaskModal('deleteTaskModal', id);
   }
 
