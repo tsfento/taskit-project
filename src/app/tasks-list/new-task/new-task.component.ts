@@ -9,6 +9,7 @@ declare var window;
   templateUrl: './new-task.component.html',
   styleUrls: ['./new-task.component.css']
 })
+
 export class NewTaskComponent {
   constructor(private tasksService: TasksService) {}
 

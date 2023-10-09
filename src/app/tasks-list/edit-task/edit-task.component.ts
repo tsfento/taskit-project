@@ -16,7 +16,12 @@ export class EditTaskComponent implements OnInit {
   constructor(private tasksService: TasksService) {}
 
   ngOnInit() {
-    this.tasks = this.tasksService.tasks;
+    this.tasks = this.tasksService.getTasks();
+
+    this.tasksService.tasksChanged.subscribe(
+      (changedTasks: Task[]) => {
+        this.tasks = changedTasks;
+    });
   }
 
   resetForm() {

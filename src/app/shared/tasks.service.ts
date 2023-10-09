@@ -23,16 +23,22 @@ export class TasksService {
   ];
   taskIndex: number;
 
-  showTaskModal(modalType: string, id?: number) {
+  tasksChanged = new EventEmitter<Task[]>();
+
+  getTasks() {
+    return this.tasks.slice();
+  }
+
+  showTaskModal(modalType: string, index?: number) {
     const taskModal = new window.bootstrap.Modal(document.getElementById(modalType));
 
-    if (id !== undefined) {
+    if (index !== undefined) {
       if (modalType === 'editTaskModal') {
-        this.fillModal('Edit', id);
+        this.fillModal('Edit', index);
       } else if (modalType === 'viewTaskModal') {
-        this.fillModal('View', id);
+        this.fillModal('View', index);
       } else if (modalType === 'deleteTaskModal') {
-        console.log('delete' + id);
+        console.log('delete', index);
       }
     }
 
@@ -44,7 +50,7 @@ export class TasksService {
     taskForm.reset();
   }
 
-  fillModal(modalType: string, id: number) {
+  fillModal(modalType: string, index: number) {
     if (modalType === 'Edit') {
       const form: HTMLFormElement = document.querySelector(`#${modalType.toLowerCase()}TaskForm`);
       const taskName: HTMLInputElement = document.querySelector(`#input${modalType}TaskName`);
@@ -52,12 +58,13 @@ export class TasksService {
       const taskDueDate: HTMLInputElement = document.querySelector(`#input${modalType}DueDate`);
       const taskPriority: HTMLInputElement = document.querySelector(`#input${modalType}Priority`);
       const taskStatus: HTMLInputElement = document.querySelector(`#input${modalType}Status`);
-      this.taskIndex = this.tasks.findIndex(i => i.id === id);
-      taskName.value = this.tasks[this.taskIndex].title;
-      taskDetails.value = this.tasks[this.taskIndex].details;
-      taskDueDate.value = this.tasks[this.taskIndex].dueDate;
-      taskPriority.value = this.tasks[this.taskIndex].priority;
-      taskStatus.value = this.tasks[this.taskIndex].status;
+
+      this.taskIndex = index;
+      taskName.value = this.tasks[index].title;
+      taskDetails.value = this.tasks[index].details;
+      taskDueDate.value = this.tasks[index].dueDate;
+      taskPriority.value = this.tasks[index].priority;
+      taskStatus.value = this.tasks[index].status;
     } else if (modalType === 'View') {
 
     }
@@ -65,6 +72,7 @@ export class TasksService {
 
   addTask(sentTask: Task) {
     this.tasks.push(sentTask);
+    this.tasksChanged.emit(this.tasks.slice());
   }
 
   editTask(editedTask: Task, index: number) {
@@ -76,8 +84,9 @@ export class TasksService {
     this.tasks[index].status = editedTask.status;
   }
 
-  deleteTask(id: number) {
-    this.taskIndex = this.tasks.findIndex(i => i.id === id);
-    this.tasks.splice(this.taskIndex, 1);
+  // Change to ngFor index
+  deleteTask(index: number) {
+    this.tasks.splice(index, 1);
+    this.tasksChanged.emit(this.tasks.slice());
   }
 }

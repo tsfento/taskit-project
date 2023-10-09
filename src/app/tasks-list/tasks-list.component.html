@@ -15,7 +15,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteTask(idToDelete)">Delete</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteTask(deleteIndex)">Delete</button>
       </div>
     </div>
   </div>
@@ -36,7 +36,7 @@
       </thead>
       <tbody>
         <tr class="border-bottom"
-        *ngFor="let task of tasks">
+        *ngFor="let task of tasks; let i = index">
           <th scope="row">{{ task.title }}</th>
           <td>{{ task.dueDate }}</td>
           <td><span
@@ -49,9 +49,9 @@
           <td>
             <div class="d-flex text-center justify-content-evenly"
             *ngIf="task.priority !== ''">
-              <i class="bi bi-eye action" title="View" (click)="showViewModal(task.id)"></i>
-              <i class="bi bi-pencil-square action" title="Edit" (click)="showEditModal(task.id)"></i>
-              <i class="bi bi-trash action" title="Delete" (click)="showDeleteModal(task.id)"></i>
+              <i class="bi bi-eye action" title="View" (click)="showViewModal(i)"></i>
+              <i class="bi bi-pencil-square action" title="Edit" (click)="showEditModal(i)"></i>
+              <i class="bi bi-trash action" title="Delete" (click)="showDeleteModal(i)"></i>
             </div>
           </td>
         </tr>

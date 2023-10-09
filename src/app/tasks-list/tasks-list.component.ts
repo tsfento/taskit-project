@@ -12,29 +12,34 @@ import { TasksService } from '../shared/tasks.service';
 export class TasksListComponent implements OnInit {
   tasks: Task[] = [];
   deleteIndex: number;
-  idToDelete: number;
 
   constructor(private tasksService: TasksService) {}
 
   ngOnInit() {
-    this.tasks = this.tasksService.tasks;
+    this.tasks = this.tasksService.getTasks();
+
+    this.tasksService.tasksChanged.subscribe(
+      (changedTasks: Task[]) => {
+        this.tasks = changedTasks;
+    });
   }
 
-  showEditModal(id: number) {
-    this.tasksService.showTaskModal('editTaskModal', id);
+  showEditModal(index: number) {
+    this.tasksService.showTaskModal('editTaskModal', index);
   }
 
-  showViewModal(id: number) {
-    this.tasksService.showTaskModal('viewTaskModal', id);
+  showViewModal(index: number) {
+    this.tasksService.showTaskModal('viewTaskModal', index);
   }
 
-  showDeleteModal(id: number) {
-    this.idToDelete = id;
-    this.deleteIndex = this.tasks.findIndex(i => i.id === this.idToDelete);
-    this.tasksService.showTaskModal('deleteTaskModal', id);
+  showDeleteModal(index: number) {
+    this.deleteIndex = index;
+    this.tasksService.showTaskModal('deleteTaskModal', index);
   }
 
-  deleteTask(id: number) {
-    this.tasksService.deleteTask(id);
+  deleteTask(index: number) {
+    this.deleteIndex = index;
+    console.log(this.deleteIndex);
+    this.tasksService.deleteTask(index);
   }
 }
