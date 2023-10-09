@@ -18,8 +18,8 @@ export class NewTaskComponent {
     const taskNewName: HTMLInputElement = document.querySelector('#inputNewTaskName');
     const taskNewDetails: HTMLInputElement = document.querySelector('#inputNewDetails');
     const taskNewDueDate: HTMLInputElement = document.querySelector('#inputNewDueDate');
-    const taskNewPriority: HTMLInputElement = document.querySelector('#inputNewPriority');
-    const taskNewStatus: HTMLInputElement = document.querySelector('#inputNewStatus');
+    const taskNewPriority: HTMLSelectElement = document.querySelector('#inputNewPriority');
+    const taskNewStatus: HTMLSelectElement = document.querySelector('#inputNewStatus');
 
     const task: Task = new Task(Date.now(), taskNewName.value, taskNewDetails.value, taskNewDueDate.value, taskNewPriority.value, taskNewStatus.value);
 
