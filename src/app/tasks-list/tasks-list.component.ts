@@ -22,9 +22,7 @@ export class TasksListComponent implements OnInit {
   ngOnInit() {
     this.tasks = this.tasksService.getTasks();
 
-    for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
-      this.page.push(this.tasks[i]);
-    }
+    this.generatePage();
 
     this.totalPages = Math.ceil(this.tasks.length / 15);
 
@@ -32,11 +30,7 @@ export class TasksListComponent implements OnInit {
       (changedTasks: Task[]) => {
         this.tasks = changedTasks;
 
-        this.page = [];
-
-        for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
-          this.page.push(this.tasks[i]);
-        }
+        this.generatePage();
 
         this.totalPages = Math.ceil(this.tasks.length / 15);
     });
@@ -60,26 +54,26 @@ export class TasksListComponent implements OnInit {
     this.tasksService.deleteTask(index);
   }
 
+  generatePage() {
+    this.page = [];
+
+    for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
+      this.page.push(this.tasks[i]);
+    }
+  }
+
   switchPageNum(direction: string) {
     if (direction === 'forward') {
       if (this.pageNum !== (Math.ceil(this.tasks.length / 15))) {
         this.pageNum++;
 
-        this.page = [];
-
-        for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
-          this.page.push(this.tasks[i]);
-        }
+        this.generatePage();
       }
     } else if (direction === 'back') {
       if (this.pageNum !== 1) {
         this.pageNum--;
 
-        this.page = [];
-
-        for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
-          this.page.push(this.tasks[i]);
-        }
+        this.generatePage();
       }
     }
   }
