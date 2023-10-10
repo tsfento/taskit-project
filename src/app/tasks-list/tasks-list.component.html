@@ -36,8 +36,8 @@
       </thead>
       <tbody>
         <tr class="border-bottom"
-        *ngFor="let task of tasks; let i = index">
-          <th scope="row">{{ task.title }}</th>
+        *ngFor="let task of page; let i = index">
+          <th class="title" scope="row">{{ task.title }}</th>
           <td>{{ task.dueDate }}</td>
           <td><span
             *ngIf="task.priority !== ''"
@@ -57,5 +57,10 @@
         </tr>
       </tbody>
     </table>
+    <div class="pages text-center">
+      <button class="btn btn-sm btn-arrow me-1" [disabled]="pageNum === 1" (click)="switchPageNum('back')">&laquo;</button>
+      <button class="btn btn-sm btn-num me-1">{{ pageNum }}</button>
+      <button class="btn btn-sm btn-arrow" [disabled]="pageNum === totalPages" (click)="switchPageNum('forward')">&raquo;</button>
+    </div>
   </div>
 </div>

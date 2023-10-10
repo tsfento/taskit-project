@@ -11,6 +11,10 @@ import { TasksService } from '../shared/tasks.service';
 })
 export class TasksListComponent implements OnInit {
   tasks: Task[] = [];
+  page: Task[] = [];
+  totalPages: number = 1;
+  pageNum: number = 1;
+  pageRows: number = 15;
   deleteIndex: number;
 
   constructor(private tasksService: TasksService) {}
@@ -18,9 +22,23 @@ export class TasksListComponent implements OnInit {
   ngOnInit() {
     this.tasks = this.tasksService.getTasks();
 
+    for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
+      this.page.push(this.tasks[i]);
+    }
+
+    this.totalPages = Math.ceil(this.tasks.length / 15);
+
     this.tasksService.tasksChanged.subscribe(
       (changedTasks: Task[]) => {
         this.tasks = changedTasks;
+
+        this.page = [];
+
+        for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
+          this.page.push(this.tasks[i]);
+        }
+
+        this.totalPages = Math.ceil(this.tasks.length / 15);
     });
   }
 
@@ -39,7 +57,30 @@ export class TasksListComponent implements OnInit {
 
   deleteTask(index: number) {
     this.deleteIndex = index;
-    console.log(this.deleteIndex);
     this.tasksService.deleteTask(index);
+  }
+
+  switchPageNum(direction: string) {
+    if (direction === 'forward') {
+      if (this.pageNum !== (Math.ceil(this.tasks.length / 15))) {
+        this.pageNum++;
+
+        this.page = [];
+
+        for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
+          this.page.push(this.tasks[i]);
+        }
+      }
+    } else if (direction === 'back') {
+      if (this.pageNum !== 1) {
+        this.pageNum--;
+
+        this.page = [];
+
+        for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
+          this.page.push(this.tasks[i]);
+        }
+      }
+    }
   }
 }

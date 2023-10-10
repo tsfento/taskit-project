@@ -7,6 +7,10 @@
   background-color: white;
 }
 
+/* .title {
+  width: 300px;
+} */
+
 th, td {
   border: none;
 }
@@ -61,4 +65,34 @@ td:empty::after {
   width: 110px;
   height: 35px;
   font-size: 13px;
+}
+
+.pages .btn-arrow {
+  background-color: limegreen;
+  color: white;
+  border: none;
+  width: 50px;
+}
+
+.pages .btn-arrow:hover {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px limegreen;
+  color: limegreen;
+  font-weight: bolder;
+  transition: background-color .3s, box-shadow .3s, color .3s;
+}
+
+.pages .btn-num {
+  background-color: limegreen;
+  color: white;
+  border: none;
+  width: 30px;
+}
+
+.pages .btn:disabled {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px limegreen;
+  color: limegreen;
+  font-weight: bolder;
+  opacity: 30%;
 }
