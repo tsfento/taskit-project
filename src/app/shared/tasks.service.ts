@@ -5,7 +5,7 @@ declare var window;
 
 export class TasksService {
   tasks: Task[] = [
-    new Task(1, 'Delete Me', 'Try to delete me.', '10/5/23', 'High', 'In Progress'),
+    new Task(1, 'Delete Me', 'Try to delete me.', 'Oct 5th, 2023', 'High', 'In Progress', '2023-10-05'),
     // new Task(0, '', '', '', '', ''),
     // new Task(0, '', '', '', '', ''),
     // new Task(0, '', '', '', '', ''),
@@ -62,7 +62,7 @@ export class TasksService {
       this.taskIndex = index;
       taskName.value = this.tasks[index].title;
       taskDetails.value = this.tasks[index].details;
-      taskDueDate.value = this.tasks[index].dueDate;
+      taskDueDate.value = this.tasks[index].unformattedDate;
       taskPriority.value = this.tasks[index].priority;
       taskStatus.value = this.tasks[index].status;
     } else if (modalType === 'View') {
@@ -88,5 +88,35 @@ export class TasksService {
   deleteTask(index: number) {
     this.tasks.splice(index, 1);
     this.tasksChanged.emit(this.tasks.slice());
+  }
+
+  formatDate(date: string) {
+    const dateFormat: string[] = date.split('-');
+
+    const month: string[] = [
+      'Jan', 'Feb', 'Mar', 'Apr',
+      'Jun', 'May', 'Jul', 'Aug',
+      'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+    if (Number(dateFormat[2]) < 10) {
+      const removeZero: string[] = dateFormat[2].split('');
+      dateFormat[2] = removeZero[1];
+    }
+
+    function addOrdinal(day: string) {
+      if (Number(day) >= 11 && Number(day) <= 13) {
+        return day + 'th';
+      }
+
+      switch(Number(day) % 10) {
+        case 1: return day + 'st';
+        case 2: return day + 'nd';
+        case 3: return day + 'rd';
+        default: return day + 'th';
+      }
+    }
+
+    return `${month[Number(dateFormat[1]) - 1]} ${addOrdinal(dateFormat[2])}, ${dateFormat[0]}`;
   }
 }

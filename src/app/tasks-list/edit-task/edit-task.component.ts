@@ -38,7 +38,9 @@ export class EditTaskComponent implements OnInit {
     const taskEditPriority: HTMLSelectElement = document.querySelector('#inputEditPriority');
     const taskEditStatus: HTMLSelectElement = document.querySelector('#inputEditStatus');
 
-    const editedTask: Task = new Task(this.tasks[this.taskIndex].id, taskEditName.value, taskEditDetails.value, taskEditDueDate.value, taskEditPriority.value, taskEditStatus.value);
+    const editedTask: Task = new Task(this.tasks[this.taskIndex].id, taskEditName.value, taskEditDetails.value, taskEditDueDate.value, taskEditPriority.value, taskEditStatus.value, taskEditDueDate.value);
+
+    editedTask.dueDate = this.tasksService.formatDate(editedTask.dueDate);
 
     editForm.reset();
 

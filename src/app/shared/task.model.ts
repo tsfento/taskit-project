@@ -6,6 +6,7 @@ export class Task {
     public dueDate: string,
     public priority: string,
     public status: string,
+    public unformattedDate: string,
     ) {
   }
 }
