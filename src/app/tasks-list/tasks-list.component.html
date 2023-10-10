@@ -5,17 +5,17 @@
 <div class="modal fade" id="deleteTaskModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header" style="background-color: crimson; color: white;">
-        <h1 class="modal-title fs-5">Delete?</h1>
+      <div class="d-flex justify-content-end btn-close-div">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body text-center mt-3">
         <p *ngIf="deleteIndex !== undefined"
-        style="font-size: 22px;">Are you sure you want to delete task '{{ tasks[deleteIndex].title }}'?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteTask(deleteIndex)">Delete</button>
+        class="mb-4"
+        style="font-weight: bold; font-size: 28px;">Are you sure you want to delete task '{{ tasks[deleteIndex].title }}'?</p>
+        <div class="mb-5">
+          <button type="button" class="btn btn-secondary dlt-btn me-4" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger dlt-btn" data-bs-dismiss="modal" (click)="deleteTask(deleteIndex)">Delete</button>
+        </div>
       </div>
     </div>
   </div>

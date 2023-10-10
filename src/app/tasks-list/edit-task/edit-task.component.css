@@ -33,3 +33,28 @@
 .op {
   font-family: 'Bootstrap-icons';
 }
+
+.modal-title {
+  font-weight: bold;
+}
+
+.btn-close-div {
+  margin-top: 12px;
+  margin-right: 12px;
+}
+
+.btn-close {
+  width: 5px;
+  height: 5px;
+}
+
+.btn {
+  width: 110px;
+  height: 35px;
+  font-size: 13px;
+}
+
+.btn-success {
+  background-color: limegreen;
+  border: none;
+}
