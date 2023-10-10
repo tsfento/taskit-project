@@ -11,6 +11,7 @@ import { TasksService } from '../shared/tasks.service';
 })
 export class TasksListComponent implements OnInit {
   tasks: Task[] = [];
+  blankTask: Task = new Task(0, '', '', '', '', '', '');
   page: Task[] = [];
   totalPages: number = 1;
   pageNum: number = 1;
@@ -58,8 +59,14 @@ export class TasksListComponent implements OnInit {
     this.page = [];
 
     for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
-      this.page.push(this.tasks[i]);
+      if (i + 1 > this.tasks.length) {
+        this.page.push(this.blankTask);
+      } else {
+        this.page.push(this.tasks[i]);
+      }
     }
+
+    console.log(this.page);
   }
 
   switchPageNum(direction: string) {
