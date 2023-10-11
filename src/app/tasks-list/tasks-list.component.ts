@@ -17,6 +17,7 @@ export class TasksListComponent implements OnInit {
   pageNum: number = 1;
   pageRows: number = 15;
   deleteIndex: number;
+  pageIndex: number;
 
   constructor(private tasksService: TasksService) {}
 
@@ -35,24 +36,31 @@ export class TasksListComponent implements OnInit {
 
         this.totalPages = Math.ceil(this.tasks.length / 15);
     });
+
+    this.tasksService.changePage.subscribe(
+      (page: number) => {
+        this.pageNum = page;
+        this.generatePage();
+      }
+    )
   }
 
   showEditModal(index: number) {
-    this.tasksService.showTaskModal('editTaskModal', index);
+    this.tasksService.showTaskModal('editTaskModal', index + ((this.pageNum - 1) * this.pageRows));
   }
 
   showViewModal(index: number) {
-    this.tasksService.showTaskModal('viewTaskModal', index);
+    this.tasksService.showTaskModal('viewTaskModal', index + ((this.pageNum - 1) * this.pageRows));
   }
 
   showDeleteModal(index: number) {
-    this.deleteIndex = index;
-    this.tasksService.showTaskModal('deleteTaskModal', index);
+    this.pageIndex = index;
+    this.deleteIndex = index + ((this.pageNum - 1) * this.pageRows);
+    this.tasksService.showTaskModal('deleteTaskModal');
   }
 
   deleteTask(index: number) {
-    this.deleteIndex = index;
-    this.tasksService.deleteTask(index);
+    this.tasksService.deleteTask(this.deleteIndex);
   }
 
   generatePage() {
@@ -65,8 +73,6 @@ export class TasksListComponent implements OnInit {
         this.page.push(this.tasks[i]);
       }
     }
-
-    console.log(this.page);
   }
 
   switchPageNum(direction: string) {

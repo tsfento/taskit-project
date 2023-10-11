@@ -11,6 +11,8 @@ declare var window;
 })
 
 export class NewTaskComponent {
+  todaysDate: string = this.getTodaysDate();
+
   constructor(private tasksService: TasksService) {}
 
   newTask() {
@@ -27,10 +29,31 @@ export class NewTaskComponent {
 
     newForm.reset();
 
+    taskNewDueDate.value = this.todaysDate;
+
     this.tasksService.addTask(task);
   }
 
   resetForm() {
+    const taskNewDueDate: HTMLInputElement = document.querySelector('#inputNewDueDate');
     this.tasksService.resetForm('#newTaskForm');
+    taskNewDueDate.value = this.todaysDate;
+  }
+
+  getTodaysDate() {
+    const todaysDate: Date = new Date();
+    const year: string = todaysDate.getFullYear().toString();
+    let month: string = String(todaysDate.getMonth() + 1);
+    let day: string = todaysDate.getDate().toString();
+
+    if (Number(month) < 10) {
+      month = '0' + month;
+    }
+
+    if (Number(day) < 10) {
+      day = '0' + day;
+    }
+
+    return `${year}-${month}-${day}`;
   }
 }

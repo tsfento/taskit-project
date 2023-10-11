@@ -6,28 +6,29 @@ declare var window;
 export class TasksService {
   tasks: Task[] = [
     new Task(1, 'Delete Me', 'Try to delete me.', 'Oct 5th, 2023', 'High', 'In Progress', '2023-10-05'),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
+    new Task(0, '', '', '', 'Low', '', ''),
   ];
   taskIndex: number;
 
   tasksChanged = new EventEmitter<Task[]>();
+  changePage = new EventEmitter<number>();
 
   getTasks() {
     return this.tasks.slice();
@@ -42,7 +43,7 @@ export class TasksService {
       } else if (modalType === 'viewTaskModal') {
         this.fillModal('View', index);
       } else if (modalType === 'deleteTaskModal') {
-        console.log('delete', index);
+        this.deleteTask(index);
       }
     }
 
@@ -77,6 +78,7 @@ export class TasksService {
   addTask(sentTask: Task) {
     this.tasks.push(sentTask);
     this.tasksChanged.emit(this.tasks.slice());
+    this.changePage.emit(Math.ceil(this.tasks.length / 15));
   }
 
   editTask(editedTask: Task, index: number) {
