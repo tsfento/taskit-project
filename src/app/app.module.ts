@@ -10,6 +10,7 @@ import { UserInfoBoxComponent } from './sidebar/user-info-box/user-info-box.comp
 import { NewTaskComponent } from './tasks-list/new-task/new-task.component';
 import { ViewTaskComponent } from './tasks-list/view-task/view-task.component';
 import { EditTaskComponent } from './tasks-list/edit-task/edit-task.component';
+import { KanbanComponent } from './kanban/kanban.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { EditTaskComponent } from './tasks-list/edit-task/edit-task.component';
     UserInfoBoxComponent,
     NewTaskComponent,
     ViewTaskComponent,
-    EditTaskComponent
+    EditTaskComponent,
+    KanbanComponent
   ],
   imports: [
     BrowserModule,

@@ -47,7 +47,7 @@
             {{ task.status }}
           </td>
           <td>
-            <div class="d-flex text-center justify-content-evenly"
+            <div class="d-flex justify-content-evenly"
             *ngIf="task.priority !== ''">
               <i class="bi bi-eye action" title="View" (click)="showViewModal(i)"></i>
               <i class="bi bi-pencil-square action" title="Edit" (click)="showEditModal(i)"></i>

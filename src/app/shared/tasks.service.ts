@@ -1,7 +1,11 @@
-import { EventEmitter } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import { Task } from "./task.model";
 
 declare var window;
+
+@Injectable({
+  providedIn: 'root'
+})
 
 export class TasksService {
   tasks: Task[] = [

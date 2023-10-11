@@ -28,7 +28,9 @@ td:empty::after {
 }
 
 .header {
-  background-color: lightgrey;
+  /* background-color: lightgrey; */
+  border-bottom: 1px solid grey;
+  color: darkgrey;
 }
 
 .low {

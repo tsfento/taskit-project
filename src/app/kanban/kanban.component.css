@@ -1,0 +1,56 @@
+h6 {
+  color: darkgrey;
+}
+
+h5 {
+  font-weight: bold;
+}
+
+.task-container {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  height: 600px;
+}
+
+.task-card {
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+}
+
+.label {
+  color: darkgrey;
+}
+
+.bi {
+  font-size: 12px;
+  display: inline-flex;
+}
+
+.value {
+  color: black;
+}
+
+.low {
+  color: limegreen;
+}
+
+.medium {
+  color: gold;
+}
+
+.high {
+  color: crimson;
+}
+
+.dropdown-toggle {
+  background-color: khaki;
+  border: 1px solid khaki;
+  font-size: 12px;
+  width: 75px;
+}
+
+.dropdown-menu {
+  min-width: 70px;
+}
