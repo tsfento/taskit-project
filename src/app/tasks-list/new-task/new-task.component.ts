@@ -22,8 +22,10 @@ export class NewTaskComponent {
     const taskNewDueDate: HTMLInputElement = document.querySelector('#inputNewDueDate');
     const taskNewPriority: HTMLSelectElement = document.querySelector('#inputNewPriority');
     const taskNewStatus: HTMLSelectElement = document.querySelector('#inputNewStatus');
+    const splitPriority = taskNewPriority.value.split('-');
+    const splitStatus = taskNewStatus.value.split('-');
 
-    const task: Task = new Task(Date.now(), taskNewName.value, taskNewDetails.value, taskNewDueDate.value, taskNewPriority.value, taskNewStatus.value, taskNewDueDate.value);
+    const task: Task = new Task(Date.now(), taskNewName.value, taskNewDetails.value, taskNewDueDate.value, splitPriority[0], splitStatus[0], taskNewDueDate.value, +splitPriority[1], +splitStatus[1]);
 
     task.dueDate = this.tasksService.formatDate(task.dueDate);
 

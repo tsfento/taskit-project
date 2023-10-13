@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  pageShow: string = 'kanban';
+  pageShow: string = 'task-list';
+  // pageShow: string = 'kanban';
 
   changePage(page: string) {
     this.pageShow = page;

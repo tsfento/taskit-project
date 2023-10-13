@@ -11,13 +11,39 @@ h5 {
   border-radius: 5px;
   border: 1px solid lightgrey;
   height: 600px;
+  overflow: auto;
+  /* Firefox Scrollbar */
+  scrollbar-color: darkgrey lightgrey;
+  scrollbar-width: thin;
 }
+
+/* Chrome Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: lightgrey;
+}
+
+::-webkit-scrollbar-thumb {
+  background: darkgrey;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: grey;
+}
+/* End Chrome Scrollbar */
 
 .task-card {
   background-color: white;
   border-radius: 5px;
   border: 1px solid lightgrey;
   margin-top: 11px;
+}
+
+.task-card:last-child {
+  margin-bottom: 11px;
 }
 
 .label {
@@ -54,4 +80,13 @@ h5 {
 
 .dropdown-menu {
   min-width: 70px;
+}
+
+.status-dropdown {
+  background-color: khaki;
+  border-color: khaki;
+  border-radius: 5px;
+  width: 120px;
+  font-size: 14px;
+  height: 30px;
 }

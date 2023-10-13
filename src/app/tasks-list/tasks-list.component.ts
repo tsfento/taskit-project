@@ -10,13 +10,14 @@ import { TasksService } from '../shared/tasks.service';
 })
 export class TasksListComponent implements OnInit {
   tasks: Task[] = [];
-  blankTask: Task = new Task(0, '', '', '', '', '', '');
+  blankTask: Task = new Task(0, '', '', '', '', '', '', 0, 0);
   page: Task[] = [];
   totalPages: number = 1;
   pageNum: number = 1;
   pageRows: number = 15;
-  deleteIndex: number;
   pageIndex: number;
+  deleteIndex: number;
+  statusIndex: number;
 
   constructor(private tasksService: TasksService) {}
 
@@ -44,6 +45,10 @@ export class TasksListComponent implements OnInit {
     )
   }
 
+  onNewTask() {
+    this.tasksService.showTaskModal('newTaskModal');
+  }
+
   showEditModal(index: number) {
     this.tasksService.showTaskModal('editTaskModal', index + ((this.pageNum - 1) * this.pageRows));
   }
@@ -59,7 +64,28 @@ export class TasksListComponent implements OnInit {
   }
 
   deleteTask(index: number) {
-    this.tasksService.deleteTask(this.deleteIndex);
+    this.tasksService.deleteTask(index);
+  }
+
+  showFilter(filterType: string, filter: string) {
+    const box: HTMLButtonElement = document.querySelector(filterType);
+    let color: string;
+
+    if (filter === 'Due Date' || filter === 'Priority' || filter === 'Status') {
+      box.classList.remove('select-box-filtered');
+    } else {
+      box.classList.add('select-box-filtered');
+    }
+
+    if (filter === 'Low' || filter === 'Medium' || filter === 'High') {
+      if (filter === 'Low') { color = 'limegreen'; }
+      if (filter === 'Medium') { color = 'gold'; }
+      if (filter === 'High') { color = 'crimson'; }
+
+      box.innerHTML = `<span class="bi bi-circle-fill" style="color: ${color}">&nbsp;</span><span style="color: black">${filter}</span>`;
+    } else {
+      box.innerText = filter;
+    }
   }
 
   generatePage() {
@@ -88,5 +114,32 @@ export class TasksListComponent implements OnInit {
         this.generatePage();
       }
     }
+  }
+
+  sortTable(column: string) {
+    if (column === 'title' || column === 'unformattedDate') {
+      this.tasks.sort(
+        (a, b) => {
+          let x = a[column].toLowerCase();
+          let y = b[column].toLowerCase();
+          if (x < y) { return -1; }
+          if (x > y) { return 1; }
+        }
+      );
+    } else {
+      this.tasks.sort(
+        (a, b) => {
+          return a[column] - b[column];
+        }
+      );
+    }
+
+    this.generatePage();
+  }
+
+  changeStatus(status: string, index: number) {
+    this.statusIndex = index + ((this.pageNum - 1) * this.pageRows);
+    console.log(status, this.statusIndex);
+    this.tasksService.changeStatus(status, this.statusIndex);
   }
 }

@@ -21,22 +21,57 @@
   </div>
 </div>
 <!-- End Delete Confirmation -->
-<app-tasks-list-bar></app-tasks-list-bar>
+<!-- Task List Bar -->
+<div class="container mt-5">
+  <h1 class="mb-4" >Task List</h1>
+  <div class="d-flex flex-row mb-3 top-bar">
+    <label class="me-2 mt-2" style="font-weight: bold;">Filters:</label>
+    <div class="dropdown me-2">
+      <button class="btn btn-default btn-sm dropdown-toggle mt-1 due-date select-box" type="button" data-bs-toggle="dropdown">Due Date</button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" (click)="showFilter('.due-date', 'Due Date')">Show All</a></li>
+        <li><a class="dropdown-item" (click)="showFilter('.due-date', 'Oct. 31st, 2023')">Oct. 31st, 2023</a></li>
+      </ul>
+    </div>
+    <div class="dropdown me-2">
+      <button class="btn btn-default btn-sm dropdown-toggle mt-1 priority select-box" type="button" data-bs-toggle="dropdown">Priority</button>
+      <ul class="dropdown-menu priority">
+        <li><a class="dropdown-item" (click)="showFilter('.priority', 'Priority')">Show All</a></li>
+        <li><a class="dropdown-item" (click)="showFilter('.priority', 'Low')"><span class="bi bi-circle-fill low">&nbsp;</span>Low</a></li>
+        <li><a class="dropdown-item" (click)="showFilter('.priority', 'Medium')"><span class="bi bi-circle-fill medium">&nbsp;</span>Medium</a></li>
+        <li><a class="dropdown-item" (click)="showFilter('.priority', 'High')"><span class="bi bi-circle-fill high">&nbsp;</span>High</a></li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <button class="btn btn-default btn-sm dropdown-toggle mt-1 status select-box" type="button" data-bs-toggle="dropdown">Status</button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" (click)="showFilter('.status', 'Status')">Show All</a></li>
+        <li><a class="dropdown-item" (click)="showFilter('.status', 'To Do')">To Do</a></li>
+        <li><a class="dropdown-item" (click)="showFilter('.status', 'In Progress')">In Progress</a></li>
+        <li><a class="dropdown-item" (click)="showFilter('.status', 'Done')">Done</a></li>
+      </ul>
+    </div>
+    <span class="flex-grow-1"></span>
+    <button class="btn btn-success btn-sm new-task-btn mt-1"
+    (click)="onNewTask()">Add New Task</button>
+  </div>
+</div>
+<!-- End Task List Bar -->
 <div class="container">
   <div class="table-responsive">
     <table class="table table-bordered table-hover rounded-3 text-center">
       <thead>
         <tr>
-          <th class="header" scope="col">Task</th>
-          <th class="header" scope="col">Due Date</th>
-          <th class="header" scope="col">Priority</th>
-          <th class="header" scope="col">Status</th>
+          <th class="header can-sort" scope="col" (click)="sortTable('title')">Task&nbsp;<span class="bi bi-caret-down"></span></th>
+          <th class="header can-sort" scope="col" (click)="sortTable('unformattedDate')">Due Date&nbsp;<span class="bi bi-caret-down"></span></th>
+          <th class="header can-sort" scope="col" (click)="sortTable('priorityNumber')">Priority&nbsp;<span class="bi bi-caret-down"></span></th>
+          <th class="header can-sort" scope="col" (click)="sortTable('statusNumber')">Status&nbsp;<span class="bi bi-caret-down"></span></th>
           <th class="header" scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr class="border-bottom"
-        *ngFor="let task of page; let i = index">
+        *ngFor="let task of page; let i = index;">
           <th class="title" scope="row">{{ task.title }}</th>
           <td>{{ task.dueDate }}</td>
           <td><span
@@ -44,7 +79,24 @@
             class="bi bi-circle-fill {{ task.priority.toLowerCase() }}">&nbsp;</span>{{ task.priority }}</td>
           <td>
             <!-- Change to dropdown -->
-            {{ task.status }}
+            <!-- <div class="dropdown">
+              <button class="btn btn-default btn-sm dropdown-toggle mt-1 status" type="button" data-bs-toggle="dropdown">{{ task.status }}</button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" (click)="showFilter('.status', 'To Do')">To Do</a></li>
+                <li><a class="dropdown-item" (click)="showFilter('.status', 'In Progress')">In Progress</a></li>
+                <li><a class="dropdown-item" (click)="showFilter('.status', 'Done')">Done</a></li>
+              </ul>
+            </div> -->
+            <select class="status-dropdown" id="status-change"
+            (change)="changeStatus($event.target.value, i)"
+            *ngIf="task.priority !== ''">
+              <option selected hidden>{{ task.status }}</option>
+              <option value="To Do-1">To Do</option>
+              <option value="In Progress-2">In Progress</option>
+              <option value="Done-3">Done</option>
+            </select>
+            <!-- Change to dropdown -->
+            <!-- {{ task.status }} -->
           </td>
           <td>
             <div class="d-flex justify-content-evenly"

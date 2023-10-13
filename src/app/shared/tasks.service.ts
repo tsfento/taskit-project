@@ -9,25 +9,26 @@ declare var window;
 
 export class TasksService {
   tasks: Task[] = [
-    new Task(1, 'Delete Me', 'Try to delete me.', 'Oct 5th, 2023', 'High', 'In Progress', '2023-10-05'),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
-    // new Task(0, '', '', '', 'Low', '', ''),
+    new Task(1, 'Delete Me', 'Try to delete me.', 'Oct 5th, 2023', 'High', 'In Progress', '2023-10-05', 3, 2),
+    new Task(1, 'Move Me', 'Move me.', 'Oct 4th, 2023', 'Low', 'To Do', '2023-10-04', 1, 1),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
+    // new Task(0, '', '', '', 'Low', '', '', 0, 0),
   ];
   taskIndex: number;
 
@@ -128,5 +129,14 @@ export class TasksService {
     }
 
     return `${month[Number(dateFormat[1]) - 1]} ${addOrdinal(dateFormat[2])}, ${dateFormat[0]}`;
+  }
+
+  changeStatus(status: string, index: number) {
+    const splitStatus = status.split('-');
+
+    this.tasks[index].status = splitStatus[0];
+    this.tasks[index].statusNumber = +splitStatus[1];
+
+    this.tasksChanged.emit(this.tasks.slice());
   }
 }

@@ -7,9 +7,57 @@
   background-color: white;
 }
 
-/* .title {
-  width: 300px;
+.top-bar {
+  width: 100%;
+}
+
+.select-box {
+  color: darkgrey;
+  /* width: 115px; */
+  width: 125px;
+  /* font-size: 13px; */
+  border-radius: 5px;
+  border-color: darkgrey;
+}
+
+.select-box-filtered {
+  color: black;
+}
+
+/* .option-text {
+  color: black;
 } */
+
+.dropdown-item {
+  font-size: 14px;
+  color: black;
+}
+
+.dropdown-menu {
+  min-width: 120px;
+}
+
+.status-dropdown {
+  border-color: darkgrey;
+  border-radius: 5px;
+  min-width: 110px;
+  font-size: 14px;
+}
+
+.new-task-btn {
+  font-size: 13px;
+  width: 150px;
+  background-color: limegreen;
+  border: none;
+  color: white;
+}
+
+.new-task-btn:hover {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px limegreen;
+  color: limegreen;
+  transition: background-color .3s, box-shadow .3s, color .3s;
+}
 
 th, td {
   border: none;
@@ -33,6 +81,19 @@ td:empty::after {
   color: darkgrey;
 }
 
+.can-sort {
+  cursor: pointer;
+}
+
+.bi-caret-down {
+  color: transparent;
+  transition: color .3s;
+}
+
+.can-sort:hover .bi-caret-down {
+  color: inherit;
+}
+
 .low {
   color: limegreen;
 }
@@ -45,7 +106,7 @@ td:empty::after {
   color: crimson;
 }
 
-.bi {
+.bi.action {
   cursor: pointer;
 }
 

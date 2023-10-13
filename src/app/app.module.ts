@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TasksListComponent } from './tasks-list/tasks-list.component';
-import { TasksListBarComponent } from './tasks-list/tasks-list-bar/tasks-list-bar.component';
 import { UserInfoBoxComponent } from './sidebar/user-info-box/user-info-box.component';
 import { NewTaskComponent } from './tasks-list/new-task/new-task.component';
 import { ViewTaskComponent } from './tasks-list/view-task/view-task.component';
@@ -17,7 +16,6 @@ import { KanbanComponent } from './kanban/kanban.component';
     AppComponent,
     SidebarComponent,
     TasksListComponent,
-    TasksListBarComponent,
     UserInfoBoxComponent,
     NewTaskComponent,
     ViewTaskComponent,
