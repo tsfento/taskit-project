@@ -27,10 +27,10 @@
   <div class="d-flex flex-row mb-3 top-bar">
     <label class="me-2 mt-2" style="font-weight: bold;">Filters:</label>
     <div class="dropdown me-2">
-      <button class="btn btn-default btn-sm dropdown-toggle mt-1 due-date select-box" type="button" data-bs-toggle="dropdown">Due Date</button>
+      <button class="btn btn-default btn-sm dropdown-toggle mt-1 unformattedDate select-box" type="button" data-bs-toggle="dropdown">Due Date</button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" (click)="showFilter('.due-date', 'Due Date')">Show All</a></li>
-        <li><a class="dropdown-item" (click)="showFilter('.due-date', 'Oct. 31st, 2023')">Oct. 31st, 2023</a></li>
+        <li><a class="dropdown-item" (click)="showFilter('.unformattedDate', 'Due Date')">Show All</a></li>
+        <li><a class="dropdown-item" (click)="showFilter('.unformattedDate', 'Oct. 31st, 2023', '2023-10-31')">Oct. 31st, 2023</a></li>
       </ul>
     </div>
     <div class="dropdown me-2">
@@ -59,7 +59,7 @@
 <!-- End Task List Bar -->
 <div class="container">
   <div class="table-responsive">
-    <table class="table table-bordered table-hover rounded-3 text-center">
+    <table class="table table-bordered table-hover rounded-3">
       <thead>
         <tr>
           <th class="header can-sort" scope="col" (click)="sortTable('title')">Task&nbsp;<span class="bi bi-caret-down"></span></th>
@@ -99,10 +99,11 @@
             <!-- {{ task.status }} -->
           </td>
           <td>
-            <div class="d-flex justify-content-evenly"
+            <!-- <div class="d-flex justify-content-evenly" -->
+            <div
             *ngIf="task.priority !== ''">
-              <i class="bi bi-eye action" title="View" (click)="showViewModal(i)"></i>
-              <i class="bi bi-pencil-square action" title="Edit" (click)="showEditModal(i)"></i>
+              <i class="bi bi-eye action me-3" title="View" (click)="showViewModal(i)"></i>
+              <i class="bi bi-pencil-square action me-3" title="Edit" (click)="showEditModal(i)"></i>
               <i class="bi bi-trash action" title="Delete" (click)="showDeleteModal(i)"></i>
             </div>
           </td>

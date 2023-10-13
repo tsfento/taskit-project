@@ -18,6 +18,10 @@ export class TasksListComponent implements OnInit {
   pageIndex: number;
   deleteIndex: number;
   statusIndex: number;
+  defaultSort: string = 'unformattedDate';
+  filterDates: string[] = [];
+  filteredArray: Task[] = [];
+  filtering: boolean = false;
 
   constructor(private tasksService: TasksService) {}
 
@@ -26,6 +30,8 @@ export class TasksListComponent implements OnInit {
 
     this.generatePage();
 
+    this.sortTable(this.defaultSort);
+
     this.totalPages = Math.ceil(this.tasks.length / 15);
 
     this.tasksService.tasksChanged.subscribe(
@@ -33,6 +39,8 @@ export class TasksListComponent implements OnInit {
         this.tasks = changedTasks;
 
         this.generatePage();
+
+        this.sortTable(this.defaultSort);
 
         this.totalPages = Math.ceil(this.tasks.length / 15);
     });
@@ -67,12 +75,17 @@ export class TasksListComponent implements OnInit {
     this.tasksService.deleteTask(index);
   }
 
-  showFilter(filterType: string, filter: string) {
+  showFilter(filterType: string, filter: string, date?: string) {
     const box: HTMLButtonElement = document.querySelector(filterType);
     let color: string;
 
     if (filter === 'Due Date' || filter === 'Priority' || filter === 'Status') {
       box.classList.remove('select-box-filtered');
+
+      this.tasks = this.tasksService.getTasks();
+      this.generatePage();
+      box.innerText = filter;
+      return
     } else {
       box.classList.add('select-box-filtered');
     }
@@ -86,6 +99,13 @@ export class TasksListComponent implements OnInit {
     } else {
       box.innerText = filter;
     }
+
+    if (date !== undefined) {
+      filter = date;
+    }
+
+    this.tasks = this.tasksService.filterTasks(filterType, filter);
+    this.generatePage();
   }
 
   generatePage() {
@@ -133,6 +153,8 @@ export class TasksListComponent implements OnInit {
         }
       );
     }
+
+    this.defaultSort = column;
 
     this.generatePage();
   }

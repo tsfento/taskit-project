@@ -139,4 +139,21 @@ export class TasksService {
 
     this.tasksChanged.emit(this.tasks.slice());
   }
+
+  filterTasks(filterType: string, filter: string) {
+    let count = 0;
+
+    function filterArray(obj) {
+      const filterProperty = filterType.split('.')[1];
+
+      if (obj[filterProperty] === filter && obj[filterProperty] !== '') {
+        return true;
+      }
+      count++;
+      return false;
+    }
+
+    const filteredArray = this.tasks.filter(filterArray);
+    return filteredArray;
+  }
 }
