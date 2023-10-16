@@ -5,23 +5,25 @@
       <h6>To Do</h6>
       <div class="container task-container">
         <!-- Task Card -->
-        <div class="container task-card"  *ngFor="let task of toDoTasks; let i = index;">
-          <div class="row">
-            <div class="col-7 mt-2">
-              <h5>{{ task.title }}</h5>
-              <span class="label">Priority: <span class="value">{{ task.priority }} <i class="bi bi-circle-fill {{ task.priority.toLowerCase() }}"></i></span></span>
-              <p class="label mt-1">Due Date: <span class="value">{{ task.dueDate }}</span></p>
+        <ng-container *ngFor="let task of tasks; let i = index">
+          <div class="container task-card" *ngIf="task.statusNumber === 1">
+            <div class="row">
+              <div class="col-7 mt-2">
+                <h5>{{ task.title }}</h5>
+                <span class="label">Priority: <span class="value">{{ task.priority }} <i class="bi bi-circle-fill {{ task.priority.toLowerCase() }}"></i></span></span>
+                <p class="label mt-1">Due Date: <span class="value">{{ task.dueDate }}</span></p>
+              </div>
+              <select class="status-dropdown col-5 mt-3" id="status-change"
+              (change)="changeStatus($event.target.value, i)"
+              *ngIf="task.priority !== ''">
+                <option selected hidden>{{ task.status }}</option>
+                <option value="To Do-1">To Do</option>
+                <option value="In Progress-2">In Progress</option>
+                <option value="Done-3">Done</option>
+              </select>
             </div>
-            <select class="status-dropdown col-5 mt-3" id="status-change"
-            (change)="changeStatus($event.target.value, i, toDoTasks)"
-            *ngIf="task.priority !== ''">
-              <option selected hidden>{{ task.status }}</option>
-              <option value="To Do-1">To Do</option>
-              <option value="In Progress-2">In Progress</option>
-              <option value="Done-3">Done</option>
-            </select>
           </div>
-        </div>
+        </ng-container>
         <!-- End Task Card -->
       </div>
     </div>
@@ -29,23 +31,25 @@
       <h6>In Progress</h6>
       <div class="container task-container">
         <!-- Task Card -->
-        <div class="container task-card"  *ngFor="let task of inProgressTasks; let i = index;">
-          <div class="row">
-            <div class="col-7 mt-2">
-              <h5>{{ task.title }}</h5>
-              <span class="label">Priority: <span class="value">{{ task.priority }} <i class="bi bi-circle-fill {{ task.priority.toLowerCase() }}"></i></span></span>
-              <p class="label mt-1">Due Date: <span class="value">{{ task.dueDate }}</span></p>
+        <ng-container *ngFor="let task of tasks; let i = index">
+          <div class="container task-card" *ngIf="task.statusNumber === 2">
+            <div class="row">
+              <div class="col-7 mt-2">
+                <h5>{{ task.title }}</h5>
+                <span class="label">Priority: <span class="value">{{ task.priority }} <i class="bi bi-circle-fill {{ task.priority.toLowerCase() }}"></i></span></span>
+                <p class="label mt-1">Due Date: <span class="value">{{ task.dueDate }}</span></p>
+              </div>
+              <select class="status-dropdown col-5 mt-3" id="status-change"
+              (change)="changeStatus($event.target.value, i)"
+              *ngIf="task.priority !== ''">
+                <option selected hidden>{{ task.status }}</option>
+                <option value="To Do-1">To Do</option>
+                <option value="In Progress-2">In Progress</option>
+                <option value="Done-3">Done</option>
+              </select>
             </div>
-            <select class="status-dropdown col-5 mt-3" id="status-change"
-            (change)="changeStatus($event.target.value, i, inProgressTasks)"
-            *ngIf="task.priority !== ''">
-              <option selected hidden>{{ task.status }}</option>
-              <option value="To Do-1">To Do</option>
-              <option value="In Progress-2">In Progress</option>
-              <option value="Done-3">Done</option>
-            </select>
           </div>
-        </div>
+        </ng-container>
         <!-- End Task Card -->
       </div>
     </div>
@@ -53,23 +57,25 @@
       <h6>Done</h6>
       <div class="container task-container">
         <!-- Task Card -->
-        <div class="container task-card"  *ngFor="let task of doneTasks; let i = index;">
-          <div class="row">
-            <div class="col-7 mt-2">
-              <h5>{{ task.title }}</h5>
-              <span class="label">Priority: <span class="value">{{ task.priority }} <i class="bi bi-circle-fill {{ task.priority.toLowerCase() }}"></i></span></span>
-              <p class="label mt-1">Due Date: <span class="value">{{ task.dueDate }}</span></p>
+        <ng-container *ngFor="let task of tasks; let i = index">
+          <div class="container task-card" *ngIf="task.statusNumber === 3">
+            <div class="row">
+              <div class="col-7 mt-2">
+                <h5>{{ task.title }}</h5>
+                <span class="label">Priority: <span class="value">{{ task.priority }} <i class="bi bi-circle-fill {{ task.priority.toLowerCase() }}"></i></span></span>
+                <p class="label mt-1">Due Date: <span class="value">{{ task.dueDate }}</span></p>
+              </div>
+              <select class="status-dropdown col-5 mt-3" id="status-change"
+              (change)="changeStatus($event.target.value, i)"
+              *ngIf="task.priority !== ''">
+                <option selected hidden>{{ task.status }}</option>
+                <option value="To Do-1">To Do</option>
+                <option value="In Progress-2">In Progress</option>
+                <option value="Done-3">Done</option>
+              </select>
             </div>
-            <select class="status-dropdown col-5 mt-3" id="status-change"
-            (change)="changeStatus($event.target.value, i, doneTasks)"
-            *ngIf="task.priority !== ''">
-              <option selected hidden>{{ task.status }}</option>
-              <option value="To Do-1">To Do</option>
-              <option value="In Progress-2">In Progress</option>
-              <option value="Done-3">Done</option>
-            </select>
           </div>
-        </div>
+        </ng-container>
         <!-- End Task Card -->
       </div>
     </div>
