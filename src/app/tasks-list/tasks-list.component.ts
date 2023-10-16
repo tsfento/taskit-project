@@ -18,10 +18,6 @@ export class TasksListComponent implements OnInit {
   pageIndex: number;
   deleteIndex: number;
   statusIndex: number;
-  defaultSort: string = 'unformattedDate';
-  filterDates: string[] = [];
-  filteredArray: Task[] = [];
-  filtering: boolean = false;
 
   constructor(private tasksService: TasksService) {}
 
@@ -30,8 +26,6 @@ export class TasksListComponent implements OnInit {
 
     this.generatePage();
 
-    this.sortTable(this.defaultSort);
-
     this.totalPages = Math.ceil(this.tasks.length / 15);
 
     this.tasksService.tasksChanged.subscribe(
@@ -39,8 +33,6 @@ export class TasksListComponent implements OnInit {
         this.tasks = changedTasks;
 
         this.generatePage();
-
-        this.sortTable(this.defaultSort);
 
         this.totalPages = Math.ceil(this.tasks.length / 15);
     });
@@ -75,39 +67,6 @@ export class TasksListComponent implements OnInit {
     this.tasksService.deleteTask(index);
   }
 
-  showFilter(filterType: string, filter: string, date?: string) {
-    const box: HTMLButtonElement = document.querySelector(filterType);
-    let color: string;
-
-    if (filter === 'Due Date' || filter === 'Priority' || filter === 'Status') {
-      box.classList.remove('select-box-filtered');
-
-      this.tasks = this.tasksService.getTasks();
-      this.generatePage();
-      box.innerText = filter;
-      return
-    } else {
-      box.classList.add('select-box-filtered');
-    }
-
-    if (filter === 'Low' || filter === 'Medium' || filter === 'High') {
-      if (filter === 'Low') { color = 'limegreen'; }
-      if (filter === 'Medium') { color = 'gold'; }
-      if (filter === 'High') { color = 'crimson'; }
-
-      box.innerHTML = `<span class="bi bi-circle-fill" style="color: ${color}">&nbsp;</span><span style="color: black">${filter}</span>`;
-    } else {
-      box.innerText = filter;
-    }
-
-    if (date !== undefined) {
-      filter = date;
-    }
-
-    this.tasks = this.tasksService.filterTasks(filterType, filter);
-    this.generatePage();
-  }
-
   generatePage() {
     this.page = [];
 
@@ -120,43 +79,20 @@ export class TasksListComponent implements OnInit {
     }
   }
 
-  switchPageNum(direction: string) {
-    if (direction === 'forward') {
-      if (this.pageNum !== (Math.ceil(this.tasks.length / 15))) {
-        this.pageNum++;
+  prevPage() {
+    if (this.pageNum !== 1) {
+      this.pageNum--;
 
-        this.generatePage();
-      }
-    } else if (direction === 'back') {
-      if (this.pageNum !== 1) {
-        this.pageNum--;
-
-        this.generatePage();
-      }
+      this.generatePage();
     }
   }
 
-  sortTable(column: string) {
-    if (column === 'title' || column === 'unformattedDate') {
-      this.tasks.sort(
-        (a, b) => {
-          let x = a[column].toLowerCase();
-          let y = b[column].toLowerCase();
-          if (x < y) { return -1; }
-          if (x > y) { return 1; }
-        }
-      );
-    } else {
-      this.tasks.sort(
-        (a, b) => {
-          return a[column] - b[column];
-        }
-      );
+  nextPage() {
+    if (this.pageNum !== (Math.ceil(this.tasks.length / 15))) {
+      this.pageNum++;
+
+      this.generatePage();
     }
-
-    this.defaultSort = column;
-
-    this.generatePage();
   }
 
   changeStatus(status: string, index: number) {
