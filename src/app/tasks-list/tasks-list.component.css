@@ -72,11 +72,11 @@ th, td {
   border: none;
 }
 
-tr.border-bottom:not(:last-child) td {
+tr.border-bottom:not(:nth-child(15n)) td {
   border-bottom: 1px solid darkgrey;
 }
 
-tr.border-bottom:not(:last-child) th {
+tr.border-bottom:not(:nth-child(15n)) th {
   border-bottom: 1px solid darkgrey;
 }
 

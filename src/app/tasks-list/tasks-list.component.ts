@@ -24,25 +24,18 @@ export class TasksListComponent implements OnInit {
   ngOnInit() {
     this.tasks = this.tasksService.getTasks();
 
-    this.generatePage();
-
     this.totalPages = Math.ceil(this.tasks.length / 15);
+
+    this.generatePage();
 
     this.tasksService.tasksChanged.subscribe(
       (changedTasks: Task[]) => {
         this.tasks = changedTasks;
 
-        this.generatePage();
-
         this.totalPages = Math.ceil(this.tasks.length / 15);
-    });
 
-    this.tasksService.changePage.subscribe(
-      (page: number) => {
-        this.pageNum = page;
         this.generatePage();
-      }
-    )
+    });
   }
 
   onNewTask() {
@@ -58,9 +51,9 @@ export class TasksListComponent implements OnInit {
   }
 
   showDeleteModal(index: number) {
-    this.pageIndex = index;
-    this.deleteIndex = index + ((this.pageNum - 1) * this.pageRows);
+    this.deleteIndex = index;
     this.tasksService.showTaskModal('deleteTaskModal');
+    console.log(index);
   }
 
   deleteTask(index: number) {
@@ -68,13 +61,10 @@ export class TasksListComponent implements OnInit {
   }
 
   generatePage() {
-    this.page = [];
-
-    for (let i = (this.pageNum - 1) * this.pageRows; i < this.pageRows * this.pageNum; i++ ) {
-      if (i + 1 > this.tasks.length) {
-        this.page.push(this.blankTask);
-      } else {
-        this.page.push(this.tasks[i]);
+    for (let i = 0; i < this.tasks.length; i++) {
+      if (this.tasks.length < this.totalPages * 15) {
+        this.tasks.push(this.blankTask);
+        console.log('didit');
       }
     }
   }
