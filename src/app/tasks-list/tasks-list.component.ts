@@ -36,6 +36,12 @@ export class TasksListComponent implements OnInit {
 
         this.generatePage();
     });
+
+    this.tasksService.changePage.subscribe(
+      (page: number) => {
+        this.pageNum = page;
+      }
+    );
   }
 
   onNewTask() {
