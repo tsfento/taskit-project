@@ -16,6 +16,10 @@
   background-color: white;
 }
 
+td.title {
+  font-weight: bolder;
+}
+
 .top-bar {
   width: 100%;
 }

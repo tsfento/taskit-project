@@ -70,7 +70,6 @@ export class TasksListComponent implements OnInit {
     for (let i = 0; i < this.tasks.length; i++) {
       if (this.tasks.length < this.totalPages * 15) {
         this.tasks.push(this.blankTask);
-        console.log('didit');
       }
     }
   }

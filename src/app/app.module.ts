@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -11,12 +10,8 @@ import { NewTaskComponent } from './tasks-list/new-task/new-task.component';
 import { ViewTaskComponent } from './tasks-list/view-task/view-task.component';
 import { EditTaskComponent } from './tasks-list/edit-task/edit-task.component';
 import { KanbanComponent } from './kanban/kanban.component';
-
-const appRoutes: Routes = [
-  // { path: '', component: AppComponent },
-  { path: 'tasks-list', component: TasksListComponent },
-  { path: 'kanban', component: KanbanComponent },
-];
+import { LandingComponent } from './landing/landing.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -27,12 +22,13 @@ const appRoutes: Routes = [
     NewTaskComponent,
     ViewTaskComponent,
     EditTaskComponent,
-    KanbanComponent
+    KanbanComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

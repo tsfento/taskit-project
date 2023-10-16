@@ -6,11 +6,4 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  @Output() pageToEmit = new EventEmitter<string>();
-  pageToShow: string = 'task-list';
-
-  onChangePage(page: string) {
-    this.pageToShow = page;
-    this.pageToEmit.emit(page);
-  }
 }
