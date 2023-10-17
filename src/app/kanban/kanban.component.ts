@@ -9,9 +9,6 @@ import { Task } from '../shared/task.model';
 })
 export class KanbanComponent implements OnInit {
   tasks: Task[] = [];
-  toDoTasks: Task[] = [];
-  inProgressTasks: Task[] = [];
-  doneTasks: Task[] = [];
 
   constructor(private tasksService: TasksService) {}
 
