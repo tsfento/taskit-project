@@ -13,13 +13,21 @@ export class LandingComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   hasAccount(bool: boolean) {
-    this.doesUserHaveAccount = bool;
+    const container = document.querySelector('.container');
+
+    setTimeout(() => {
+      this.doesUserHaveAccount = bool;
+    }, 125);
+
+    setTimeout(() => {
+      container.classList.toggle('switch');
+    }, 300);
   }
 
   containerHeight() {
     const container = document.querySelector('.container');
 
-    container.classList.toggle('switched');
+    container.classList.toggle('switch');
   }
 
   onLogin() {

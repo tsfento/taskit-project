@@ -8,12 +8,23 @@
 
 .container {
   width: 550px;
-  height: 654px;
-  transition: height .2s linear;
 }
 
-.container.switched {
-  height: 446px;
+.container.switch {
+  position: relative;
+  animation: move .3s ease-in-out;
+  margin-left: 50vw;
+  margin-top: 50vh;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+@keyframes move {
+  50% {
+    transform: translateX(50vw) translateY(-50%);
+  }
+  50.001% {
+    transform: translateX(-60vw) translateY(-50%);
+  }
 }
 
 .info-box {
@@ -37,13 +48,13 @@
   font-weight: 500;
 }
 
-.sign-up-bottom {
+.bottom {
   margin-bottom: 100px;
 }
 
-.login-bottom {
+/* .login-bottom {
   margin-bottom: 70px;
-}
+} */
 
 .account {
   font-size: 13px;

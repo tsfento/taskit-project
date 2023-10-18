@@ -1,5 +1,5 @@
 <div class="vertical-center" [ngSwitch]="true">
-  <div class="container info-box">
+  <div class="container info-box entering">
     <!-- Sign Up -->
     <div *ngSwitchCase="doesUserHaveAccount === false">
       <div class="ms-sm-3 ms-xl-4 mt-5 mb-5">
@@ -25,7 +25,7 @@
           <input type="text" class="form-control" id="password">
         </div>
       </form>
-      <div class="d-flex justify-content-end me-3 sign-up-bottom">
+      <div class="d-flex justify-content-end me-3 bottom">
         <div class="mt-2 me-4 account">
           <span class="me-2">Have an account?</span><a class="green login" (click)="hasAccount(true); containerHeight()">Login</a>
         </div>
@@ -49,7 +49,7 @@
           <input type="text" class="form-control" id="password">
         </div>
       </form>
-      <div class="d-flex justify-content-end me-3 login-bottom">
+      <div class="d-flex justify-content-end me-3 bottom">
         <div class="mt-2 me-4 account">
           <span class="me-2">Don't have an account?</span><a class="green login" (click)="hasAccount(false); containerHeight()">Sign Up</a>
         </div>
