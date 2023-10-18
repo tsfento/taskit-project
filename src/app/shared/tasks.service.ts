@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from "@angular/core";
 import { Task } from "./task.model";
+import { Subject } from "rxjs";
 
 declare var window;
 
@@ -32,6 +33,7 @@ export class TasksService {
   ];
   taskIndex: number;
 
+  // loggedIn = new Subject<boolean>();
   tasksChanged = new EventEmitter<Task[]>();
   changePage = new EventEmitter<number>();
 

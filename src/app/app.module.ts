@@ -12,6 +12,7 @@ import { EditTaskComponent } from './tasks-list/edit-task/edit-task.component';
 import { KanbanComponent } from './kanban/kanban.component';
 import { LandingComponent } from './landing/landing.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ContainerComponent } from './container/container.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AppRoutingModule } from './app-routing.module';
     ViewTaskComponent,
     EditTaskComponent,
     KanbanComponent,
-    LandingComponent
+    LandingComponent,
+    ContainerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,66 @@
+.vertical-center {
+  min-height: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  width: 550px;
+  height: 654px;
+  transition: height .2s linear;
+}
+
+.container.switched {
+  height: 446px;
+}
+
+.info-box {
+  /* background-color: #f2f3f4; */
+  background-color: rgb(248, 249, 250);
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+}
+
+.logo-text {
+  font-size: 26px;
+  font-weight: bolder;
+}
+
+.green {
+  color: limegreen;
+}
+
+.label {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.sign-up-bottom {
+  margin-bottom: 100px;
+}
+
+.login-bottom {
+  margin-bottom: 70px;
+}
+
+.account {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.login {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.login:hover {
+  color: #28a428;
+}
+
+.submit {
+  background-color: limegreen;
+  border: none;
+  width: 100px;
+}
