@@ -28,7 +28,6 @@ export class TaskModalComponent implements OnInit {
   }
 
   newTask() {
-    const newForm: HTMLFormElement = document.querySelector('#taskForm');
     const taskNewName: HTMLInputElement = document.querySelector('#inputTaskName');
     const taskNewDetails: HTMLInputElement = document.querySelector('#inputDetails');
     const taskNewDueDate: HTMLInputElement = document.querySelector('#inputDueDate');
@@ -41,7 +40,7 @@ export class TaskModalComponent implements OnInit {
 
     task.dueDate = this.tasksService.formatDate(task.dueDate);
 
-    newForm.reset();
+    this.resetForm();
 
     taskNewDueDate.value = this.getTodaysDate();
 
@@ -51,7 +50,6 @@ export class TaskModalComponent implements OnInit {
   saveChanges() {
     this.tasks = this.tasksService.tasks;
     this.taskIndex = this.tasksService.taskIndex;
-    const editForm: HTMLFormElement = document.querySelector('#taskForm');
     const taskEditName: HTMLInputElement = document.querySelector('#inputTaskName');
     const taskEditDetails: HTMLInputElement = document.querySelector('#inputDetails');
     const taskEditDueDate: HTMLInputElement = document.querySelector('#inputDueDate');
@@ -64,7 +62,7 @@ export class TaskModalComponent implements OnInit {
 
     editedTask.dueDate = this.tasksService.formatDate(editedTask.dueDate);
 
-    editForm.reset();
+    this.resetForm();
 
     this.tasksService.editTask(editedTask, this.taskIndex);
   }
