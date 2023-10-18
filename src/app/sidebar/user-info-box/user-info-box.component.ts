@@ -7,5 +7,5 @@ import { UserInfo } from 'src/app/shared/userinfo.model';
   styleUrls: ['./user-info-box.component.css']
 })
 export class UserInfoBoxComponent {
-  user = new UserInfo('Tyler', 'user@email.com','./assets/images/blank-profile-picture_640.png');
+  user = new UserInfo('User', 'user@email.com','./assets/images/blank-profile-picture_640.png');
 }

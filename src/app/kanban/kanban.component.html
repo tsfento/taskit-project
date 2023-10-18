@@ -13,7 +13,7 @@
                 <span class="label">Priority: <span class="value">{{ task.priority }} <i class="bi bi-circle-fill {{ task.priority.toLowerCase() }}"></i></span></span>
                 <p class="label mt-1">Due Date: <span class="value">{{ task.dueDate }}</span></p>
               </div>
-              <select class="status-dropdown col-5 mt-3" id="status-change"
+              <select class="status-dropdown todo-dropdown col-5 mt-3" id="status-change"
               (change)="changeStatus($event.target.value, i)"
               *ngIf="task.priority !== ''">
                 <option selected hidden>{{ task.status }}</option>
@@ -39,7 +39,7 @@
                 <span class="label">Priority: <span class="value">{{ task.priority }} <i class="bi bi-circle-fill {{ task.priority.toLowerCase() }}"></i></span></span>
                 <p class="label mt-1">Due Date: <span class="value">{{ task.dueDate }}</span></p>
               </div>
-              <select class="status-dropdown col-5 mt-3" id="status-change"
+              <select class="status-dropdown progress-dropdown col-5 mt-3" id="status-change"
               (change)="changeStatus($event.target.value, i)"
               *ngIf="task.priority !== ''">
                 <option selected hidden>{{ task.status }}</option>
@@ -65,7 +65,7 @@
                 <span class="label">Priority: <span class="value">{{ task.priority }} <i class="bi bi-circle-fill {{ task.priority.toLowerCase() }}"></i></span></span>
                 <p class="label mt-1">Due Date: <span class="value">{{ task.dueDate }}</span></p>
               </div>
-              <select class="status-dropdown col-5 mt-3" id="status-change"
+              <select class="status-dropdown done-dropdown col-5 mt-3" id="status-change"
               (change)="changeStatus($event.target.value, i)"
               *ngIf="task.priority !== ''">
                 <option selected hidden>{{ task.status }}</option>

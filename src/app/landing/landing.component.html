@@ -1,5 +1,16 @@
-<div class="vertical-center" [ngSwitch]="true">
-  <div class="container info-box entering">
+<!-- Welcome -->
+<div class="vertical-center" *ngIf="leftWelcome === false">
+  <div class="container welcome-container welcome-box">
+    <div class="text-center mt-4">
+      <span class="welcome-text">Welcome to <span class="welcome-text green">TASK</span><span class="welcome-text">IT</span></span>
+    </div>
+    <img class="screenshot" src="./assets/images/landing_screen.png">
+  </div>
+</div>
+<!-- End Welcome -->
+<!-- Auth -->
+<div class="vertical-center" *ngIf="leftWelcome === true" [ngSwitch]="true">
+  <div class="container auth-container info-box entering">
     <!-- Sign Up -->
     <div *ngSwitchCase="doesUserHaveAccount === false">
       <div class="ms-sm-3 ms-xl-4 mt-5 mb-5">

@@ -80,22 +80,33 @@ h5 {
   color: crimson;
 }
 
-.dropdown-toggle {
-  background-color: khaki;
-  border: 1px solid khaki;
-  font-size: 12px;
-  width: 75px;
-}
-
 .dropdown-menu {
   min-width: 70px;
 }
 
 .status-dropdown {
-  background-color: khaki;
-  border-color: khaki;
   border-radius: 5px;
   width: 120px;
-  font-size: 14px;
-  height: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  height: 28px;
+}
+
+.todo-dropdown {
+  background-color: khaki;
+  border-color: khaki;
+}
+
+.progress-dropdown {
+  background-color: aqua;
+  border-color: aqua;
+}
+
+.done-dropdown {
+  background-color: lightgreen;
+  border-color: lightgreen;
+}
+
+span {
+  font-weight: 600;
 }

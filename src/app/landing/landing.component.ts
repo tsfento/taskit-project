@@ -8,11 +8,13 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent {
+  leftWelcome: boolean = false;
   doesUserHaveAccount: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   hasAccount(bool: boolean) {
+    this.leftWelcome = true;
     const container = document.querySelector('.container');
 
     setTimeout(() => {
