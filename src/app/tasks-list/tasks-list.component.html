@@ -1,6 +1,5 @@
-<app-new-task></app-new-task>
 <app-view-task></app-view-task>
-<app-edit-task></app-edit-task>
+<app-task-modal></app-task-modal>
 <!-- Begin Delete Confirmation Modal -->
 <div class="modal fade" id="deleteTaskModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -30,7 +29,10 @@
       <button class="btn btn-default btn-sm dropdown-toggle mt-1 unformattedDate select-box" type="button" data-bs-toggle="dropdown">Due Date</button>
       <ul class="dropdown-menu">
         <li><a class="dropdown-item">Show All</a></li>
-        <li><a class="dropdown-item">Oct. 31st, 2023</a></li>
+        <!-- <li><a class="dropdown-item">Oct. 31st, 2023</a></li> -->
+        <ng-container *ngFor="let task of tasks">
+          <li *ngIf="task.dueDate !== ''"><a class="dropdown-item">{{ task.dueDate }}</a></li>
+        </ng-container>
       </ul>
     </div>
     <div class="dropdown me-2">
@@ -53,7 +55,7 @@
     </div>
     <span class="flex-grow-1"></span>
     <button class="btn btn-success btn-sm new-task-btn mt-1"
-    (click)="onNewTask()">Add New Task</button>
+    (click)="onTaskModal()">Add New Task</button>
   </div>
 </div>
 <!-- End Task List Bar -->
@@ -92,8 +94,8 @@
               <!-- <div class="d-flex justify-content-evenly" -->
               <div
               *ngIf="task.priority !== ''">
-                <i class="bi bi-eye action me-3" title="View" (click)="showViewModal(i)"></i>
-                <i class="bi bi-pencil-square action me-3" title="Edit" (click)="showEditModal(i)"></i>
+                <i class="bi bi-eye action me-3" title="View" (click)="onTaskModal(i)"></i>
+                <i class="bi bi-pencil-square action me-3" title="Edit" (click)="onTaskModal(i)"></i>
                 <i class="bi bi-trash action" title="Delete" (click)="showDeleteModal(i)"></i>
               </div>
             </td>

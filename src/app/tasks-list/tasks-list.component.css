@@ -42,6 +42,7 @@ td.title {
 } */
 
 .dropdown-item {
+  cursor: pointer;
   font-size: 14px;
   color: black;
 }
@@ -55,6 +56,7 @@ td.title {
   border-radius: 5px;
   min-width: 110px;
   font-size: 14px;
+  height: 23px;
 }
 
 .new-task-btn {

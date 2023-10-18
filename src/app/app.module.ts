@@ -6,13 +6,12 @@ import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TasksListComponent } from './tasks-list/tasks-list.component';
 import { UserInfoBoxComponent } from './sidebar/user-info-box/user-info-box.component';
-import { NewTaskComponent } from './tasks-list/new-task/new-task.component';
 import { ViewTaskComponent } from './tasks-list/view-task/view-task.component';
-import { EditTaskComponent } from './tasks-list/edit-task/edit-task.component';
 import { KanbanComponent } from './kanban/kanban.component';
 import { LandingComponent } from './landing/landing.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ContainerComponent } from './container/container.component';
+import { TaskModalComponent } from './tasks-list/task-modal/task-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +19,11 @@ import { ContainerComponent } from './container/container.component';
     SidebarComponent,
     TasksListComponent,
     UserInfoBoxComponent,
-    NewTaskComponent,
     ViewTaskComponent,
-    EditTaskComponent,
     KanbanComponent,
     LandingComponent,
-    ContainerComponent
+    ContainerComponent,
+    TaskModalComponent
   ],
   imports: [
     BrowserModule,

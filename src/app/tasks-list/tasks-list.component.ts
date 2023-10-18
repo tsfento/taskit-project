@@ -11,11 +11,9 @@ import { TasksService } from '../shared/tasks.service';
 export class TasksListComponent implements OnInit {
   tasks: Task[] = [];
   blankTask: Task = new Task(0, '', '', '', '', '', '', 0, 0);
-  page: Task[] = [];
   totalPages: number = 1;
   pageNum: number = 1;
   pageRows: number = 15;
-  pageIndex: number;
   deleteIndex: number;
   statusIndex: number;
 
@@ -44,16 +42,16 @@ export class TasksListComponent implements OnInit {
     );
   }
 
-  onNewTask() {
-    this.tasksService.showTaskModal('newTaskModal');
-  }
-
-  showEditModal(index: number) {
-    this.tasksService.showTaskModal('editTaskModal', index + ((this.pageNum - 1) * this.pageRows));
+  onTaskModal(index?: number) {
+    if (index === undefined) {
+      this.tasksService.showTaskModal('taskModal');
+    } else {
+      this.tasksService.showTaskModal('taskModal', index);
+    }
   }
 
   showViewModal(index: number) {
-    this.tasksService.showTaskModal('viewTaskModal', index + ((this.pageNum - 1) * this.pageRows));
+    this.tasksService.showTaskModal('taskModal', index + ((this.pageNum - 1) * this.pageRows));
   }
 
   showDeleteModal(index: number) {

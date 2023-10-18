@@ -11,7 +11,7 @@ declare var window;
 export class TasksService {
   tasks: Task[] = [
     new Task(1, 'Delete Me', 'Try to delete me.', 'Oct 5th, 2023', 'High', 'In Progress', '2023-10-05', 3, 2),
-    new Task(1, 'Move Me', 'Move me.', 'Oct 4th, 2023', 'Low', 'To Do', '2023-10-04', 1, 1),
+    new Task(1, 'Move Me', 'Try to move me.', 'Oct 4th, 2023', 'Low', 'To Do', '2023-10-04', 1, 1),
     // new Task(0, '', '', '', 'Low', '', '', 0, 0),
     // new Task(0, '', '', '', 'Low', '', '', 0, 0),
     // new Task(0, '', '', '', 'Low', '', '', 0, 0),
@@ -33,26 +33,29 @@ export class TasksService {
   ];
   taskIndex: number;
 
-  // loggedIn = new Subject<boolean>();
   tasksChanged = new EventEmitter<Task[]>();
   changePage = new EventEmitter<number>();
+  isEditing = new Subject<boolean>();
 
   getTasks() {
     return this.tasks.slice();
   }
 
   showTaskModal(modalType: string, index?: number) {
-    const taskModal = new window.bootstrap.Modal(document.getElementById(modalType));
+    if (index === undefined) {
+      this.isEditing.next(false);
+    }
 
     if (index !== undefined) {
-      if (modalType === 'editTaskModal') {
-        this.fillModal('Edit', index);
-      } else if (modalType === 'viewTaskModal') {
-        this.fillModal('View', index);
+      if (modalType === 'taskModal') {
+        this.isEditing.next(true);
+        this.fillModal(index);
       } else if (modalType === 'deleteTaskModal') {
-        this.deleteTask(index);
+        // this.deleteTask(index);
       }
     }
+
+    const taskModal = new window.bootstrap.Modal(document.getElementById(modalType));
 
     taskModal.show();
   }
@@ -62,24 +65,19 @@ export class TasksService {
     taskForm.reset();
   }
 
-  fillModal(modalType: string, index: number) {
-    if (modalType === 'Edit') {
-      const form: HTMLFormElement = document.querySelector(`#${modalType.toLowerCase()}TaskForm`);
-      const taskName: HTMLInputElement = document.querySelector(`#input${modalType}TaskName`);
-      const taskDetails: HTMLInputElement = document.querySelector(`#input${modalType}Details`);
-      const taskDueDate: HTMLInputElement = document.querySelector(`#input${modalType}DueDate`);
-      const taskPriority: HTMLInputElement = document.querySelector(`#input${modalType}Priority`);
-      const taskStatus: HTMLInputElement = document.querySelector(`#input${modalType}Status`);
+  fillModal(index: number) {
+    const taskName: HTMLInputElement = document.querySelector('#inputTaskName');
+    const taskDetails: HTMLInputElement = document.querySelector('#inputDetails');
+    const taskDueDate: HTMLInputElement = document.querySelector('#inputDueDate');
+    const taskPriority: HTMLSelectElement = document.querySelector('#inputPriority');
+    const taskStatus: HTMLSelectElement = document.querySelector('#inputStatus');
 
-      this.taskIndex = index;
-      taskName.value = this.tasks[index].title;
-      taskDetails.value = this.tasks[index].details;
-      taskDueDate.value = this.tasks[index].unformattedDate;
-      taskPriority.value = this.tasks[index].priority;
-      taskStatus.value = this.tasks[index].status;
-    } else if (modalType === 'View') {
-
-    }
+    this.taskIndex = index;
+    taskName.value = this.tasks[index].title;
+    taskDetails.value = this.tasks[index].details;
+    taskDueDate.value = this.tasks[index].unformattedDate;
+    taskPriority.value = this.tasks[index].priority + '-' + this.tasks[index].priorityNumber;
+    taskStatus.value = this.tasks[index].status + '-' + this.tasks[index].statusNumber;
   }
 
   addTask(sentTask: Task) {
