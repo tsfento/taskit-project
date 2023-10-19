@@ -32,8 +32,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.generatePage();
 
     this.tasksSub = this.tasksService.tasksChanged.subscribe(
-      (changedTasks: Task[]) => {
-        this.tasks = changedTasks;
+      (payload) => {
+        this.tasks = payload.tasks;
 
         this.totalPages = Math.ceil(this.tasks.length / 15);
 
@@ -67,7 +67,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   showDeleteModal(index: number) {
     this.deleteIndex = index;
     this.tasksService.showTaskModal('deleteTaskModal');
-    console.log(index);
+    // console.log(index);
   }
 
   deleteTask(index: number) {
@@ -100,7 +100,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   changeStatus(status: string, index: number) {
     this.statusIndex = index + ((this.pageNum - 1) * this.pageRows);
-    console.log(status, this.statusIndex);
+    // console.log(status, this.statusIndex);
     this.tasksService.changeStatus(status, this.statusIndex);
   }
 }

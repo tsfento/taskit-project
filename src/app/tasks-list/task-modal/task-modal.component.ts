@@ -19,14 +19,13 @@ export class TaskModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.tasksSub = this.tasksService.tasksChanged.subscribe(
-      (changedTasks: Task[]) => {
-        this.tasks = changedTasks;
+      (payload) => {
+        this.tasks = payload.tasks;
     });
 
     this.editingSub = this.tasksService.isEditing.subscribe(
       (bool: boolean) => {
         this.isEditing = bool;
-        console.log(this.isEditing);
       });
   }
 

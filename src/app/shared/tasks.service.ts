@@ -1,13 +1,13 @@
-import { EventEmitter, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Task } from "./task.model";
 import { Subject } from "rxjs";
 
 declare var window;
+type taskChange = { tasks: Task[]; task: Task; action: string; }
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class TasksService {
   tasks: Task[] = [
     new Task(1, 'Delete Me', 'Try to delete me.', 'Oct 5th, 2023', 'High', 'In Progress', '2023-10-05', 3, 2),
@@ -33,7 +33,7 @@ export class TasksService {
   ];
   taskIndex: number;
 
-  tasksChanged = new Subject<Task[]>();
+  tasksChanged = new Subject<taskChange>();
   changePage = new Subject<number>();
   isEditing = new Subject<boolean>();
 
@@ -82,7 +82,11 @@ export class TasksService {
 
   addTask(sentTask: Task) {
     this.tasks.push(sentTask);
-    this.tasksChanged.next(this.tasks.slice());
+    this.tasksChanged.next({
+      tasks: this.tasks.slice(),
+      task: sentTask,
+      action: 'added',
+    });
     this.changePage.next(Math.ceil(this.tasks.length / 15));
   }
 
@@ -98,7 +102,11 @@ export class TasksService {
   // Change to ngFor index
   deleteTask(index: number) {
     this.tasks.splice(index, 1);
-    this.tasksChanged.next(this.tasks.slice());
+    this.tasksChanged.next({
+      tasks: this.tasks.slice(),
+      task: this.tasks[index],
+      action: 'deleted',
+    });
   }
 
   formatDate(date: string) {
@@ -137,6 +145,10 @@ export class TasksService {
     this.tasks[index].status = splitStatus[0];
     this.tasks[index].statusNumber = +splitStatus[1];
 
-    this.tasksChanged.next(this.tasks.slice());
+    this.tasksChanged.next({
+      tasks: this.tasks.slice(),
+      task: this.tasks[index],
+      action: 'status changed',
+    });
   }
 }

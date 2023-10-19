@@ -16,8 +16,8 @@ export class KanbanService implements OnInit, OnDestroy {
     this.tasks = this.tasksService.getTasks();
 
     this.tasksSub = this.tasksService.tasksChanged.subscribe(
-      (changedTasks: Task[]) => {
-        this.tasks = changedTasks;
+      (payload) => {
+        this.tasks = payload.tasks;
       }
     )
   }
