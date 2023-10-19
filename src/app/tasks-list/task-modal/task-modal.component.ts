@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Task } from 'src/app/shared/task.model';
 import { TasksService } from 'src/app/shared/tasks.service';
 
@@ -7,10 +8,12 @@ import { TasksService } from 'src/app/shared/tasks.service';
   templateUrl: './task-modal.component.html',
   styleUrls: ['./task-modal.component.css']
 })
-export class TaskModalComponent implements OnInit {
+export class TaskModalComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   taskIndex: number;
   isEditing: boolean;
+  tasksSub: Subscription;
+  editingSub: Subscription;
 
   constructor(private tasksService: TasksService) {}
 
@@ -20,11 +23,15 @@ export class TaskModalComponent implements OnInit {
         this.tasks = changedTasks;
     });
 
-    this.tasksService.isEditing.subscribe(
+    this.editingSub = this.tasksService.isEditing.subscribe(
       (bool: boolean) => {
         this.isEditing = bool;
         console.log(this.isEditing);
       });
+  }
+
+  ngOnDestroy() {
+    this.editingSub.unsubscribe();
   }
 
   newTask() {
