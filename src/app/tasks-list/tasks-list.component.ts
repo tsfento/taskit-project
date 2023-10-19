@@ -65,7 +65,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
   showDeleteModal(index: number) {
     this.deleteIndex = index;
     this.tasksService.showTaskModal('deleteTaskModal');
-    // console.log(index);
   }
 
   deleteTask(index: number) {

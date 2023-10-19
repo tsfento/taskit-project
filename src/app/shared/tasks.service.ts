@@ -97,6 +97,11 @@ export class TasksService {
     this.tasks[index].dueDate = editedTask.dueDate;
     this.tasks[index].priority = editedTask.priority;
     this.tasks[index].status = editedTask.status;
+    this.tasksChanged.next({
+      tasks: this.tasks.slice(),
+      task: this.tasks[index],
+      action: 'edited',
+    });
   }
 
   // Change to ngFor index
