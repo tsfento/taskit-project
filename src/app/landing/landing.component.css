@@ -31,13 +31,13 @@
 
 .img-container {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .overlay {
   position: absolute;
   top: 94%;
-  left: 28%;
-
 }
 
 .screenshot {
