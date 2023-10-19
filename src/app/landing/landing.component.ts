@@ -14,10 +14,10 @@ export class LandingComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   hasAccount(bool: boolean) {
-    this.leftWelcome = true;
     const container = document.querySelector('.container');
 
     setTimeout(() => {
+      this.leftWelcome = true;
       this.doesUserHaveAccount = bool;
     }, 125);
 

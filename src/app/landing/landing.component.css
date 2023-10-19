@@ -3,6 +3,7 @@
   min-height: 100vh;
 
   display: flex;
+  /* justify-content: center; */
   align-items: center;
 }
 
@@ -17,10 +18,65 @@
   font-weight: bold;
 }
 
+.paragraph-div {
+  width: 700px;
+  margin: auto;
+}
+
+.welcome-paragraph {
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.img-container {
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 94%;
+  left: 28%;
+
+}
+
 .screenshot {
   display: block;
   margin: auto;
   width: 850px;
+}
+
+.signup-btn {
+  width: 150px;
+  background-color: limegreen;
+  border: 1px solid limegreen;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+  padding-bottom: 8px;
+}
+
+.signup-btn:hover {
+  color: limegreen;
+  background-color: white;
+  border: 1px solid limegreen;
+}
+
+.login-btn {
+  width: 150px;
+  color: limegreen;
+  background-color: white;
+  border: 1px solid limegreen;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+  padding-bottom: 8px;
+}
+
+.login-btn:hover {
+  color: white;
+  background-color: limegreen;
+  border: 1px solid limegreen;
 }
 
 .auth-container {

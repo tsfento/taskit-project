@@ -4,7 +4,18 @@
     <div class="text-center mt-4">
       <span class="welcome-text">Welcome to <span class="welcome-text green">TASK</span><span class="welcome-text">IT</span></span>
     </div>
-    <img class="screenshot" src="./assets/images/landing_screen.png">
+    <div class="text-center mt-3 paragraph-div">
+      <span class="welcome-paragraph">This platform allows you to keep track of tasks profesionally, domestically, and more. Sign up today to get to work!</span>
+    </div>
+    <div class="text-center img-container">
+      <img class="screenshot" src="./assets/images/landing_screen.png">
+      <span class="welcome-paragraph overlay">Create an account to get started today.</span>
+    </div>
+    <div class="text-center buttons mt-4 mb-5">
+      <button class="btn btn-success me-3 signup-btn" (click)="hasAccount(false)">Sign Up</button>
+      <span class="me-3">or</span>
+      <button class="btn btn-success login-btn" (click)="hasAccount(true)">Login</button>
+    </div>
   </div>
 </div>
 <!-- End Welcome -->
