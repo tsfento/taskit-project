@@ -51,7 +51,7 @@ export class TasksService {
         this.isEditing.next(true);
         this.fillModal(index);
       } else if (modalType === 'deleteTaskModal') {
-        // this.deleteTask(index);
+        this.deleteTask(index);
       }
     }
 
@@ -101,12 +101,12 @@ export class TasksService {
 
   // Change to ngFor index
   deleteTask(index: number) {
-    this.tasks.splice(index, 1);
     this.tasksChanged.next({
       tasks: this.tasks.slice(),
       task: this.tasks[index],
       action: 'deleted',
     });
+    this.tasks.splice(index, 1);
   }
 
   formatDate(date: string) {

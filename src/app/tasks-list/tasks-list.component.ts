@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Task } from '../shared/task.model';
 
 import { TasksService } from '../shared/tasks.service';
-import { ToastService } from '../shared/toast.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,8 +20,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   tasksSub: Subscription;
   pageSub: Subscription;
 
-  constructor(private tasksService: TasksService,
-    private toastService: ToastService) {}
+  constructor(private tasksService: TasksService) {}
 
   ngOnInit() {
     this.tasks = this.tasksService.getTasks();

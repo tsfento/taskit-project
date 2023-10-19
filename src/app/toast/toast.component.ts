@@ -18,8 +18,6 @@ export class ToastComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.tasksSub = this.tasksService.tasksChanged.subscribe((payload) => {
-      this.taskTitle = payload.task.title;
-      this.actionTaken = payload.action;
       this.showToast(payload.task.title, payload.action);
     });
   }
