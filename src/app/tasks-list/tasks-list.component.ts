@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Task } from '../shared/task.model';
 
 import { TasksService } from '../shared/tasks.service';
+import { ToastService } from '../shared/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tasks-list',
   templateUrl: './tasks-list.component.html',
   styleUrls: ['./tasks-list.component.css'],
 })
-export class TasksListComponent implements OnInit {
+export class TasksListComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   blankTask: Task = new Task(0, '', '', '', '', '', '', 0, 0);
   totalPages: number = 1;
@@ -16,8 +18,11 @@ export class TasksListComponent implements OnInit {
   pageRows: number = 15;
   deleteIndex: number;
   statusIndex: number;
+  tasksSub: Subscription;
+  pageSub: Subscription;
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private tasksService: TasksService,
+    private toastService: ToastService) {}
 
   ngOnInit() {
     this.tasks = this.tasksService.getTasks();
@@ -26,7 +31,7 @@ export class TasksListComponent implements OnInit {
 
     this.generatePage();
 
-    this.tasksService.tasksChanged.subscribe(
+    this.tasksSub = this.tasksService.tasksChanged.subscribe(
       (changedTasks: Task[]) => {
         this.tasks = changedTasks;
 
@@ -35,11 +40,16 @@ export class TasksListComponent implements OnInit {
         this.generatePage();
     });
 
-    this.tasksService.changePage.subscribe(
+    this.pageSub = this.tasksService.changePage.subscribe(
       (page: number) => {
         this.pageNum = page;
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.tasksSub.unsubscribe();
+    this.pageSub.unsubscribe();
   }
 
   onTaskModal(index?: number) {

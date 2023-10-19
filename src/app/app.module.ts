@@ -12,6 +12,7 @@ import { LandingComponent } from './landing/landing.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ContainerComponent } from './container/container.component';
 import { TaskModalComponent } from './tasks-list/task-modal/task-modal.component';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TaskModalComponent } from './tasks-list/task-modal/task-modal.component
     KanbanComponent,
     LandingComponent,
     ContainerComponent,
-    TaskModalComponent
+    TaskModalComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

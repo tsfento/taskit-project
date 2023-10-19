@@ -18,7 +18,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   constructor(private tasksService: TasksService) {}
 
   ngOnInit() {
-    this.tasksService.tasksChanged.subscribe(
+    this.tasksSub = this.tasksService.tasksChanged.subscribe(
       (changedTasks: Task[]) => {
         this.tasks = changedTasks;
     });
@@ -31,6 +31,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.tasksSub.unsubscribe();
     this.editingSub.unsubscribe();
   }
 

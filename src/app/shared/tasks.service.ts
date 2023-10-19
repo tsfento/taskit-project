@@ -33,8 +33,8 @@ export class TasksService {
   ];
   taskIndex: number;
 
-  tasksChanged = new EventEmitter<Task[]>();
-  changePage = new EventEmitter<number>();
+  tasksChanged = new Subject<Task[]>();
+  changePage = new Subject<number>();
   isEditing = new Subject<boolean>();
 
   getTasks() {
@@ -82,8 +82,8 @@ export class TasksService {
 
   addTask(sentTask: Task) {
     this.tasks.push(sentTask);
-    this.tasksChanged.emit(this.tasks.slice());
-    this.changePage.emit(Math.ceil(this.tasks.length / 15));
+    this.tasksChanged.next(this.tasks.slice());
+    this.changePage.next(Math.ceil(this.tasks.length / 15));
   }
 
   editTask(editedTask: Task, index: number) {
@@ -98,7 +98,7 @@ export class TasksService {
   // Change to ngFor index
   deleteTask(index: number) {
     this.tasks.splice(index, 1);
-    this.tasksChanged.emit(this.tasks.slice());
+    this.tasksChanged.next(this.tasks.slice());
   }
 
   formatDate(date: string) {
@@ -137,6 +137,6 @@ export class TasksService {
     this.tasks[index].status = splitStatus[0];
     this.tasks[index].statusNumber = +splitStatus[1];
 
-    this.tasksChanged.emit(this.tasks.slice());
+    this.tasksChanged.next(this.tasks.slice());
   }
 }
