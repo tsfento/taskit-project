@@ -43,7 +43,9 @@
 .screenshot {
   display: block;
   margin: auto;
-  width: 850px;
+  max-width: 65%;
+  /* width: 850px; */
+  height: auto;
 }
 
 .signup-btn {

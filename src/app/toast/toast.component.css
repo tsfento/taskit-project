@@ -1,4 +1,15 @@
+.green {
+  background-color: limegreen;
+  border: 1px solid limegreen;
+}
+
+.red {
+  background-color: crimson;
+  border: 1px solid crimson;
+}
+
 .toast-body {
+  color: white;
   font-weight: 600;
   font-size: 18px;
 }

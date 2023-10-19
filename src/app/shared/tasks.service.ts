@@ -106,12 +106,13 @@ export class TasksService {
 
   // Change to ngFor index
   deleteTask(index: number) {
+    const tempTask = this.tasks[index];
+    this.tasks.splice(index, 1);
     this.tasksChanged.next({
       tasks: this.tasks.slice(),
-      task: this.tasks[index],
+      task: tempTask,
       action: 'deleted',
     });
-    this.tasks.splice(index, 1);
   }
 
   formatDate(date: string) {
