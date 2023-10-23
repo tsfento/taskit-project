@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-landing',
@@ -17,15 +17,15 @@ export class LandingComponent implements OnInit {
 
   ngOnInit() {
     this.signupForm = new FormGroup ({
-      firstName: new FormControl(null),
-      lastName: new FormControl(null),
-      email: new FormControl(null),
-      password: new FormControl(null),
+      firstName: new FormControl(null, Validators.required),
+      lastName: new FormControl(null, Validators.required),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, Validators.required),
     });
 
     this.loginForm = new FormGroup({
-      email: new FormControl(null),
-      password: new FormControl(null),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, Validators.required),
     });
   }
 
@@ -41,9 +41,13 @@ export class LandingComponent implements OnInit {
       if (bool === true) {
         signupDiv.setAttribute('hidden', '');
         loginDiv.removeAttribute('hidden');
+        this.signupForm.reset();
+        this.loginForm.reset();
       } else {
         signupDiv.removeAttribute('hidden');
         loginDiv.setAttribute('hidden', '');
+        this.signupForm.reset();
+        this.loginForm.reset();
       }
     }, 125);
 

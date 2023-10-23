@@ -10,14 +10,23 @@
           <h1 class="modal-title fs-5" id="taskModalLabel">Add a New Task</h1>
           <div class="col-8">
             <label for="inputTaskName" class="form-label">Task</label>
+            <span class="help-block text-danger" style="float: right;"
+            *ngIf="!taskForm.get('title').valid && taskForm.get('title').touched"
+            >Please enter a title.</span>
             <input type="text" class="form-control" maxlength="25" placeholder="Name the task" formControlName="title">
             <label for="inputDetails" class="form-label mt-3">Details</label>
+            <span class="help-block text-danger mt-3" style="float: right;"
+            *ngIf="!taskForm.get('details').valid && taskForm.get('details').touched"
+            >Please enter some details.</span>
             <textarea type="text" class="form-control" maxlength="250" placeholder="Describe the task" style="height: 160px; resize: none;" formControlName="details"></textarea>
           </div>
           <div class="col-4">
             <label for="inputDueDate" class="form-label">Due Date</label>
             <div>
               <input type="date" class="form-control" formControlName="dueDate">
+              <p class="help-block text-danger mt-3"
+            *ngIf="!taskForm.get('dueDate').valid && taskForm.get('dueDate').touched"
+            >Due date cannot be before {{ this.tasksService.formatDate(getTodaysDate()) }}.</p>
             </div>
             <label for="inputPriority" class="form-label mt-2">Priority</label>
             <div>
@@ -38,8 +47,8 @@
             <div class="d-flex justify-content-between mt-3 pb-4">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm()">Cancel</button>
               <div>
-                <button *ngIf="!isEditing" type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmitForm()">Create</button>
-                <button *ngIf="isEditing" type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmitForm()">Update</button>
+                <button *ngIf="!isEditing" type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmitForm()" [disabled]="!taskForm.valid">Create</button>
+                <button *ngIf="isEditing" type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmitForm()" [disabled]="!taskForm.valid">Update</button>
               </div>
             </div>
           </div>

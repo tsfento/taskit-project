@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Task } from 'src/app/shared/task.model';
 import { TasksService } from 'src/app/shared/tasks.service';
@@ -31,11 +30,11 @@ export class TaskModalComponent implements OnInit, OnDestroy {
       });
 
       this.taskForm = new FormGroup({
-        title: new FormControl(null),
-        details: new FormControl(null),
-        dueDate: new FormControl(this.getTodaysDate()),
-        priority: new FormControl('Low-1'),
-        status: new FormControl('To Do-1'),
+        title: new FormControl(null, Validators.required),
+        details: new FormControl(null, Validators.required),
+        dueDate: new FormControl(this.getTodaysDate(), [Validators.required]),
+        priority: new FormControl('Low-1', Validators.required),
+        status: new FormControl('To Do-1', Validators.required),
       });
   }
 
