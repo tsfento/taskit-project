@@ -6,22 +6,22 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm()"></button>
       </div>
       <div class="modal-body">
-        <form class="row g-3" id="taskForm">
+        <form [formGroup]="taskForm" class="row g-3">
           <h1 class="modal-title fs-5" id="taskModalLabel">Add a New Task</h1>
           <div class="col-8">
             <label for="inputTaskName" class="form-label">Task</label>
-            <input type="text" class="form-control" id="inputTaskName" maxlength="25" placeholder="Name the task">
+            <input type="text" class="form-control" maxlength="25" placeholder="Name the task" formControlName="title">
             <label for="inputDetails" class="form-label mt-3">Details</label>
-            <textarea type="text" class="form-control" id="inputDetails" maxlength="250" placeholder="Describe the task" style="height: 160px; resize: none;"></textarea>
+            <textarea type="text" class="form-control" maxlength="250" placeholder="Describe the task" style="height: 160px; resize: none;" formControlName="details"></textarea>
           </div>
           <div class="col-4">
             <label for="inputDueDate" class="form-label">Due Date</label>
             <div>
-              <input type="date" class="form-control" id="inputDueDate" value="{{ getTodaysDate() }}">
+              <input type="date" class="form-control" formControlName="dueDate">
             </div>
             <label for="inputPriority" class="form-label mt-2">Priority</label>
             <div>
-              <select class="form-select" aria-label="Priority" id="inputPriority">
+              <select class="form-select" aria-label="Priority" formControlName="priority">
                 <option selected value="Low-1">Low</option>
                 <option value="Medium-2">Medium</option>
                 <option value="High-3">High</option>
@@ -29,7 +29,7 @@
             </div>
             <label for="inputStatus" class="form-label mt-2">Status</label>
             <div>
-              <select class="form-select" aria-label="Status" id="inputStatus">
+              <select class="form-select" aria-label="Status" formControlName="status">
                 <option selected value="To Do-1">To Do</option>
                 <option value="In Progress-2">In Progress</option>
                 <option value="Done-3">Done</option>
@@ -38,8 +38,8 @@
             <div class="d-flex justify-content-between mt-3 pb-4">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm()">Cancel</button>
               <div>
-                <button *ngIf="!isEditing" type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="newTask()">Create</button>
-                <button *ngIf="isEditing" type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="saveChanges()">Update</button>
+                <button *ngIf="!isEditing" type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmitForm()">Create</button>
+                <button *ngIf="isEditing" type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmitForm()">Update</button>
               </div>
             </div>
           </div>

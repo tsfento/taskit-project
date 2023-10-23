@@ -12,71 +12,71 @@
       <p class="welcome-paragraph overlay">Create an account to get started today.</p>
     </div>
     <div class="text-center buttons mt-4 mb-5">
-      <button class="btn btn-success me-3 signup-btn" (click)="hasAccount(false)">Sign Up</button>
+      <button class="btn btn-success me-3 signup-btn" type="button" (click)="hasAccount(false)">Sign Up</button>
       <span class="me-3">or</span>
-      <button class="btn btn-success login-btn" (click)="hasAccount(true)">Login</button>
+      <button class="btn btn-success login-btn" type="button" (click)="hasAccount(true)">Login</button>
     </div>
   </div>
 </div>
 <!-- End Welcome -->
 <!-- Auth -->
-<div class="vertical-center" *ngIf="leftWelcome === true" [ngSwitch]="true">
+<div class="vertical-center">
   <div class="container auth-container info-box entering">
     <!-- Sign Up -->
-    <div *ngSwitchCase="doesUserHaveAccount === false">
-      <div class="ms-sm-3 ms-xl-4 mt-5 mb-5">
-        <span class="logo-text">Welcome to </span>
-        <span class="logo-text green">TASK</span><span class="logo-text">IT!</span>
-        <div class="label"><span>Sign up to get things done.</span></div>
-      </div>
-      <form>
+    <div class="signup-div" hidden>
+      <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
+        <div class="ms-sm-3 ms-xl-4 mt-5 mb-5">
+          <span class="logo-text">Welcome to </span>
+          <span class="logo-text green">TASK</span><span class="logo-text">IT!</span>
+          <div class="label"><span>Sign up to get things done.</span></div>
+        </div>
         <div class="mb-3 ms-4 me-4">
           <label for="firstName" class="form-label label">First Name</label>
-          <input type="text" class="form-control" id="firstName">
+          <input type="text" class="form-control" id="firstName" formControlName="firstName">
         </div>
         <div class="mb-3 ms-4 me-4">
           <label for="lastName" class="form-label label">Last Name</label>
-          <input type="text" class="form-control" id="lastName">
+          <input type="text" class="form-control" id="lastName" formControlName="lastName">
         </div>
         <div class="mb-3 ms-4 me-4">
           <label for="email" class="form-label label">Email</label>
-          <input type="text" class="form-control" id="email">
+          <input type="email" class="form-control" id="email" formControlName="email">
         </div>
         <div class="mb-3 ms-4 me-4">
           <label for="password" class="form-label label">Password</label>
-          <input type="text" class="form-control" id="password">
+          <input type="password" class="form-control" id="password" formControlName="password">
+        </div>
+        <div class="d-flex justify-content-end me-3 bottom">
+          <div class="mt-2 me-4 account">
+            <span class="me-2">Have an account?</span><a class="green login" (click)="hasAccount(true); containerHeight()">Login</a>
+          </div>
+          <button class="btn btn-success me-2 submit" type="submit">Submit</button>
         </div>
       </form>
-      <div class="d-flex justify-content-end me-3 bottom">
-        <div class="mt-2 me-4 account">
-          <span class="me-2">Have an account?</span><a class="green login" (click)="hasAccount(true); containerHeight()">Login</a>
-        </div>
-        <button class="btn btn-success me-2 submit" (click)="onLogin()">Submit</button>
-      </div>
     </div>
     <!-- End Sign Up -->
     <!-- Login -->
-    <div *ngSwitchCase="doesUserHaveAccount === true">
-      <div class="ms-sm-3 ms-xl-4 mt-5 mb-5">
-        <span class="logo-text">Welcome Back!</span>
-        <div class="label"><span>Let's get to work.</span></div>
-      </div>
-      <form>
+    <div class="login-div" hidden>
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+        <div class="ms-sm-3 ms-xl-4 mt-5 mb-5">
+          <span class="logo-text">Welcome Back!</span>
+          <div class="label"><span>Let's get to work.</span></div>
+        </div>
         <div class="mb-3 ms-4 me-4">
           <label for="email" class="form-label label">Email</label>
-          <input type="text" class="form-control" id="email">
+          <input type="email" class="form-control" id="email" formControlName="email">
         </div>
         <div class="mb-3 ms-4 me-4">
           <label for="password" class="form-label label">Password</label>
-          <input type="text" class="form-control" id="password">
+          <input type="password" class="form-control" id="password" formControlName="password">
+        </div>
+        <div class="d-flex justify-content-end me-3 bottom">
+          <div class="mt-2 me-4 account">
+            <span class="me-2">Don't have an account?</span><a class="green login" (click)="hasAccount(false); containerHeight()">Sign Up</a>
+          </div>
+          <button class="btn btn-success me-2 submit" type="submit">Submit</button>
         </div>
       </form>
-      <div class="d-flex justify-content-end me-3 bottom">
-        <div class="mt-2 me-4 account">
-          <span class="me-2">Don't have an account?</span><a class="green login" (click)="hasAccount(false); containerHeight()">Sign Up</a>
-        </div>
-        <button class="btn btn-success me-2 submit" (click)="onLogin()">Submit</button>
-      </div>
     </div>
     <!-- End Login -->
   </div>

@@ -41,45 +41,6 @@ export class TasksService {
     return this.tasks.slice();
   }
 
-  showTaskModal(modalType: string, index?: number) {
-    if (index === undefined) {
-      this.isEditing.next(false);
-    }
-
-    if (index !== undefined) {
-      if (modalType === 'taskModal') {
-        this.isEditing.next(true);
-        this.fillModal(index);
-      } else if (modalType === 'deleteTaskModal') {
-        this.deleteTask(index);
-      }
-    }
-
-    const taskModal = new window.bootstrap.Modal(document.getElementById(modalType));
-
-    taskModal.show();
-  }
-
-  resetForm(formType) {
-    const taskForm: HTMLFormElement = document.querySelector(formType);
-    taskForm.reset();
-  }
-
-  fillModal(index: number) {
-    const taskName: HTMLInputElement = document.querySelector('#inputTaskName');
-    const taskDetails: HTMLInputElement = document.querySelector('#inputDetails');
-    const taskDueDate: HTMLInputElement = document.querySelector('#inputDueDate');
-    const taskPriority: HTMLSelectElement = document.querySelector('#inputPriority');
-    const taskStatus: HTMLSelectElement = document.querySelector('#inputStatus');
-
-    this.taskIndex = index;
-    taskName.value = this.tasks[index].title;
-    taskDetails.value = this.tasks[index].details;
-    taskDueDate.value = this.tasks[index].unformattedDate;
-    taskPriority.value = this.tasks[index].priority + '-' + this.tasks[index].priorityNumber;
-    taskStatus.value = this.tasks[index].status + '-' + this.tasks[index].statusNumber;
-  }
-
   addTask(sentTask: Task) {
     this.tasks.push(sentTask);
     this.tasksChanged.next({

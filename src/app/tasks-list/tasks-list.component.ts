@@ -1,8 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Task } from '../shared/task.model';
 
 import { TasksService } from '../shared/tasks.service';
 import { Subscription } from 'rxjs';
+import { TaskModalComponent } from './task-modal/task-modal.component';
+
+declare var window;
 
 @Component({
   selector: 'app-tasks-list',
@@ -10,6 +13,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./tasks-list.component.css'],
 })
 export class TasksListComponent implements OnInit, OnDestroy {
+  @ViewChild(TaskModalComponent) taskModal: TaskModalComponent;
   tasks: Task[] = [];
   blankTask: Task = new Task(0, '', '', '', '', '', '', 0, 0);
   totalPages: number = 1;
@@ -52,19 +56,23 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   onTaskModal(index?: number) {
     if (index === undefined) {
-      this.tasksService.showTaskModal('taskModal');
+      // this.tasksService.showTaskModal('taskModal');
+      this.taskModal.showModal();
     } else {
-      this.tasksService.showTaskModal('taskModal', index);
+      // this.tasksService.showTaskModal('taskModal', index);
+      this.taskModal.showModal(index);
     }
   }
 
-  showViewModal(index: number) {
-    this.tasksService.showTaskModal('taskModal', index + ((this.pageNum - 1) * this.pageRows));
-  }
+  // showViewModal(index: number) {
+  //   this.tasksService.showTaskModal('taskModal', index + ((this.pageNum - 1) * this.pageRows));
+  // }
 
   showDeleteModal(index: number) {
     this.deleteIndex = index;
-    this.tasksService.showTaskModal('deleteTaskModal');
+    const deleteTaskModal = new window.bootstrap.Modal(document.getElementById('deleteTaskModal'));
+
+    deleteTaskModal.show();
   }
 
   deleteTask(index: number) {

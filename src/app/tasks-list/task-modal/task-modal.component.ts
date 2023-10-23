@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { Task } from 'src/app/shared/task.model';
 import { TasksService } from 'src/app/shared/tasks.service';
+
+declare var window;
 
 @Component({
   selector: 'app-task-modal',
@@ -14,70 +18,88 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   isEditing: boolean;
   tasksSub: Subscription;
   editingSub: Subscription;
+  taskForm: FormGroup;
 
   constructor(private tasksService: TasksService) {}
 
   ngOnInit() {
+    this.tasks = this.tasksService.getTasks();
+
     this.tasksSub = this.tasksService.tasksChanged.subscribe(
       (payload) => {
         this.tasks = payload.tasks;
-    });
+      });
 
-    this.editingSub = this.tasksService.isEditing.subscribe(
-      (bool: boolean) => {
-        this.isEditing = bool;
+      this.taskForm = new FormGroup({
+        title: new FormControl(null),
+        details: new FormControl(null),
+        dueDate: new FormControl(this.getTodaysDate()),
+        priority: new FormControl('Low-1'),
+        status: new FormControl('To Do-1'),
       });
   }
 
   ngOnDestroy() {
     this.tasksSub.unsubscribe();
-    this.editingSub.unsubscribe();
   }
 
-  newTask() {
-    const taskNewName: HTMLInputElement = document.querySelector('#inputTaskName');
-    const taskNewDetails: HTMLInputElement = document.querySelector('#inputDetails');
-    const taskNewDueDate: HTMLInputElement = document.querySelector('#inputDueDate');
-    const taskNewPriority: HTMLSelectElement = document.querySelector('#inputPriority');
-    const taskNewStatus: HTMLSelectElement = document.querySelector('#inputStatus');
-    const splitPriority = taskNewPriority.value.split('-');
-    const splitStatus = taskNewStatus.value.split('-');
+  onSubmitForm() {
+    if (this.isEditing) {
+      const splitPriority = this.taskForm.get('priority').value.split('-');
+      const splitStatus = this.taskForm.get('status').value.split('-');
 
-    const task: Task = new Task(Date.now(), taskNewName.value, taskNewDetails.value, taskNewDueDate.value, splitPriority[0], splitStatus[0], taskNewDueDate.value, +splitPriority[1], +splitStatus[1]);
+      const editedTask: Task = new Task(this.tasks[this.taskIndex].id, this.taskForm.get('title').value, this.taskForm.get('details').value, this.taskForm.get('dueDate').value, splitPriority[0], splitStatus[0], this.taskForm.get('dueDate').value, +splitPriority[1], +splitStatus[1]);
 
-    task.dueDate = this.tasksService.formatDate(task.dueDate);
+      editedTask.dueDate = this.tasksService.formatDate(editedTask.dueDate);
+
+      this.tasksService.editTask(editedTask, this.taskIndex);
+    } else {
+      const splitPriority = this.taskForm.get('priority').value.split('-');
+      const splitStatus = this.taskForm.get('status').value.split('-');
+
+      const task: Task = new Task(Date.now(), this.taskForm.get('title').value, this.taskForm.get('details').value, this.taskForm.get('dueDate').value, splitPriority[0], splitStatus[0], this.taskForm.get('dueDate').value, +splitPriority[1], +splitStatus[1]);
+
+      task.dueDate = this.tasksService.formatDate(task.dueDate);
+
+      this.tasksService.addTask(task);
+    }
 
     this.resetForm();
-
-    taskNewDueDate.value = this.getTodaysDate();
-
-    this.tasksService.addTask(task);
   }
 
-  saveChanges() {
-    this.tasks = this.tasksService.tasks;
-    this.taskIndex = this.tasksService.taskIndex;
-    const taskEditName: HTMLInputElement = document.querySelector('#inputTaskName');
-    const taskEditDetails: HTMLInputElement = document.querySelector('#inputDetails');
-    const taskEditDueDate: HTMLInputElement = document.querySelector('#inputDueDate');
-    const taskEditPriority: HTMLSelectElement = document.querySelector('#inputPriority');
-    const taskEditStatus: HTMLSelectElement = document.querySelector('#inputStatus');
-    const splitPriority = taskEditPriority.value.split('-');
-    const splitStatus = taskEditStatus.value.split('-');
+  showModal(index?: number) {
+    if (index === undefined) {
+      this.isEditing = false;
+    } else if (index !== undefined ) {
+      this.isEditing = true;
+      this.taskIndex = index;
+      this.fillForm(index);
+    }
 
-    const editedTask: Task = new Task(this.tasks[this.taskIndex].id, taskEditName.value, taskEditDetails.value, taskEditDueDate.value, splitPriority[0], splitStatus[0], taskEditDueDate.value, +splitPriority[1], +splitStatus[1]);
+    const taskModal = new window.bootstrap.Modal(document.getElementById('taskModal'));
 
-    editedTask.dueDate = this.tasksService.formatDate(editedTask.dueDate);
+    taskModal.show();
+  }
 
-    this.resetForm();
+  fillForm(index: number) {
+    const taskToFill = this.tasks[index];
 
-    this.tasksService.editTask(editedTask, this.taskIndex);
+    this.taskForm.setValue({
+      title: taskToFill.title,
+      details: taskToFill.details,
+      dueDate: taskToFill.unformattedDate,
+      priority: taskToFill.priority + '-' + taskToFill.priorityNumber,
+      status: taskToFill.status + '-' + taskToFill.statusNumber,
+    });
   }
 
   resetForm() {
-    const taskNewDueDate: HTMLInputElement = document.querySelector('#inputDueDate');
-    this.tasksService.resetForm('#taskForm');
-    taskNewDueDate.value = this.getTodaysDate();
+    this.taskForm.reset();
+    this.taskForm.patchValue({
+      dueDate: this.getTodaysDate(),
+      priority: 'Low-1',
+      status: 'To Do-1',
+    })
   }
 
   getTodaysDate() {
