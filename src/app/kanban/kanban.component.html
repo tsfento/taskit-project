@@ -6,7 +6,7 @@
       <div class="container task-container">
         <!-- Task Card -->
         <ng-container *ngFor="let task of tasks; let i = index">
-          <div class="container task-card" *ngIf="task.statusNumber === 1">
+          <div class="container task-card grabbable" *ngIf="task.statusNumber === 1" draggable="true">
             <div class="row">
               <div class="col-7 mt-2">
                 <h5>{{ task.title }}</h5>

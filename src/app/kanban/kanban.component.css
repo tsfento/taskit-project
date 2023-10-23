@@ -51,6 +51,19 @@ h5 {
   margin-top: 11px;
 }
 
+.grabbable {
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.grabbable:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+
 .task-card:last-child {
   margin-bottom: 11px;
 }
