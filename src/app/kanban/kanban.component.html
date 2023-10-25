@@ -3,10 +3,10 @@
   <div class="row d-flex justify-content-evenly mt-3 ms-2 me-5">
     <div class="col-xl-4 col-lg-6 col-md-12">
       <h6>To Do</h6>
-      <div class="container task-container">
+      <div class="container task-container todo-container" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
         <!-- Task Card -->
         <ng-container *ngFor="let task of tasks; let i = index">
-          <div class="container task-card grabbable" *ngIf="task.statusNumber === 1" draggable="true">
+          <div class="container task-card grabbable" *ngIf="task.statusNumber === 1" draggable="true" (dragstart)="onDragStart(i)">
             <div class="row">
               <div class="col-7 mt-2">
                 <h5>{{ task.title }}</h5>
@@ -29,10 +29,10 @@
     </div>
     <div class="col-xl-4 col-lg-6 col-md-12">
       <h6>In Progress</h6>
-      <div class="container task-container">
+      <div class="container task-container progress-container" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
         <!-- Task Card -->
         <ng-container *ngFor="let task of tasks; let i = index">
-          <div class="container task-card" *ngIf="task.statusNumber === 2">
+          <div class="container task-card grabbable" *ngIf="task.statusNumber === 2" draggable="true" (dragstart)="onDragStart(i)">
             <div class="row">
               <div class="col-7 mt-2">
                 <h5>{{ task.title }}</h5>
@@ -55,10 +55,10 @@
     </div>
     <div class="col-xl-4 col-lg-6 col-md-12">
       <h6>Done</h6>
-      <div class="container task-container">
+      <div class="container task-container done-container" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
         <!-- Task Card -->
         <ng-container *ngFor="let task of tasks; let i = index">
-          <div class="container task-card" *ngIf="task.statusNumber === 3">
+          <div class="container task-card grabbable" *ngIf="task.statusNumber === 3" draggable="true" (dragstart)="onDragStart(i)">
             <div class="row">
               <div class="col-7 mt-2">
                 <h5>{{ task.title }}</h5>
