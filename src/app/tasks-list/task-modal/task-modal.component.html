@@ -26,7 +26,7 @@
               <input type="date" class="form-control" formControlName="dueDate">
               <p class="help-block text-danger mt-3"
             *ngIf="!taskForm.get('dueDate').valid && taskForm.get('dueDate').touched"
-            >Due date cannot be before {{ this.tasksService.formatDate(getTodaysDate()) }}.</p>
+            >Due date cannot be before today.</p>
             </div>
             <label for="inputPriority" class="form-label mt-2">Priority</label>
             <div>
