@@ -18,9 +18,9 @@ export class SortTasksPipe implements PipeTransform {
       sortedTaskArray =  taskArray.sort((a: Task, b: Task) => {
         if (a.id === 0) {
           return 1;
-        } else if (a[field] < b[field]) {
+        } else if (a[field].toString().toLowerCase() < b[field].toString().toLowerCase()) {
           return -1;
-        } else if (a[field] > b[field]) {
+        } else if (a[field].toString().toLowerCase() > b[field].toString().toLowerCase()) {
           return 1;
         } else {
           return 0;
@@ -30,9 +30,9 @@ export class SortTasksPipe implements PipeTransform {
       sortedTaskArray =  taskArray.sort((a: Task, b: Task) => {
         if (a.id === 0) {
           return 1;
-        } else if (a[field] < b[field]) {
+        } else if (a[field].toString().toLowerCase() < b[field].toString().toLowerCase()) {
           return 1;
-        } else if (a[field] > b[field]) {
+        } else if (a[field].toString().toLowerCase() > b[field].toString().toLowerCase()) {
           return -1;
         } else {
           return 0;
