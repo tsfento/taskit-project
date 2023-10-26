@@ -45,6 +45,7 @@ td.title {
   cursor: pointer;
   font-size: 14px;
   color: black;
+  width: 123px;
 }
 
 .dropdown-menu {

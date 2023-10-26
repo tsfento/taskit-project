@@ -29,7 +29,6 @@
       <button class="btn btn-default btn-sm dropdown-toggle mt-1 unformattedDate select-box" type="button" data-bs-toggle="dropdown">Due Date</button>
       <ul class="dropdown-menu">
         <li><a class="dropdown-item">Show All</a></li>
-        <!-- <li><a class="dropdown-item">Oct. 31st, 2023</a></li> -->
         <ng-container *ngFor="let task of tasks">
           <li *ngIf="task.dueDate !== ''"><a class="dropdown-item">{{ task.dueDate }}</a></li>
         </ng-container>
@@ -64,16 +63,16 @@
     <table class="table table-bordered table-hover rounded-3" id="taskTable">
       <thead>
         <tr>
-          <th class="header can-sort" scope="col">Task&nbsp;<span class="bi bi-caret-down"></span></th>
-          <th class="header can-sort" scope="col">Due Date&nbsp;<span class="bi bi-caret-down"></span></th>
-          <th class="header can-sort" scope="col">Priority&nbsp;<span class="bi bi-caret-down"></span></th>
-          <th class="header can-sort" scope="col">Status&nbsp;<span class="bi bi-caret-down"></span></th>
+          <th class="header can-sort" scope="col" (click)="sortTasks('title')">Task&nbsp;<span class="bi bi-caret-down"></span></th>
+          <th class="header can-sort" scope="col" (click)="sortTasks('unformattedDate')">Due Date&nbsp;<span class="bi bi-caret-down"></span></th>
+          <th class="header can-sort" scope="col" (click)="sortTasks('priorityNumber')">Priority&nbsp;<span class="bi bi-caret-down"></span></th>
+          <th class="header can-sort" scope="col" (click)="sortTasks('statusNumber')">Status&nbsp;<span class="bi bi-caret-down"></span></th>
           <th class="header" scope="col">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr class="border-bottom"
-        *ngFor="let task of tasks; let i = index;">
+        *ngFor="let task of tasks | sortTasks:taskSort:taskSortDir; let i = index;">
           <ng-container *ngIf="i >= ((pageNum - 1) * 15) && i < ((pageNum - 1) * 15 + 15)">
             <td class="title" scope="row">{{ task.title }}</td>
             <td>{{ task.dueDate }}</td>

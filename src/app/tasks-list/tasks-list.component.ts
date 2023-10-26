@@ -23,6 +23,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
   statusIndex: number;
   tasksSub: Subscription;
   pageSub: Subscription;
+  taskSort: string = 'unformattedDate';
+  taskSortDir: string = 'forward';
 
   constructor(private tasksService: TasksService) {}
 
@@ -107,5 +109,18 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.statusIndex = index + ((this.pageNum - 1) * this.pageRows);
     // console.log(status, this.statusIndex);
     this.tasksService.changeStatus(status, this.statusIndex);
+  }
+
+  sortTasks(sortBy: string) {
+    if (sortBy === this.taskSort) {
+      if (this.taskSortDir === 'forward') {
+        this.taskSortDir = 'reverse';
+      } else {
+        this.taskSortDir = 'forward';
+      }
+    } else {
+      this.taskSortDir = 'forward';
+      this.taskSort = sortBy;
+    }
   }
 }
