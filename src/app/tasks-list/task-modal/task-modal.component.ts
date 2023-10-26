@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { CustomValidators } from 'src/app/shared/custom-validators';
+import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { Task } from 'src/app/shared/task.model';
 import { TasksService } from 'src/app/shared/tasks.service';
+import { FormatDatePipe } from 'src/app/shared/pipes/format-date.pipe';
 
 declare var window;
 
@@ -19,6 +20,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   tasksSub: Subscription;
   editingSub: Subscription;
   taskForm: FormGroup;
+  formatDatePipe = new FormatDatePipe();
 
   constructor(private tasksService: TasksService) {}
 
@@ -50,7 +52,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
 
       const editedTask: Task = new Task(this.tasks[this.taskIndex].id, this.taskForm.get('title').value, this.taskForm.get('details').value, this.taskForm.get('dueDate').value, splitPriority[0], splitStatus[0], this.taskForm.get('dueDate').value, +splitPriority[1], +splitStatus[1]);
 
-      editedTask.dueDate = this.tasksService.formatDate(editedTask.dueDate);
+      editedTask.dueDate = this.formatDatePipe.transform(editedTask.dueDate);
 
       this.tasksService.editTask(editedTask, this.taskIndex);
     } else {
@@ -59,7 +61,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
 
       const task: Task = new Task(Date.now(), this.taskForm.get('title').value, this.taskForm.get('details').value, this.taskForm.get('dueDate').value, splitPriority[0], splitStatus[0], this.taskForm.get('dueDate').value, +splitPriority[1], +splitStatus[1]);
 
-      task.dueDate = this.tasksService.formatDate(task.dueDate);
+      task.dueDate = this.formatDatePipe.transform(task.dueDate);
 
       this.tasksService.addTask(task);
     }
