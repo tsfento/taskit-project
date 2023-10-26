@@ -30,7 +30,7 @@
       <ul class="dropdown-menu">
         <li><a class="dropdown-item">Show All</a></li>
         <ng-container *ngFor="let task of tasks">
-          <li *ngIf="task.dueDate !== ''"><a class="dropdown-item">{{ task.dueDate }}</a></li>
+          <li *ngIf="task.dueDate !== ''"><a class="dropdown-item" (click)="filterTasksByDate(task.unformattedDate)">{{ task.dueDate }}</a></li>
         </ng-container>
       </ul>
     </div>

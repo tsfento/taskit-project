@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Task } from '../task.model';
 
 export type sortField = 'title' | 'unformattedDate' | 'priorityNumber' | 'statusNumber';
-export type sortDir = 'forward' | 'reverse';
+export type sortDir = 'asc' | 'desc';
 
 @Pipe({
   name: 'sortTasks',
@@ -14,7 +14,7 @@ export class SortTasksPipe implements PipeTransform {
   transform(taskArray: Task[], field: sortField, direction: sortDir): Task[] {
     let sortedTaskArray;
 
-    if (direction === 'forward') {
+    if (direction === 'asc') {
       sortedTaskArray =  taskArray.sort((a: Task, b: Task) => {
         if (a.id === 0) {
           return 1;
@@ -26,7 +26,7 @@ export class SortTasksPipe implements PipeTransform {
           return 0;
         }
       });
-    } else if (direction === 'reverse') {
+    } else if (direction === 'desc') {
       sortedTaskArray =  taskArray.sort((a: Task, b: Task) => {
         if (a.id === 0) {
           return 1;
@@ -40,7 +40,6 @@ export class SortTasksPipe implements PipeTransform {
       });
     }
 
-    console.log(sortedTaskArray);
     return sortedTaskArray;
   }
 }
