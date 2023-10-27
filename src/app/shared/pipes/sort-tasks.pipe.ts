@@ -5,40 +5,25 @@ export type sortField = 'title' | 'unformattedDate' | 'priorityNumber' | 'status
 export type sortDir = 'asc' | 'desc';
 
 @Pipe({
-  name: 'sortTasks',
-  pure: false
+  name: 'sortTasks'
 })
 export class SortTasksPipe implements PipeTransform {
   blankTask: Task = new Task(0, '', '', '', '', '', '', 0, 0);
+  collator = new Intl.Collator();
 
   transform(taskArray: Task[], field: sortField, direction: sortDir): Task[] {
     let sortedTaskArray;
 
-    if (direction === 'asc') {
-      sortedTaskArray =  taskArray.sort((a: Task, b: Task) => {
-        if (a.id === 0) {
-          return 1;
-        } else if (a[field].toString().toLowerCase() < b[field].toString().toLowerCase()) {
-          return -1;
-        } else if (a[field].toString().toLowerCase() > b[field].toString().toLowerCase()) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    } else if (direction === 'desc') {
-      sortedTaskArray =  taskArray.sort((a: Task, b: Task) => {
-        if (a.id === 0) {
-          return 1;
-        } else if (a[field].toString().toLowerCase() < b[field].toString().toLowerCase()) {
-          return 1;
-        } else if (a[field].toString().toLowerCase() > b[field].toString().toLowerCase()) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
-    }
+    sortedTaskArray = taskArray.sort((a: Task, b: Task) => {
+      if (a.id === 0) { return 1; }
+      if (b.id === 0) { return -1; }
+
+      if (direction === 'asc') {
+        return this.collator.compare(a[field].toString(), b[field].toString());
+      } else if (direction === 'desc') {
+        return this.collator.compare(b[field].toString(), a[field].toString());
+      }
+    });
 
     return sortedTaskArray;
   }
