@@ -34,5 +34,4 @@ export class FormatDatePipe implements PipeTransform {
 
     return `${month[Number(dateFormat[1]) - 1]} ${addOrdinal(dateFormat[2])}, ${dateFormat[0]}`;
   }
-
 }
