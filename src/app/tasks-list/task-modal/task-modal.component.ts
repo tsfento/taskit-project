@@ -5,6 +5,7 @@ import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { Task } from 'src/app/shared/task.model';
 import { TasksService } from 'src/app/shared/tasks.service';
 import { FormatDatePipe } from 'src/app/shared/pipes/format-date.pipe';
+import { ActivatedRoute, Router } from '@angular/router';
 
 declare var window;
 
@@ -22,7 +23,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   taskForm: FormGroup;
   formatDatePipe = new FormatDatePipe();
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private tasksService: TasksService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.tasks = this.tasksService.getTasks();
@@ -64,6 +65,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
       task.dueDate = this.formatDatePipe.transform(task.dueDate);
 
       this.tasksService.addTask(task);
+      this.router.navigate(['../', 'tasks-list'], { relativeTo: this.route});
     }
 
     this.resetForm();
