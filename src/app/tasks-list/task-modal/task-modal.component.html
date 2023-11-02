@@ -47,8 +47,7 @@
             <div class="d-flex justify-content-between mt-3 pb-4">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetForm()">Cancel</button>
               <div>
-                <button *ngIf="!isEditing" type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmitForm()" [disabled]="!taskForm.valid">Create</button>
-                <button *ngIf="isEditing" type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmitForm()" [disabled]="!taskForm.valid">Update</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmitForm()" [disabled]="!taskForm.valid">{{ !isEditing ? 'Create' : 'Update' }}</button>
               </div>
             </div>
           </div>

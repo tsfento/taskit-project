@@ -1,0 +1,54 @@
+.sub-heading {
+  color: darkgrey;
+  line-height: 1px;
+}
+
+.task-btn {
+  color: white;
+  font-size: 22px;
+  background-color: limegreen;
+  border: 1px solid limegreen;
+  width: 250px;
+  height: 65px;
+}
+
+.task-box {
+  border: 1px solid limegreen;
+  /* background-color: lightgreen; */
+  background-color: rgba(51, 170, 51, .1);
+  border-radius: 10px;
+  width: 400px;
+  height: 200px;
+  position: relative;
+}
+
+.task-text {
+  text-align: center;
+  vertical-align: middle;
+  line-height: 200px;
+  color: limegreen;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.vertical-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.bi.action {
+  /* margin-right: 5px; */
+  cursor: pointer;
+  color: limegreen;
+  font-size: 30px;
+  text-align: right;
+  position: absolute;
+  bottom: 0px;
+  right: 5px;
+}
+
+.bi.action:hover {
+  color: green;
+}

@@ -15,6 +15,7 @@ import { TaskModalComponent } from './tasks-list/task-modal/task-modal.component
 import { ToastComponent } from './toast/toast.component';
 import { FormatDatePipe } from './shared/pipes/format-date.pipe';
 import { SortTasksPipe } from './shared/pipes/sort-tasks.pipe';
+import { ImBoredComponent } from './im-bored/im-bored.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { SortTasksPipe } from './shared/pipes/sort-tasks.pipe';
     ToastComponent,
     FormatDatePipe,
     SortTasksPipe,
+    ImBoredComponent,
   ],
   imports: [
     BrowserModule,

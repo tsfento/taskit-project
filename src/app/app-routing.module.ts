@@ -4,6 +4,7 @@ import { TasksListComponent } from "./tasks-list/tasks-list.component";
 import { KanbanComponent } from "./kanban/kanban.component";
 import { LandingComponent } from "./landing/landing.component";
 import { ContainerComponent } from "./container/container.component";
+import { ImBoredComponent } from "./im-bored/im-bored.component";
 
 const appRoutes: Routes = [
   { path: '', component: LandingComponent },
@@ -11,6 +12,7 @@ const appRoutes: Routes = [
     { path: '', redirectTo: 'tasks-list', pathMatch: 'full' },
     { path: 'tasks-list', component: TasksListComponent },
     { path: 'kanban', component: KanbanComponent },
+    { path: 'im-bored', component: ImBoredComponent },
   ]},
 ];
 
