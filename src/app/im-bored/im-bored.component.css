@@ -12,6 +12,13 @@
   height: 65px;
 }
 
+.task-btn:hover {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px limegreen;
+  color: limegreen;
+  transition: background-color .3s, box-shadow .3s, color .3s;
+}
+
 .task-box {
   border: 1px solid limegreen;
   /* background-color: lightgreen; */
@@ -24,11 +31,13 @@
 
 .task-text {
   text-align: center;
-  vertical-align: middle;
-  line-height: 200px;
   color: limegreen;
   font-size: 22px;
   font-weight: 600;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .vertical-center {
@@ -39,7 +48,6 @@
 }
 
 .bi.action {
-  /* margin-right: 5px; */
   cursor: pointer;
   color: limegreen;
   font-size: 30px;

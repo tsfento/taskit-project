@@ -1,10 +1,11 @@
+<app-task-modal></app-task-modal>
 <div class="containert mt-5">
   <h1>I'm Bored</h1>
   <p class="sub-heading">Let's find something to do.</p>
   <button class="btn btn-success mt-4 task-btn" (click)="generateTask()">{{ !taskGenerated ? 'Generate Task' : 'Regenerate Task' }}</button>
   <div class="container vertical-center">
-    <div class="task-box" *ngIf="taskTitle !== ''">
-      <p class="task-text">{{ taskTitle }}</p>
+    <div class="task-box" *ngIf="activity !== ''">
+      <p class="task-text">{{ activity }}</p>
       <i class="bi bi-plus action" (click)="addTask()"></i>
     </div>
   </div>

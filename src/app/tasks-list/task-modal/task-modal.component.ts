@@ -95,6 +95,14 @@ export class TaskModalComponent implements OnInit, OnDestroy {
     });
   }
 
+  addBoredTask(boredDetails: string) {
+    this.taskForm.patchValue({
+      details: boredDetails,
+    });
+
+    this.showModal();
+  }
+
   resetForm() {
     this.taskForm.reset();
     this.taskForm.patchValue({
