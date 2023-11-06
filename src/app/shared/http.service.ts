@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TasksService } from './tasks.service';
 import { Task } from './task.model';
-import { Subscription, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

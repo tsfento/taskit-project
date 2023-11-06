@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { AuthService, IRequestData } from '../shared/auth.service';
+import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-landing',
@@ -12,8 +15,9 @@ export class LandingComponent implements OnInit {
   doesUserHaveAccount: boolean = false;
   signupForm: FormGroup;
   loginForm: FormGroup;
+  authObservable: Observable<IRequestData>;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit() {
     this.signupForm = new FormGroup ({
@@ -62,11 +66,27 @@ export class LandingComponent implements OnInit {
     container.classList.toggle('switch');
   }
 
-  onSignupSubmit() {
-    this.router.navigate(['user'], { relativeTo: this.route });
+  onSignupSubmit(form: FormGroup) {
+    // console.log('Signup: ', form.value);
+    this.authObservable = this.authService.signUp(form.value);
+    this.authSub(form);
   }
 
-  onLoginSubmit() {
-    this.router.navigate(['user'], { relativeTo: this.route });
+  onLoginSubmit(form: FormGroup) {
+    console.log('Login: ', form.value);
+  }
+
+  authSub(form: FormGroup) {
+    this.authObservable.subscribe({
+      next: data => {
+        this.router.navigate(['user']);
+      },
+      error: (response: HttpErrorResponse) => {
+        console.log(response);
+      },
+      complete: () => {
+        form.reset();
+      }
+    });
   }
 }

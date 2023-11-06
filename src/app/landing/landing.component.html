@@ -24,7 +24,7 @@
   <div class="container auth-container info-box entering">
     <!-- Sign Up -->
     <div class="signup-div" hidden>
-      <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
+      <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit(signupForm)">
         <div class="ms-sm-3 ms-xl-4 mt-5 mb-5">
           <span class="logo-text">Welcome to </span>
           <span class="logo-text green">TASK</span><span class="logo-text">IT!</span>
@@ -69,7 +69,7 @@
     <!-- End Sign Up -->
     <!-- Login -->
     <div class="login-div" hidden>
-      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit(loginForm)">
         <div class="ms-sm-3 ms-xl-4 mt-5 mb-5">
           <span class="logo-text">Welcome Back!</span>
           <div class="label"><span>Let's get to work.</span></div>
