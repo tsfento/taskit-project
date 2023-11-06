@@ -13,10 +13,10 @@ export class UserInfoBoxComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.currentUser.subscribe(currentUser => {
-      this.user.name = `${currentUser.firstName} ${currentUser.lastName}`;
-      this.user.email = currentUser.email;
-      this.user.image = './assets/images/blank-profile-picture_640.png';
+    this.user = this.authService.userInfo;
+
+    this.authService.sendUserInfo.subscribe(userInfo => {
+      this.user = userInfo;
     });
   }
 }

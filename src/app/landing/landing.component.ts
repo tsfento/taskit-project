@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { AuthService, IRequestData } from '../shared/auth.service';
+import { AuthService, IResponseData } from '../shared/auth.service';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -15,7 +15,7 @@ export class LandingComponent implements OnInit {
   doesUserHaveAccount: boolean = false;
   signupForm: FormGroup;
   loginForm: FormGroup;
-  authObservable: Observable<IRequestData>;
+  authObservable: Observable<IResponseData>;
 
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
 
