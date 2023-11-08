@@ -73,17 +73,19 @@ export class LandingComponent implements OnInit {
   }
 
   onSignupSubmit(form: FormGroup) {
-    this.authObservable = this.authService.signUp(form.value);
+    this.authObservable = this.authService.signUpOrLogin(form.value, false);
     this.authSub(form);
   }
 
   onLoginSubmit(form: FormGroup) {
-    console.log('Login: ', form.value);
+    this.authObservable = this.authService.signUpOrLogin(form.value, true);
+    this.authSub(form);
   }
 
   authSub(form: FormGroup) {
     this.authObservable.subscribe({
-      next: data => {
+      next: (data: IResponseData) => {
+        // console.log(data.localId);
         this.router.navigate(['user']);
       },
       error: (errorResponse: HttpErrorResponse) => {

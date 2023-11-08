@@ -19,3 +19,7 @@
 .logout:hover {
   color: lightgrey;
 }
+
+.click {
+  cursor: pointer;
+}

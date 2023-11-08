@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject, tap } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 import { User } from './user.model';
-import { UserInfo } from './userinfo.model';
 import { IUserData } from '../landing/landing.component';
+import { UsersStorageService } from './users-storage.service';
 
 const API_KEY = environment.apiUrl;
 const SIGNUP_URL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
@@ -41,14 +41,14 @@ export interface IAuthData {
 })
 export class AuthService {
   currentUser = new BehaviorSubject<User | null>(null);
-  sendUserInfo = new Subject<UserInfo>;
-  userInfo = new UserInfo('', '', '');
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private usersStoragService: UsersStorageService) {}
 
-  signUp(requestData: IUserData) {
+  signUpOrLogin(requestData: IUserData, loggingIn: boolean) {
+    const url = loggingIn ? LOGIN_URL : SIGNUP_URL;
+
     return this.http.post<IResponseData>(
-      SIGNUP_URL, {
+      url, {
         email: requestData.email,
         password: requestData.password,
         returnSecureToken: true
@@ -62,14 +62,11 @@ export class AuthService {
           expiresIn: +response.expiresIn
         }
 
-        this.handleAuthentication(authData);
+        this.handleAuthentication(authData, loggingIn);
     }));
   }
 
-  logIn(requestData: IRequestData) {
-  }
-
-  private handleAuthentication(authData: IAuthData) {
+  private handleAuthentication(authData: IAuthData, loggingIn: boolean) {
     const expirationDate = new Date(new Date().getTime() + authData.expiresIn * 1000);
 
     const loggedInUser = new User(
@@ -81,13 +78,17 @@ export class AuthService {
       expirationDate
     );
 
-    this.userInfo.name = `${authData.firstName} ${authData.lastName}`;
-    this.userInfo.email = authData.email;
-    this.userInfo.image = './assets/images/blank-profile-picture_640.png';
-
-    this.sendUserInfo.next(this.userInfo);
-
     this.currentUser.next(loggedInUser);
+
+    if (loggingIn) {
+      this.usersStoragService.fetchUserDetails(authData);
+    } else {
+      this.usersStoragService.storeUserDetails(authData);
+    }
+  }
+
+  logout() {
+    this.currentUser.next(null);
   }
 
   routeToUser() {
