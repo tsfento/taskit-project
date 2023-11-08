@@ -7,6 +7,12 @@
   }
 }
 
+.page-container {
+  height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 20vh;
+}
+
 h6 {
   color: darkgrey;
 }
