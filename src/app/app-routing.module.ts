@@ -5,10 +5,14 @@ import { KanbanComponent } from "./kanban/kanban.component";
 import { LandingComponent } from "./landing/landing.component";
 import { ContainerComponent } from "./container/container.component";
 import { ImBoredComponent } from "./im-bored/im-bored.component";
+import { authGuard } from "./shared/auth.guard";
 
 const appRoutes: Routes = [
-  { path: '', component: LandingComponent },
-  { path: 'user', component: ContainerComponent, children: [
+  { path: '', component: LandingComponent, canActivate: [authGuard] },
+  { path: 'user',
+    component: ContainerComponent,
+    canActivate: [authGuard],
+    children: [
     { path: '', redirectTo: 'tasks-list', pathMatch: 'full' },
     { path: 'tasks-list', component: TasksListComponent },
     { path: 'kanban', component: KanbanComponent },

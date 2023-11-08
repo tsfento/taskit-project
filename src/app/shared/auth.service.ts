@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject, tap } from 'rxjs';
 import { User } from './user.model';
 import { UserInfo } from './userinfo.model';
-import { FormGroup } from '@angular/forms';
+import { IUserData } from '../landing/landing.component';
 
 const API_KEY = environment.apiUrl;
 const SIGNUP_URL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
@@ -27,6 +27,15 @@ export interface IResponseData {
   registered?: string;
 }
 
+export interface IAuthData {
+  firstName: string;
+  lastName: string;
+  userId: string;
+  email: string;
+  token: string;
+  expiresIn: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,44 +46,43 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
 
-  signUp(requestData) {
-
-
+  signUp(requestData: IUserData) {
     return this.http.post<IResponseData>(
-        SIGNUP_URL, {
+      SIGNUP_URL, {
+        email: requestData.email,
+        password: requestData.password,
+        returnSecureToken: true
+      }).pipe(tap((response) => {
+        const authData: IAuthData = {
+          firstName: requestData.firstName,
+          lastName: requestData.lastName,
+          userId: response.localId,
           email: requestData.email,
-          password: requestData.password,
-          returnSecureToken: true
-        }).pipe(tap((response) => {
-          // console.log(response);
-          this.handleAuthentication(
-            requestData.firstName,
-            requestData.lastName,
-            response.localId,
-            requestData.email,
-            response.idToken,
-            +response.expiresIn
-          );
-        }));
+          token: response.idToken,
+          expiresIn: +response.expiresIn
+        }
+
+        this.handleAuthentication(authData);
+    }));
   }
 
   logIn(requestData: IRequestData) {
   }
 
-  private handleAuthentication(
-    firstName: string,
-    lastName: string,
-    userId: string,
-    email: string,
-    token: string,
-    expiresIn: number,
-  ) {
-    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+  private handleAuthentication(authData: IAuthData) {
+    const expirationDate = new Date(new Date().getTime() + authData.expiresIn * 1000);
 
-    const loggedInUser = new User(firstName, lastName, userId, email, token, expirationDate);
+    const loggedInUser = new User(
+      authData.firstName,
+      authData.lastName,
+      authData.userId,
+      authData.email,
+      authData.token,
+      expirationDate
+    );
 
-    this.userInfo.name = `${firstName} ${lastName}`;
-    this.userInfo.email = email;
+    this.userInfo.name = `${authData.firstName} ${authData.lastName}`;
+    this.userInfo.email = authData.email;
     this.userInfo.image = './assets/images/blank-profile-picture_640.png';
 
     this.sendUserInfo.next(this.userInfo);

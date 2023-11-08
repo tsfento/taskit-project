@@ -5,6 +5,13 @@ import { AuthService, IResponseData } from '../shared/auth.service';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
+export interface IUserData {
+  email: string;
+  password: string;
+  firstName?: string;
+  lastName?: string;
+}
+
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
@@ -62,12 +69,10 @@ export class LandingComponent implements OnInit {
 
   containerHeight() {
     const container = document.querySelector('.container');
-
     container.classList.toggle('switch');
   }
 
   onSignupSubmit(form: FormGroup) {
-    // console.log('Signup: ', form.value);
     this.authObservable = this.authService.signUp(form.value);
     this.authSub(form);
   }
@@ -81,8 +86,8 @@ export class LandingComponent implements OnInit {
       next: data => {
         this.router.navigate(['user']);
       },
-      error: (response: HttpErrorResponse) => {
-        console.log(response);
+      error: (errorResponse: HttpErrorResponse) => {
+        console.log(errorResponse);
       },
       complete: () => {
         form.reset();
