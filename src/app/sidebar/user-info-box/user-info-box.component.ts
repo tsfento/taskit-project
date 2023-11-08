@@ -16,7 +16,7 @@ export class UserInfoBoxComponent implements OnInit, OnDestroy {
   constructor(private usersStorageService: UsersStorageService, private authService: AuthService) {}
 
   ngOnInit() {
-    this.user = this.usersStorageService.userInfo;
+    // this.user = this.usersStorageService.userInfo;
 
     this.userInfoSub = this.usersStorageService.sendUserInfo.subscribe(userInfo => {
       this.user = userInfo;

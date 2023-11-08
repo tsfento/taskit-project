@@ -89,6 +89,7 @@ export class AuthService {
 
   logout() {
     this.currentUser.next(null);
+    this.router.navigate(['/']);
   }
 
   routeToUser() {
