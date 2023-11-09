@@ -63,8 +63,6 @@ export class AuthService {
           expiresIn: +response.expiresIn
         }
 
-        console.log(+response.expiresIn);
-
         this.handleAuthentication(authData, loggingIn);
     }));
   }

@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Task } from "./task.model";
 import { Subject } from "rxjs";
+import { TasksStorageService } from "./tasks-storage.service";
 
 declare var window;
 type taskChange = { tasks: Task[]; task: Task; action: string; }
@@ -37,6 +38,8 @@ export class TasksService {
   changePage = new Subject<number>();
   isEditing = new Subject<boolean>();
 
+  constructor(private tasksStorageService: TasksStorageService) {}
+
   getTasks() {
     return this.tasks.slice();
   }
@@ -49,6 +52,7 @@ export class TasksService {
       action: 'added',
     });
     this.changePage.next(Math.ceil(this.tasks.length / 15));
+    this.tasksStorageService.storeTasks(this.tasks.slice());
   }
 
   editTask(editedTask: Task, index: number) {

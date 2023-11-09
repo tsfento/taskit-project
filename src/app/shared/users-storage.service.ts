@@ -46,7 +46,8 @@ interface IFetchUserResponseData {
 export class UsersStorageService {
   sendUserInfo = new Subject<UserInfo>();
   userInfo: UserInfo;
-
+  sendUserId = new Subject<string>();
+  userId: string;
 
   constructor(private http: HttpClient) {}
 
@@ -66,8 +67,10 @@ export class UsersStorageService {
         res.email,
         './assets/images/blank-profile-picture_640.png'
       );
+      this.userId = res.localId;
 
       this.sendUserInfo.next(this.userInfo);
+      this.sendUserId.next(this.userId);
     })
   }
 
@@ -83,8 +86,10 @@ export class UsersStorageService {
         res.users[0].email,
         './assets/images/blank-profile-picture_640.png'
       );
+      this.userId = res.users[0].localId;
 
       this.sendUserInfo.next(this.userInfo);
+      this.sendUserId.next(this.userId);
     });
   }
 }
