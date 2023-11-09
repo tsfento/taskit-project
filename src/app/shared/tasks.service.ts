@@ -10,9 +10,9 @@ type taskChange = { tasks: Task[]; task: Task; action: string; }
   providedIn: 'root'
 })
 export class TasksService {
-  tasks: Task[] = [
-    new Task(1, 'Delete Me', 'Try to delete me.', 'Oct 5th, 2023', 'High', 'In Progress', '2023-10-05', 3, 2),
-    new Task(1, 'Move Me', 'Try to move me.', 'Oct 4th, 2023', 'Low', 'To Do', '2023-10-04', 1, 1),
+  // tasks: Task[] = [
+    // new Task(1, 'Delete Me', 'Try to delete me.', 'Oct 5th, 2023', 'High', 'In Progress', '2023-10-05', 3, 2),
+    // new Task(1, 'Move Me', 'Try to move me.', 'Oct 4th, 2023', 'Low', 'To Do', '2023-10-04', 1, 1),
     // new Task(0, '', '', '', 'Low', '', '', 0, 0),
     // new Task(0, '', '', '', 'Low', '', '', 0, 0),
     // new Task(0, '', '', '', 'Low', '', '', 0, 0),
@@ -31,7 +31,8 @@ export class TasksService {
     // new Task(0, '', '', '', 'Low', '', '', 0, 0),
     // new Task(0, '', '', '', 'Low', '', '', 0, 0),
     // new Task(0, '', '', '', 'Low', '', '', 0, 0),
-  ];
+  // ];
+  tasks: Task[] = [];
   taskIndex: number;
 
   tasksChanged = new Subject<taskChange>();

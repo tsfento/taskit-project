@@ -82,11 +82,21 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   generatePage() {
-    for (let i = 0; i < this.tasks.length; i++) {
-      if (this.tasks.length < this.totalPages * 15) {
+    if (this.tasks.length === 0) {
+      while (this.tasks.length < 15) {
         this.tasks.push(this.blankTask);
       }
     }
+
+    while (this.tasks.length < this.totalPages * 15) {
+      this.tasks.push(this.blankTask);
+    }
+
+    // for (let i = 0; i < this.tasks.length; i++) {
+    //   if (this.tasks.length < this.totalPages * 15) {
+    //     this.tasks.push(this.blankTask);
+    //   }
+    // }
   }
 
   prevPage() {
