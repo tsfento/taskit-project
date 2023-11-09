@@ -9,7 +9,7 @@ const API_KEY = environment.apiUrl;
 const UPDATE_USER_URL = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`;
 const LOOKUP_USER_URL = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${API_KEY}`
 
-export interface IStoreUserResponseData {
+interface IStoreUserResponseData {
   localId: string;
   email: string;
   displayName: string;
@@ -21,7 +21,7 @@ export interface IStoreUserResponseData {
   expiresIn: string;
 }
 
-export interface IFetchUserResponseData {
+interface IFetchUserResponseData {
   kind: string;
   users: [{
     localId: string;

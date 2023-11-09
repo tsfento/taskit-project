@@ -1,25 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TasksService } from './shared/tasks.service';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './shared/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
-  loggedIn: boolean = false;
-  loggedInSub: Subscription;
-
-  constructor(private tasksService: TasksService) {}
+export class AppComponent implements OnInit {
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    // this.loggedInSub = this.tasksService.loggedIn.subscribe(bool => {
-    //   this.loggedIn = bool;
-    // });
-  }
-
-  ngOnDestroy() {
-    this.loggedInSub.unsubscribe();
+    this.authService.autoLogin();
   }
 }

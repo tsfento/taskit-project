@@ -1,7 +1,7 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BehaviorSubject, tap } from 'rxjs';
 import { User } from './user.model';
 import { IUserData } from '../landing/landing.component';
@@ -41,8 +41,9 @@ export interface IAuthData {
 })
 export class AuthService {
   currentUser = new BehaviorSubject<User | null>(null);
+  private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private usersStoragService: UsersStorageService) {}
+  constructor(private http: HttpClient, private router: Router, private usersStoragService: UsersStorageService) {}
 
   signUpOrLogin(requestData: IUserData, loggingIn: boolean) {
     const url = loggingIn ? LOGIN_URL : SIGNUP_URL;
@@ -62,16 +63,73 @@ export class AuthService {
           expiresIn: +response.expiresIn
         }
 
+        console.log(+response.expiresIn);
+
         this.handleAuthentication(authData, loggingIn);
     }));
+  }
+
+  autoLogin() {
+    const userData: {
+      firstName: string;
+      lastName: string;
+      id: string;
+      email: string;
+      _token: string;
+      _tokenExpDate: string;
+    } = JSON.parse(localStorage.getItem('userData'));
+
+    if (!userData) {
+      return;
+    }
+
+    const loadedUser = new User(
+      userData.firstName,
+      userData.lastName,
+      userData.id,
+      userData.email,
+      userData._token,
+      new Date(userData._tokenExpDate)
+    );
+
+    const authData: IAuthData = {
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      userId: userData.id,
+      email: userData.email,
+      token: userData._token,
+      expiresIn: new Date(userData._tokenExpDate).getTime() - new Date().getTime()
+    }
+
+    if (loadedUser.token) {
+      this.currentUser.next(loadedUser);
+      this.autoLogout(authData.expiresIn);
+      this.usersStoragService.fetchUserDetails(authData);
+      this.navigateToUserPage();
+    }
+  }
+
+  logout() {
+    this.currentUser.next(null);
+    this.router.navigate(['/']);
+    localStorage.removeItem('userData');
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 
   private handleAuthentication(authData: IAuthData, loggingIn: boolean) {
     const expirationDate = new Date(new Date().getTime() + authData.expiresIn * 1000);
 
     const loggedInUser = new User(
-      authData.firstName,
-      authData.lastName,
+      '',
+      '',
       authData.userId,
       authData.email,
       authData.token,
@@ -79,6 +137,8 @@ export class AuthService {
     );
 
     this.currentUser.next(loggedInUser);
+    this.autoLogout(authData.expiresIn * 1000);
+    localStorage.setItem('userData', JSON.stringify(loggedInUser));
 
     if (loggingIn) {
       this.usersStoragService.fetchUserDetails(authData);
@@ -87,12 +147,7 @@ export class AuthService {
     }
   }
 
-  logout() {
-    this.currentUser.next(null);
-    this.router.navigate(['/']);
-  }
-
-  routeToUser() {
-    this.router.navigate(['user'], { relativeTo: this.route });
+  navigateToUserPage() {
+    this.router.navigate(['user']);
   }
 }

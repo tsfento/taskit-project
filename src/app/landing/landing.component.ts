@@ -85,7 +85,8 @@ export class LandingComponent implements OnInit {
   authSub(form: FormGroup) {
     this.authObservable.subscribe({
       next: (data: IResponseData) => {
-        this.router.navigate(['user']);
+        // this.router.navigate(['user']);
+        this.authService.navigateToUserPage();
       },
       error: (errorResponse: HttpErrorResponse) => {
         console.log(errorResponse);
