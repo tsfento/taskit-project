@@ -12,6 +12,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   tasksSub: Subscription;
   draggingTask: Task;
+  taskIndex: number;
 
   constructor(private tasksService: TasksService) {}
 
@@ -34,26 +35,29 @@ export class KanbanComponent implements OnInit, OnDestroy {
   }
 
   onDragStart(index: number) {
+    this.taskIndex = index;
     this.draggingTask = this.tasks[index];
   }
 
   onDragOver(event: Event) {
     event.preventDefault();
-    // console.log(event.target);
   }
 
   onDrop(event: Event) {
     const element = event.target as HTMLElement;
 
     if (element.classList.contains('todo-container')) {
-      this.draggingTask.status = 'To Do';
-      this.draggingTask.statusNumber = 1;
+      // this.draggingTask.status = 'To Do';
+      // this.draggingTask.statusNumber = 1;
+      this.tasksService.changeStatus('To Do-1', this.taskIndex);
     } else if (element.classList.contains('progress-container')) {
-      this.draggingTask.status = 'In Progress';
-      this.draggingTask.statusNumber = 2;
+      // this.draggingTask.status = 'In Progress';
+      // this.draggingTask.statusNumber = 2;
+      this.tasksService.changeStatus('In Progress-2', this.taskIndex);
     } else if (element.classList.contains('done-container')) {
-      this.draggingTask.status = 'Done';
-      this.draggingTask.statusNumber = 3;
+      // this.draggingTask.status = 'Done';
+      // this.draggingTask.statusNumber = 3;
+      this.tasksService.changeStatus('Done-3', this.taskIndex);
     }
   }
 }
