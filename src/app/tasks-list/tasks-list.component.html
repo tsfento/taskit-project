@@ -26,30 +26,30 @@
   <div class="d-flex flex-row mb-3 top-bar">
     <label class="me-2 mt-2" style="font-weight: bold;">Filters:</label>
     <div class="dropdown me-2">
-      <button class="btn btn-default btn-sm dropdown-toggle mt-1 unformattedDate select-box" type="button" data-bs-toggle="dropdown">Due Date</button>
+      <button class="btn btn-default btn-sm dropdown-toggle mt-1 unformattedDate select-box" type="button" data-bs-toggle="dropdown" #dueDateBtn>Due Date</button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item">Show All</a></li>
+        <li><a class="dropdown-item" (click)="filterByDate(null, dueDateBtn)">Show All</a></li>
         <ng-container *ngFor="let task of tasks">
-          <li *ngIf="task.dueDate !== ''"><a class="dropdown-item" (click)="filterTasksByDate(task.unformattedDate)">{{ task.dueDate }}</a></li>
+          <li *ngIf="task.dueDate !== ''"><a class="dropdown-item" (click)="filterByDate(task, dueDateBtn)">{{ task.dueDate }}</a></li>
         </ng-container>
       </ul>
     </div>
     <div class="dropdown me-2">
-      <button class="btn btn-default btn-sm dropdown-toggle mt-1 priority select-box" type="button" data-bs-toggle="dropdown">Priority</button>
+      <button class="btn btn-default btn-sm dropdown-toggle mt-1 priority select-box" type="button" data-bs-toggle="dropdown" #priorityBtn>Priority</button>
       <ul class="dropdown-menu priority">
-        <li><a class="dropdown-item">Show All</a></li>
-        <li><a class="dropdown-item"><span class="bi bi-circle-fill low">&nbsp;</span>Low</a></li>
-        <li><a class="dropdown-item"><span class="bi bi-circle-fill medium">&nbsp;</span>Medium</a></li>
-        <li><a class="dropdown-item"><span class="bi bi-circle-fill high">&nbsp;</span>High</a></li>
+        <li><a class="dropdown-item" (click)="filterByPriority(0, priorityBtn)">Show All</a></li>
+        <li><a class="dropdown-item" (click)="filterByPriority(1, priorityBtn)"><span class="bi bi-circle-fill low">&nbsp;</span>Low</a></li>
+        <li><a class="dropdown-item" (click)="filterByPriority(2, priorityBtn)"><span class="bi bi-circle-fill medium">&nbsp;</span>Medium</a></li>
+        <li><a class="dropdown-item" (click)="filterByPriority(3, priorityBtn)"><span class="bi bi-circle-fill high">&nbsp;</span>High</a></li>
       </ul>
     </div>
     <div class="dropdown">
-      <button class="btn btn-default btn-sm dropdown-toggle mt-1 status select-box" type="button" data-bs-toggle="dropdown">Status</button>
+      <button class="btn btn-default btn-sm dropdown-toggle mt-1 status select-box" type="button" data-bs-toggle="dropdown" #statusBtn>Status</button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item">Show All</a></li>
-        <li><a class="dropdown-item">To Do</a></li>
-        <li><a class="dropdown-item">In Progress</a></li>
-        <li><a class="dropdown-item">Done</a></li>
+        <li><a class="dropdown-item" (click)="filterByStatus(0, statusBtn)">Show All</a></li>
+        <li><a class="dropdown-item" (click)="filterByStatus(1, statusBtn)">To Do</a></li>
+        <li><a class="dropdown-item" (click)="filterByStatus(2, statusBtn)">In Progress</a></li>
+        <li><a class="dropdown-item" (click)="filterByStatus(3, statusBtn)">Done</a></li>
       </ul>
     </div>
     <span class="flex-grow-1"></span>
@@ -73,7 +73,11 @@
       <tbody>
         <tr class="border-bottom"
         *ngFor="let task of tasks | sortTasks:taskSort:taskSortDir; let i = index;">
-          <ng-container *ngIf="i >= ((pageNum - 1) * 15) && i < ((pageNum - 1) * 15 + 15)">
+          <ng-container
+            *ngIf="i >= ((pageNum - 1) * 15) && i < ((pageNum - 1) * 15 + 15)
+            && (dueDateFilter === '' || dueDateFilter === task.unformattedDate)
+            && (priorityFilter === 0 || priorityFilter === task.priorityNumber)
+            && (statusFilter === 0 || statusFilter === task.statusNumber)">
             <td class="title" scope="row">{{ task.title }}</td>
             <td>{{ task.dueDate }}</td>
             <td><span
@@ -105,7 +109,7 @@
     <div class="pages text-center">
       <button class="btn btn-sm btn-arrow me-1" [disabled]="pageNum === 1" (click)="prevPage()">&laquo;</button>
       <button class="btn btn-sm btn-num me-1">{{ pageNum }}</button>
-      <button class="btn btn-sm btn-arrow" [disabled]="pageNum === totalPages" (click)="nextPage()">&raquo;</button>
+      <button class="btn btn-sm btn-arrow" [disabled]="pageNum === totalPages || totalPages === 0" (click)="nextPage()">&raquo;</button>
     </div>
   </div>
 </div>

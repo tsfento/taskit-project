@@ -25,6 +25,11 @@ export class TasksListComponent implements OnInit, OnDestroy {
   pageSub: Subscription;
   taskSort: string = 'unformattedDate';
   taskSortDir: string = 'asc';
+  // filteredArray: Task[] = [];
+  // filtering: boolean = false;
+  dueDateFilter = '';
+  priorityFilter = 0;
+  statusFilter = 0;
 
   constructor(private tasksService: TasksService) {}
 
@@ -134,7 +139,63 @@ export class TasksListComponent implements OnInit, OnDestroy {
     }
   }
 
-  filterTasksByDate(date: string) {
-    console.log(date);
+  // filterTasks(date?: number, priority?: number, status?: number) {
+  // }
+
+  filterByDate(task: Task, button: HTMLButtonElement) {
+    const taskTable: HTMLTableElement = document.querySelector('#taskTable');
+
+    if (task === null) {
+      button.classList.remove('select-box-filtered');
+      button.innerText = 'Due Date';
+      this.dueDateFilter = '';
+    } else {
+      button.classList.add('select-box-filtered');
+      button.innerText = task.dueDate;
+      // this.filteredArray = this.tasks.filter((t) => {
+      //   return t.unformattedDate === task.unformattedDate;
+      // });
+      this.dueDateFilter = task.unformattedDate;
+    }
+  }
+
+  filterByPriority(number: number, button: HTMLButtonElement) {
+    if (number === 0) {
+      button.classList.remove('select-box-filtered');
+      button.innerText = 'Priority';
+      this.priorityFilter = 0;
+    } else if (number === 1) {
+      button.classList.add('select-box-filtered');
+      button.innerText = 'Low';
+      this.priorityFilter = 1;
+    } else if (number === 2) {
+      button.classList.add('select-box-filtered');
+      button.innerText = 'Medium';
+      this.priorityFilter = 2;
+    } else if (number === 3) {
+      button.classList.add('select-box-filtered');
+      button.innerText = 'High';
+      this.priorityFilter = 3;
+    }
+  }
+
+  filterByStatus(number: number, button: HTMLButtonElement) {
+    if (number === 0) {
+      button.classList.remove('select-box-filtered');
+      button.innerText = 'Status';
+      this.statusFilter = 0;
+    } else if (number === 1) {
+      button.classList.add('select-box-filtered');
+      button.innerText = 'To Do';
+      this.statusFilter = 1;
+    } else if (number === 2) {
+      button.classList.add('select-box-filtered');
+      button.innerText = 'In Progress';
+      this.statusFilter = 2;
+    } else if (number === 3) {
+      button.classList.add('select-box-filtered');
+      button.innerText = 'Done';
+      this.statusFilter = 3;
+    }
   }
 }
