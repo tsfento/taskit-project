@@ -16,7 +16,7 @@ export class TasksStorageService {
       `https://taskit-project-default-rtdb.firebaseio.com/${userId}.json`,
       tasks
     ).subscribe(response => {
-      console.log(response);
+      // console.log(response);
     })
   }
 

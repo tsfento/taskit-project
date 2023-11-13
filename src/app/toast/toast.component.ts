@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TasksService } from '../shared/tasks.service';
 import { Subscription } from 'rxjs';
 import { Task } from '../shared/task.model';
+import { AuthService } from '../shared/auth.service';
 
 declare var window;
 
@@ -13,7 +14,7 @@ declare var window;
 export class ToastComponent implements OnInit, OnDestroy {
   taskTitle: string;
   actionTaken: string;
-  tasksSub: Subscription
+  tasksSub: Subscription;
 
   constructor(private tasksService: TasksService) {}
 

@@ -75,9 +75,9 @@
         *ngFor="let task of tasks | sortTasks:taskSort:taskSortDir; let i = index;">
           <ng-container
             *ngIf="i >= ((pageNum - 1) * 15) && i < ((pageNum - 1) * 15 + 15)
-            && (dueDateFilter === '' || dueDateFilter === task.unformattedDate)
-            && (priorityFilter === 0 || priorityFilter === task.priorityNumber)
-            && (statusFilter === 0 || statusFilter === task.statusNumber)">
+            && (dueDateFilter === '' || dueDateFilter === task.unformattedDate || task.unformattedDate === '')
+            && (priorityFilter === 0 || priorityFilter === task.priorityNumber || task.priorityNumber === 0)
+            && (statusFilter === 0 || statusFilter === task.statusNumber || task.statusNumber === 0)">
             <td class="title" scope="row">{{ task.title }}</td>
             <td>{{ task.dueDate }}</td>
             <td><span

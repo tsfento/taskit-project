@@ -97,6 +97,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
       this.tasks.push(this.blankTask);
     }
 
+    console.log(this.tasks);
+
     // for (let i = 0; i < this.tasks.length; i++) {
     //   if (this.tasks.length < this.totalPages * 15) {
     //     this.tasks.push(this.blankTask);
@@ -183,7 +185,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
     if (number === 0) {
       button.classList.remove('select-box-filtered');
       button.innerText = 'Status';
-      this.statusFilter = 0;
     } else if (number === 1) {
       button.classList.add('select-box-filtered');
       button.innerText = 'To Do';
