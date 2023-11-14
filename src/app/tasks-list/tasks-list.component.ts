@@ -73,16 +73,16 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   onTaskModal(index?: number) {
     if (index === undefined) {
-      // this.tasksService.showTaskModal('taskModal');
+      // this.storageService.showTaskModal('taskModal');
       this.taskModal.showModal();
     } else {
-      // this.tasksService.showTaskModal('taskModal', index);
+      // this.storagevice.showTaskModal('taskModal', index);
       this.taskModal.showModal(index);
     }
   }
 
   // showViewModal(index: number) {
-  //   this.tasksService.showTaskModal('taskModal', index + ((this.pageNum - 1) * this.pageRows));
+  //   this.storageService.showTaskModal('taskModal', index + ((this.pageNum - 1) * this.pageRows));
   // }
 
   showDeleteModal(index: number) {
