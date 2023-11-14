@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { HttpService } from '../shared/http.service';
-import { TasksService } from '../shared/tasks.service';
 import { TaskModalComponent } from '../tasks-list/task-modal/task-modal.component';
 
 @Component({
@@ -13,7 +12,7 @@ export class ImBoredComponent {
   taskGenerated: boolean = false;
   activity: string = '';
 
-  constructor(private httpService: HttpService, private tasksService: TasksService) { }
+  constructor(private httpService: HttpService) { }
 
   generateTask() {
     this.httpService.getTaskFromBored().subscribe(data => {

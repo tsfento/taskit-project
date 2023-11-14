@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TasksService } from '../shared/tasks.service';
+import { StorageService } from '../shared/storage.service';
 import { Subscription } from 'rxjs';
-import { Task } from '../shared/task.model';
-import { AuthService } from '../shared/auth.service';
 
 declare var window;
 
@@ -16,10 +14,10 @@ export class ToastComponent implements OnInit, OnDestroy {
   actionTaken: string;
   tasksSub: Subscription;
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private storageService: StorageService) {}
 
   ngOnInit() {
-    this.tasksSub = this.tasksService.tasksChanged.subscribe((payload) => {
+    this.tasksSub = this.storageService.tasksChanged.subscribe((payload) => {
       this.showToast(payload.task.title, payload.action);
     });
   }

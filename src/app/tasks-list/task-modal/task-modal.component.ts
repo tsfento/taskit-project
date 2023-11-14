@@ -3,9 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { Task } from 'src/app/shared/task.model';
-import { TasksService } from 'src/app/shared/tasks.service';
 import { FormatDatePipe } from 'src/app/shared/pipes/format-date.pipe';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StorageService } from 'src/app/shared/storage.service';
 
 declare var window;
 
@@ -23,12 +23,12 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   taskForm: FormGroup;
   formatDatePipe = new FormatDatePipe();
 
-  constructor(private tasksService: TasksService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private storageService: StorageService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.tasks = this.tasksService.getTasks();
+    this.tasks = this.storageService.fetchTasks();
 
-    this.tasksSub = this.tasksService.tasksChanged.subscribe(
+    this.tasksSub = this.storageService.tasksChanged.subscribe(
       (payload) => {
         this.tasks = payload.tasks;
       });
@@ -55,7 +55,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
 
       editedTask.dueDate = this.formatDatePipe.transform(editedTask.dueDate);
 
-      this.tasksService.editTask(editedTask, this.taskIndex);
+      this.storageService.editTask(editedTask, this.taskIndex);
     } else {
       const splitPriority = this.taskForm.get('priority').value.split('-');
       const splitStatus = this.taskForm.get('status').value.split('-');
@@ -64,7 +64,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
 
       task.dueDate = this.formatDatePipe.transform(task.dueDate);
 
-      this.tasksService.addTask(task);
+      this.storageService.addTask(task);
       this.router.navigate(['../', 'tasks-list'], { relativeTo: this.route});
     }
 

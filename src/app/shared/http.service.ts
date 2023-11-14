@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { TasksService } from './tasks.service';
 import { Task } from './task.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class HttpService {
   tasks: Task[] = [];
 
-  constructor(private http: HttpClient, private tasksService: TasksService) { }
+  constructor(private http: HttpClient) { }
 
   getTaskFromBored() {
     return this.http.get<Task>('http://www.boredapi.com/api/activity/');

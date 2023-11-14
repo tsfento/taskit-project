@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TasksService } from '../shared/tasks.service';
 import { Task } from '../shared/task.model';
 import { Subscription } from 'rxjs';
+import { StorageService } from '../shared/storage.service';
 
 @Component({
   selector: 'app-kanban',
@@ -14,12 +14,12 @@ export class KanbanComponent implements OnInit, OnDestroy {
   draggingTask: Task;
   taskIndex: number;
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private storageService: StorageService) {}
 
   ngOnInit(): void {
-    this.tasks = this.tasksService.getTasks();
+    this.tasks = this.storageService.fetchTasks();
 
-    this.tasksSub = this.tasksService.tasksChanged.subscribe(
+    this.tasksSub = this.storageService.tasksChanged.subscribe(
       (payload) => {
         this.tasks = payload.tasks;
       }
@@ -31,7 +31,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
   }
 
   changeStatus(status: string, index: number) {
-    this.tasksService.changeStatus(status, index);
+    this.storageService.changeStatus(status, index);
   }
 
   onDragStart(index: number) {
@@ -49,15 +49,15 @@ export class KanbanComponent implements OnInit, OnDestroy {
     if (element.classList.contains('todo-container')) {
       // this.draggingTask.status = 'To Do';
       // this.draggingTask.statusNumber = 1;
-      this.tasksService.changeStatus('To Do-1', this.taskIndex);
+      this.storageService.changeStatus('To Do-1', this.taskIndex);
     } else if (element.classList.contains('progress-container')) {
       // this.draggingTask.status = 'In Progress';
       // this.draggingTask.statusNumber = 2;
-      this.tasksService.changeStatus('In Progress-2', this.taskIndex);
+      this.storageService.changeStatus('In Progress-2', this.taskIndex);
     } else if (element.classList.contains('done-container')) {
       // this.draggingTask.status = 'Done';
       // this.draggingTask.statusNumber = 3;
-      this.tasksService.changeStatus('Done-3', this.taskIndex);
+      this.storageService.changeStatus('Done-3', this.taskIndex);
     }
   }
 }

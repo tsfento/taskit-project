@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Task } from 'src/app/shared/task.model';
-import { TasksService } from 'src/app/shared/tasks.service';
 
 @Component({
   selector: 'app-view-task',
@@ -12,5 +11,5 @@ export class ViewTaskComponent {
   tasks: Task[] = [];
   taskIndex: number;
 
-  constructor(private tasksService: TasksService) {}
+  constructor() {}
 }

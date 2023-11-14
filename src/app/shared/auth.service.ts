@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, tap } from 'rxjs';
 import { User } from './user.model';
 import { IUserData } from '../landing/landing.component';
-import { UsersStorageService } from './users-storage.service';
+import { StorageService } from './storage.service';
 
 const API_KEY = environment.apiUrl;
 const SIGNUP_URL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
@@ -43,7 +43,7 @@ export class AuthService {
   currentUser = new BehaviorSubject<User | null>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router, private usersStoragService: UsersStorageService) {}
+  constructor(private http: HttpClient, private router: Router, private storageService: StorageService) {}
 
   signUpOrLogin(requestData: IUserData, loggingIn: boolean) {
     const url = loggingIn ? LOGIN_URL : SIGNUP_URL;
@@ -102,7 +102,7 @@ export class AuthService {
     if (loadedUser.token) {
       this.currentUser.next(loadedUser);
       this.autoLogout(authData.expiresIn);
-      this.usersStoragService.fetchUserDetails(authData);
+      this.storageService.fetchUserDetails(authData);
       this.navigateToUserPage();
     }
   }
@@ -139,9 +139,9 @@ export class AuthService {
     localStorage.setItem('userData', JSON.stringify(loggedInUser));
 
     if (loggingIn) {
-      this.usersStoragService.fetchUserDetails(authData);
+      this.storageService.fetchUserDetails(authData);
     } else {
-      this.usersStoragService.storeUserDetails(authData);
+      this.storageService.storeUserDetails(authData);
     }
   }
 

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/auth.service';
 import { UserInfo } from 'src/app/shared/userinfo.model';
-import { UsersStorageService } from 'src/app/shared/users-storage.service';
+import { StorageService } from 'src/app/shared/storage.service';
 
 @Component({
   selector: 'app-user-info-box',
@@ -13,12 +13,12 @@ export class UserInfoBoxComponent implements OnInit, OnDestroy {
   userInfoSub: Subscription;
   user = new UserInfo('', '', '');
 
-  constructor(private usersStorageService: UsersStorageService, private authService: AuthService) {}
+  constructor(private storageService: StorageService, private authService: AuthService) {}
 
   ngOnInit() {
     // this.user = this.usersStorageService.userInfo;
 
-    this.userInfoSub = this.usersStorageService.sendUserInfo.subscribe(userInfo => {
+    this.userInfoSub = this.storageService.sendUserInfo.subscribe(userInfo => {
       this.user = userInfo;
     });
   }

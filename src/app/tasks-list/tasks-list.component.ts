@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Task } from '../shared/task.model';
 
-import { TasksService } from '../shared/tasks.service';
 import { Subscription } from 'rxjs';
 import { TaskModalComponent } from './task-modal/task-modal.component';
+import { StorageService } from '../shared/storage.service';
 
 declare var window;
 
@@ -21,35 +21,45 @@ export class TasksListComponent implements OnInit, OnDestroy {
   pageRows: number = 15;
   deleteIndex: number;
   statusIndex: number;
-  tasksSub: Subscription;
+  tasksFetchedSub: Subscription;
+  tasksChangedSub: Subscription;
   pageSub: Subscription;
   taskSort: string = 'unformattedDate';
   taskSortDir: string = 'asc';
-  // filteredArray: Task[] = [];
-  // filtering: boolean = false;
   dueDateFilter = '';
   priorityFilter = 0;
   statusFilter = 0;
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private storageService: StorageService) {}
 
   ngOnInit() {
-    this.tasks = this.tasksService.getTasks();
+    this.tasks = this.storageService.fetchTasks();
 
     this.totalPages = Math.ceil(this.tasks.length / 15);
 
     this.generatePage();
 
-    this.tasksSub = this.tasksService.tasksChanged.subscribe(
-      (payload) => {
-        this.tasks = payload.tasks;
+    this.tasksFetchedSub = this.storageService.tasksFetched.subscribe(
+      (fetchedTasks) => {
+        this.tasks = fetchedTasks;
 
         this.totalPages = Math.ceil(this.tasks.length / 15);
 
         this.generatePage();
-    });
+      }
+    )
 
-    this.pageSub = this.tasksService.changePage.subscribe(
+    this.tasksChangedSub = this.storageService.tasksChanged.subscribe(
+      (changedTasks) => {
+        this.tasks = changedTasks.tasks;
+
+        this.totalPages = Math.ceil(this.tasks.length / 15);
+
+        this.generatePage();
+      }
+    );
+
+    this.pageSub = this.storageService.changePage.subscribe(
       (page: number) => {
         this.pageNum = page;
       }
@@ -57,7 +67,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.tasksSub.unsubscribe();
+    this.tasksChangedSub.unsubscribe();
     this.pageSub.unsubscribe();
   }
 
@@ -83,7 +93,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   deleteTask(index: number) {
-    this.tasksService.deleteTask(index);
+    this.storageService.deleteTask(index);
   }
 
   generatePage() {
@@ -96,8 +106,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
     while (this.tasks.length < this.totalPages * 15) {
       this.tasks.push(this.blankTask);
     }
-
-    console.log(this.tasks);
 
     // for (let i = 0; i < this.tasks.length; i++) {
     //   if (this.tasks.length < this.totalPages * 15) {
@@ -125,7 +133,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   changeStatus(status: string, index: number) {
     this.statusIndex = index + ((this.pageNum - 1) * this.pageRows);
     // console.log(status, this.statusIndex);
-    this.tasksService.changeStatus(status, this.statusIndex);
+    this.storageService.changeStatus(status, this.statusIndex);
   }
 
   sortTasks(sortBy: string) {
