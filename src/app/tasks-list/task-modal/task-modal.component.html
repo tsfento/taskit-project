@@ -7,7 +7,8 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="taskForm" class="row g-3">
-          <h1 class="modal-title fs-5" id="taskModalLabel">Add a New Task</h1>
+          <h1 class="modal-title fs-5" id="taskModalLabel" *ngIf="isEditing">Edit Task</h1>
+          <h1 class="modal-title fs-5" id="taskModalLabel" *ngIf="!isEditing">Add a New Task</h1>
           <div class="col-8">
             <label for="inputTaskName" class="form-label">Task</label>
             <span class="help-block text-danger" style="float: right;"

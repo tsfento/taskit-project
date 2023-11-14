@@ -29,8 +29,8 @@
       <button class="btn btn-default btn-sm dropdown-toggle mt-1 unformattedDate select-box" type="button" data-bs-toggle="dropdown" #dueDateBtn>Due Date</button>
       <ul class="dropdown-menu">
         <li><a class="dropdown-item" (click)="filterByDate(null, dueDateBtn)">Show All</a></li>
-        <ng-container *ngFor="let task of tasks">
-          <li *ngIf="task.dueDate !== ''"><a class="dropdown-item" (click)="filterByDate(task, dueDateBtn)">{{ task.dueDate }}</a></li>
+        <ng-container *ngFor="let date of dueDates">
+          <li *ngIf="date !== ''"><a class="dropdown-item" (click)="filterByDate(date, dueDateBtn)">{{ date | formatDate }}</a></li>
         </ng-container>
       </ul>
     </div>

@@ -18,7 +18,8 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   taskIndex: number;
   isEditing: boolean;
-  tasksSub: Subscription;
+  tasksFetchedSub: Subscription;
+  tasksChangedSub: Subscription;
   editingSub: Subscription;
   taskForm: FormGroup;
   formatDatePipe = new FormatDatePipe();
@@ -28,9 +29,15 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.tasks = this.storageService.fetchTasks();
 
-    this.tasksSub = this.storageService.tasksChanged.subscribe(
-      (payload) => {
-        this.tasks = payload.tasks;
+    this.tasksFetchedSub = this.storageService.tasksFetched.subscribe(
+      (fetchedTasks) => {
+        this.tasks = fetchedTasks;
+      }
+    )
+
+    this.tasksChangedSub = this.storageService.tasksChanged.subscribe(
+      (changedTasks) => {
+        this.tasks = changedTasks.tasks;
       });
 
       this.taskForm = new FormGroup({
@@ -43,7 +50,8 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.tasksSub.unsubscribe();
+    this.tasksFetchedSub.unsubscribe();
+    this.tasksChangedSub.unsubscribe();
   }
 
   onSubmitForm() {

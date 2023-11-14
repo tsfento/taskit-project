@@ -4,6 +4,7 @@ import { Task } from '../shared/task.model';
 import { Subscription } from 'rxjs';
 import { TaskModalComponent } from './task-modal/task-modal.component';
 import { StorageService } from '../shared/storage.service';
+import { FormatDatePipe } from '../shared/pipes/format-date.pipe';
 
 declare var window;
 
@@ -29,6 +30,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
   dueDateFilter = '';
   priorityFilter = 0;
   statusFilter = 0;
+  dueDates: string[] = [];
+  formatDatePipe = new FormatDatePipe();
 
   constructor(private storageService: StorageService) {}
 
@@ -43,6 +46,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
       (fetchedTasks) => {
         this.tasks = fetchedTasks;
 
+        this.generateDates();
+
         this.totalPages = Math.ceil(this.tasks.length / 15);
 
         this.generatePage();
@@ -52,6 +57,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.tasksChangedSub = this.storageService.tasksChanged.subscribe(
       (changedTasks) => {
         this.tasks = changedTasks.tasks;
+
+        this.generateDates();
 
         this.totalPages = Math.ceil(this.tasks.length / 15);
 
@@ -130,6 +137,16 @@ export class TasksListComponent implements OnInit, OnDestroy {
     }
   }
 
+  generateDates() {
+    this.dueDates = [];
+
+    this.tasks.forEach((task) => {
+      if (!this.dueDates.includes(task.unformattedDate)) {
+        this.dueDates.push(task.unformattedDate);
+      }
+    });
+  }
+
   changeStatus(status: string, index: number) {
     this.statusIndex = index + ((this.pageNum - 1) * this.pageRows);
     // console.log(status, this.statusIndex);
@@ -152,21 +169,22 @@ export class TasksListComponent implements OnInit, OnDestroy {
   // filterTasks(date?: number, priority?: number, status?: number) {
   // }
 
-  filterByDate(task: Task, button: HTMLButtonElement) {
+  filterByDate(date: string, button: HTMLButtonElement) {
     const taskTable: HTMLTableElement = document.querySelector('#taskTable');
 
-    if (task === null) {
+    if (date === null) {
       button.classList.remove('select-box-filtered');
       button.innerText = 'Due Date';
       this.dueDateFilter = '';
     } else {
       button.classList.add('select-box-filtered');
-      button.innerText = task.dueDate;
+      button.innerText = this.formatDatePipe.transform(date);
       // this.filteredArray = this.tasks.filter((t) => {
       //   return t.unformattedDate === task.unformattedDate;
       // });
-      this.dueDateFilter = task.unformattedDate;
+      this.dueDateFilter = date; //fix
     }
+    console.log(date);
   }
 
   filterByPriority(number: number, button: HTMLButtonElement) {
@@ -193,6 +211,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
     if (number === 0) {
       button.classList.remove('select-box-filtered');
       button.innerText = 'Status';
+      this.statusFilter = 0;
     } else if (number === 1) {
       button.classList.add('select-box-filtered');
       button.innerText = 'To Do';
