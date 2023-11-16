@@ -11,6 +11,6 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
   getTaskFromBored() {
-    return this.http.get<Task>('http://www.boredapi.com/api/activity/');
+    return this.http.get<Task>('https://www.boredapi.com/api/activity/');
   }
 }
