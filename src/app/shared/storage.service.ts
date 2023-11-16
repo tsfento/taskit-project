@@ -107,13 +107,11 @@ export class StorageService {
     this.http.put<Task[]>(
       `https://taskit-project-default-rtdb.firebaseio.com/${this.userId}.json`,
       tasks
-    ).subscribe(response => {
-      // console.log(response);
-    })
+    ).subscribe();
   }
 
   fetchTasks() {
-    // localStorage fallback for autoLogin
+    // localStorage for autoLogin
     if (this.userId === undefined) {
       const userData: {
         firstName: string;
@@ -144,7 +142,7 @@ export class StorageService {
     this.tasksChanged.next({
       tasks: this.tasks.slice(),
       task: sentTask,
-      action: 'added',
+      action: 'was added',
     });
     this.changePage.next(Math.ceil(this.tasks.length / 15));
     this.storeTasks(this.tasks.slice());
@@ -160,7 +158,7 @@ export class StorageService {
     this.tasksChanged.next({
       tasks: this.tasks.slice(),
       task: this.tasks[index],
-      action: 'edited',
+      action: 'was edited',
     });
   }
 
@@ -170,7 +168,7 @@ export class StorageService {
     this.tasksChanged.next({
       tasks: this.tasks.slice(),
       task: tempTask,
-      action: 'deleted',
+      action: 'was deleted',
     });
     this.storeTasks(this.tasks.slice());
   }
@@ -190,7 +188,7 @@ export class StorageService {
     this.tasksChanged.next({
       tasks: this.tasks.slice(),
       task: this.tasks[index],
-      action: 'status changed',
+      action: 'status was changed',
     });
   }
 }

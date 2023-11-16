@@ -9,7 +9,6 @@ export class Task {
     public unformattedDate: string,
     public priorityNumber: number,
     public statusNumber: number,
-    public index?: number,
     ) {
   }
 }

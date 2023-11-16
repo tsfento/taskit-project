@@ -83,6 +83,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   showModal(index?: number, isViewing?: boolean) {
     if (index === undefined) {
       this.taskForm.enable();
+      this.taskForm.get('dueDate').setValidators([Validators.required, CustomValidators.invalidDueDate]);
       this.isEditing = false;
       this.isViewing = false;
     } else if (index !== undefined && isViewing) {
@@ -91,6 +92,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
       this.fillForm(index);
     } else if (index !== undefined) {
       this.taskForm.enable();
+      this.taskForm.get('dueDate').setValidators(Validators.required);
       this.isEditing = true;
       this.isViewing = false;
       this.taskIndex = index;

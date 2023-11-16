@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { TaskModalComponent } from './task-modal/task-modal.component';
 import { StorageService } from '../shared/storage.service';
 import { FormatDatePipe } from '../shared/pipes/format-date.pipe';
+import { GeneratePagesPipe } from '../shared/pipes/generate-pages.pipe';
 
 declare var window;
 
@@ -21,14 +22,12 @@ export class TasksListComponent implements OnInit, OnDestroy {
   pageNum: number = 1;
   pageRows: number = 15;
   deleteIndex: number;
-  statusIndex: number;
   tasksFetchedSub: Subscription;
   tasksChangedSub: Subscription;
   pageSub: Subscription;
   taskSort: string = 'unformattedDate';
   formatDatePipe = new FormatDatePipe;
   taskSortDir: string = 'asc';
-  isFiltering: boolean = false;
   dueDateFilter: string;
   priorityFilter: number;
   statusFilter: number;
@@ -82,17 +81,11 @@ export class TasksListComponent implements OnInit, OnDestroy {
   onTaskModal(taskId?: number, isViewing?: boolean) {
     const index = this.storageService.findTaskIndex(taskId);
     if (taskId === undefined) {
-      // this.storageService.showTaskModal('taskModal');
       this.taskModal.showModal(undefined);
     } else {
-      // this.storagevice.showTaskModal('taskModal', index);
       this.taskModal.showModal(index, isViewing);
     }
   }
-
-  // showViewModal(index: number) {
-  //   this.storageService.showTaskModal('taskModal', index + ((this.pageNum - 1) * this.pageRows));
-  // }
 
   showDeleteModal(taskId: number) {
     const index = this.storageService.findTaskIndex(taskId);
@@ -116,12 +109,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
     while (this.tasks.length < this.totalPages * 15) {
       this.tasks.push(this.blankTask);
     }
-
-    // for (let i = 0; i < this.tasks.length; i++) {
-    //   if (this.tasks.length < this.totalPages * 15) {
-    //     this.tasks.push(this.blankTask);
-    //   }
-    // }
   }
 
   prevPage() {
@@ -148,12 +135,13 @@ export class TasksListComponent implements OnInit, OnDestroy {
         this.dueDates.push(task.unformattedDate);
       }
     });
+
+    this.dueDates.sort();
   }
 
-  changeStatus(status: string, index: number) {
-    this.statusIndex = index + ((this.pageNum - 1) * this.pageRows);
-    // console.log(status, this.statusIndex);
-    this.storageService.changeStatus(status, this.statusIndex);
+  changeStatus(status: string, taskId: number) {
+    const index = this.storageService.findTaskIndex(taskId);
+    this.storageService.changeStatus(status, index);
   }
 
   sortTasks(sortBy: string) {
@@ -169,46 +157,34 @@ export class TasksListComponent implements OnInit, OnDestroy {
     }
   }
 
-  // filterTasks(date?: number, priority?: number, status?: number) {
-  // }
-
   filterByDate(date: string, button: HTMLButtonElement) {
     const taskTable: HTMLTableElement = document.querySelector('#taskTable');
 
     if (date === null) {
-      this.isFiltering = false;
       button.classList.remove('select-box-filtered');
       button.innerText = 'Due Date';
       this.dueDateFilter = undefined;
     } else {
-      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = this.formatDatePipe.transform(date);
-      // this.filteredArray = this.tasks.filter((t) => {
-      //   return t.unformattedDate === task.unformattedDate;
-      // });
-      this.dueDateFilter = date; //fix
+      this.dueDateFilter = date;
     }
   }
 
   filterByPriority(number: number, button: HTMLButtonElement) {
     if (number === 0) {
-      this.isFiltering = false;
       button.classList.remove('select-box-filtered');
       button.innerText = 'Priority';
       this.priorityFilter = undefined;
     } else if (number === 1) {
-      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'Low';
       this.priorityFilter = 1;
     } else if (number === 2) {
-      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'Medium';
       this.priorityFilter = 2;
     } else if (number === 3) {
-      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'High';
       this.priorityFilter = 3;
@@ -217,22 +193,18 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   filterByStatus(number: number, button: HTMLButtonElement) {
     if (number === 0) {
-      this.isFiltering = false;
       button.classList.remove('select-box-filtered');
       button.innerText = 'Status';
       this.statusFilter = undefined;
     } else if (number === 1) {
-      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'To Do';
       this.statusFilter = 1;
     } else if (number === 2) {
-      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'In Progress';
       this.statusFilter = 2;
     } else if (number === 3) {
-      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'Done';
       this.statusFilter = 3;

@@ -5,6 +5,7 @@ import { FormatDatePipe } from "./pipes/format-date.pipe";
 import { SortTasksPipe } from "./pipes/sort-tasks.pipe";
 import { FilterTasksPipe } from "./pipes/filter-tasks.pipe";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { GeneratePagesPipe } from "./pipes/generate-pages.pipe";
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     FormatDatePipe,
     SortTasksPipe,
     FilterTasksPipe,
+    GeneratePagesPipe
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     TaskModalComponent,
     FormatDatePipe,
     SortTasksPipe,
-    FilterTasksPipe
+    FilterTasksPipe,
+    GeneratePagesPipe
   ]
 })
 export class SharedModule { }

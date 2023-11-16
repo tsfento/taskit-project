@@ -70,10 +70,11 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container
-        *ngFor="let task of tasks | sortTasks:taskSort:taskSortDir | filterTasks:dueDateFilter:priorityFilter:statusFilter; let i = index;">
-          <tr class="border-bottom"
-            *ngIf="i >= ((pageNum - 1) * 15) && i < ((pageNum - 1) * 15 + 15)">
+        <!-- slice:((pageNum - 1) * 15):((pageNum - 1) * 15 + 15) -->
+        <tr class="border-bottom"
+        *ngFor="let task of tasks | filterTasks:dueDateFilter:priorityFilter:statusFilter | sortTasks:taskSort:taskSortDir | slice:((pageNum - 1) * 15):((pageNum - 1) * 15 + 15) | generatePages; let i = index;">
+          <ng-container>
+            <!-- *ngIf="i >= ((pageNum - 1) * 15) && i < ((pageNum - 1) * 15 + 15)"> -->
             <td class="title" scope="row">{{ task.title }}</td>
             <td>{{ task.dueDate }}</td>
             <td><span
@@ -81,7 +82,7 @@
               class="bi bi-circle-fill {{ task.priority.toLowerCase() }}">&nbsp;</span>{{ task.priority }}</td>
             <td>
               <select class="status-dropdown" id="status-change"
-              (change)="changeStatus($event.target.value, i)"
+              (change)="changeStatus($event.target.value, task.id)"
               *ngIf="task.priority !== ''">
                 <option selected hidden>{{ task.status }}</option>
                 <option value="To Do-1">To Do</option>
@@ -98,8 +99,8 @@
                 <i class="bi bi-trash action" title="Delete" (click)="showDeleteModal(task.id)"></i>
               </div>
             </td>
-          </tr>
-        </ng-container>
+          </ng-container>
+        </tr>
       </tbody>
     </table>
     <div class="pages text-center">

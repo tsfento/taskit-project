@@ -1,16 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { AuthService, IResponseData } from '../shared/auth.service';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-
-export interface IUserData {
-  email: string;
-  password: string;
-  firstName?: string;
-  lastName?: string;
-}
 
 @Component({
   selector: 'app-landing',
@@ -24,7 +16,7 @@ export class LandingComponent implements OnInit {
   loginForm: FormGroup;
   authObservable: Observable<IResponseData>;
 
-  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.signupForm = new FormGroup ({
@@ -85,7 +77,6 @@ export class LandingComponent implements OnInit {
   authSub(form: FormGroup) {
     this.authObservable.subscribe({
       next: (data: IResponseData) => {
-        // this.router.navigate(['user']);
         this.authService.navigateToUserPage();
       },
       error: (errorResponse: HttpErrorResponse) => {

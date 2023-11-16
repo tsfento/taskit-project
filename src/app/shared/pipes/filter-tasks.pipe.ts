@@ -5,12 +5,7 @@ import { Task } from '../task.model';
   name: 'filterTasks'
 })
 export class FilterTasksPipe implements PipeTransform {
-  transform(taskArray: Task[], dueDate?: string, priority?: number, status?: number): Task[] {
-    let filters = {
-      unformattedDate: dueDate,
-      priorityNumber: priority,
-      statusNumber: status
-    };
+  transform(taskArray: Task[], dueDate: string, priority: number, status: number): Task[] {
     const blankTask: Task = new Task(0, '', '', '', '', '', '', 0, 0);
 
     taskArray = taskArray.filter((task) => {
@@ -33,10 +28,8 @@ export class FilterTasksPipe implements PipeTransform {
       return statusMatch && priorityMatch && dateMatch;
     });
 
-    if (taskArray.length < 15) {
-      while (taskArray.length < 15) {
-        taskArray.push(blankTask);
-      }
+    while (taskArray.length < 15) {
+      taskArray.push(blankTask);
     }
 
     return taskArray;

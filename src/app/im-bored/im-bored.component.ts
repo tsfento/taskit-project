@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { HttpService } from '../shared/http.service';
+import { HttpClient } from '@angular/common/http';
 import { TaskModalComponent } from '../tasks-list/task-modal/task-modal.component';
+import { Task } from '../shared/task.model';
 
 @Component({
   selector: 'app-im-bored',
@@ -12,17 +13,16 @@ export class ImBoredComponent {
   taskGenerated: boolean = false;
   activity: string = '';
 
-  constructor(private httpService: HttpService) { }
+  constructor(private http: HttpClient) { }
 
   generateTask() {
-    this.httpService.getTaskFromBored().subscribe(data => {
-      console.log(data);
+    this.http.get<Task>('https://www.boredapi.com/api/activity/').subscribe(data => {
       this.activity = data['activity'];
     });
     this.taskGenerated = true;
   }
 
   addTask() {
-    this.taskModal.addBoredTask(this.activity)
+    this.taskModal.addBoredTask(this.activity);
   }
 }
