@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment.development";
 import { IAuthData } from "./auth.service";
-import { Subject, tap } from "rxjs";
+import { Subject } from "rxjs";
 import { UserInfo } from "./userinfo.model";
 import { Task } from "./task.model";
 
@@ -173,6 +173,10 @@ export class StorageService {
       action: 'deleted',
     });
     this.storeTasks(this.tasks.slice());
+  }
+
+  findTaskIndex(taskId: number) {
+    return this.tasks.findIndex(a => a.id === taskId);
   }
 
   changeStatus(status: string, index: number) {

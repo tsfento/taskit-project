@@ -26,12 +26,13 @@ export class TasksListComponent implements OnInit, OnDestroy {
   tasksChangedSub: Subscription;
   pageSub: Subscription;
   taskSort: string = 'unformattedDate';
+  formatDatePipe = new FormatDatePipe;
   taskSortDir: string = 'asc';
-  dueDateFilter = '';
-  priorityFilter = 0;
-  statusFilter = 0;
+  isFiltering: boolean = false;
+  dueDateFilter: string;
+  priorityFilter: number;
+  statusFilter: number;
   dueDates: string[] = [];
-  formatDatePipe = new FormatDatePipe();
 
   constructor(private storageService: StorageService) {}
 
@@ -78,13 +79,14 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.pageSub.unsubscribe();
   }
 
-  onTaskModal(index?: number) {
-    if (index === undefined) {
+  onTaskModal(taskId?: number, isViewing?: boolean) {
+    const index = this.storageService.findTaskIndex(taskId);
+    if (taskId === undefined) {
       // this.storageService.showTaskModal('taskModal');
-      this.taskModal.showModal();
+      this.taskModal.showModal(undefined);
     } else {
       // this.storagevice.showTaskModal('taskModal', index);
-      this.taskModal.showModal(index);
+      this.taskModal.showModal(index, isViewing);
     }
   }
 
@@ -92,7 +94,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
   //   this.storageService.showTaskModal('taskModal', index + ((this.pageNum - 1) * this.pageRows));
   // }
 
-  showDeleteModal(index: number) {
+  showDeleteModal(taskId: number) {
+    const index = this.storageService.findTaskIndex(taskId);
     this.deleteIndex = index;
     const deleteTaskModal = new window.bootstrap.Modal(document.getElementById('deleteTaskModal'));
 
@@ -173,10 +176,12 @@ export class TasksListComponent implements OnInit, OnDestroy {
     const taskTable: HTMLTableElement = document.querySelector('#taskTable');
 
     if (date === null) {
+      this.isFiltering = false;
       button.classList.remove('select-box-filtered');
       button.innerText = 'Due Date';
-      this.dueDateFilter = '';
+      this.dueDateFilter = undefined;
     } else {
+      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = this.formatDatePipe.transform(date);
       // this.filteredArray = this.tasks.filter((t) => {
@@ -184,23 +189,26 @@ export class TasksListComponent implements OnInit, OnDestroy {
       // });
       this.dueDateFilter = date; //fix
     }
-    console.log(date);
   }
 
   filterByPriority(number: number, button: HTMLButtonElement) {
     if (number === 0) {
+      this.isFiltering = false;
       button.classList.remove('select-box-filtered');
       button.innerText = 'Priority';
-      this.priorityFilter = 0;
+      this.priorityFilter = undefined;
     } else if (number === 1) {
+      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'Low';
       this.priorityFilter = 1;
     } else if (number === 2) {
+      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'Medium';
       this.priorityFilter = 2;
     } else if (number === 3) {
+      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'High';
       this.priorityFilter = 3;
@@ -209,18 +217,22 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
   filterByStatus(number: number, button: HTMLButtonElement) {
     if (number === 0) {
+      this.isFiltering = false;
       button.classList.remove('select-box-filtered');
       button.innerText = 'Status';
-      this.statusFilter = 0;
+      this.statusFilter = undefined;
     } else if (number === 1) {
+      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'To Do';
       this.statusFilter = 1;
     } else if (number === 2) {
+      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'In Progress';
       this.statusFilter = 2;
     } else if (number === 3) {
+      this.isFiltering = true;
       button.classList.add('select-box-filtered');
       button.innerText = 'Done';
       this.statusFilter = 3;

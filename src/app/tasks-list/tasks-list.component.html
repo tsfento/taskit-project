@@ -1,4 +1,3 @@
-<app-view-task></app-view-task>
 <app-task-modal></app-task-modal>
 <!-- Begin Delete Confirmation Modal -->
 <div class="modal fade" id="deleteTaskModal" tabindex="-1" aria-hidden="true">
@@ -71,13 +70,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="border-bottom"
-        *ngFor="let task of tasks | sortTasks:taskSort:taskSortDir; let i = index;">
-          <ng-container
-            *ngIf="i >= ((pageNum - 1) * 15) && i < ((pageNum - 1) * 15 + 15)
-            && (dueDateFilter === '' || dueDateFilter === task.unformattedDate || task.unformattedDate === '')
-            && (priorityFilter === 0 || priorityFilter === task.priorityNumber || task.priorityNumber === 0)
-            && (statusFilter === 0 || statusFilter === task.statusNumber || task.statusNumber === 0)">
+        <ng-container
+        *ngFor="let task of tasks | sortTasks:taskSort:taskSortDir | filterTasks:dueDateFilter:priorityFilter:statusFilter; let i = index;">
+          <tr class="border-bottom"
+            *ngIf="i >= ((pageNum - 1) * 15) && i < ((pageNum - 1) * 15 + 15)">
             <td class="title" scope="row">{{ task.title }}</td>
             <td>{{ task.dueDate }}</td>
             <td><span
@@ -97,13 +93,13 @@
               <!-- <div class="d-flex justify-content-evenly" -->
               <div
               *ngIf="task.priority !== ''">
-                <i class="bi bi-eye action me-3" title="View" (click)="onTaskModal(i)"></i>
-                <i class="bi bi-pencil-square action me-3" title="Edit" (click)="onTaskModal(i)"></i>
-                <i class="bi bi-trash action" title="Delete" (click)="showDeleteModal(i)"></i>
+                <i class="bi bi-eye action me-3" title="View" (click)="onTaskModal(task.id, true)"></i>
+                <i class="bi bi-pencil-square action me-3" title="Edit" (click)="onTaskModal(task.id)"></i>
+                <i class="bi bi-trash action" title="Delete" (click)="showDeleteModal(task.id)"></i>
               </div>
             </td>
-          </ng-container>
-        </tr>
+          </tr>
+        </ng-container>
       </tbody>
     </table>
     <div class="pages text-center">

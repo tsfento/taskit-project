@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { TaskModalComponent } from "../tasks-list/task-modal/task-modal.component";
 import { FormatDatePipe } from "./pipes/format-date.pipe";
 import { SortTasksPipe } from "./pipes/sort-tasks.pipe";
-import { ViewTaskComponent } from "../tasks-list/view-task/view-task.component";
+import { FilterTasksPipe } from "./pipes/filter-tasks.pipe";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     TaskModalComponent,
     FormatDatePipe,
     SortTasksPipe,
-    ViewTaskComponent
+    FilterTasksPipe,
   ],
   imports: [
     CommonModule,
@@ -23,7 +23,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     TaskModalComponent,
     FormatDatePipe,
     SortTasksPipe,
-    ViewTaskComponent
+    FilterTasksPipe
   ]
 })
 export class SharedModule { }

@@ -18,6 +18,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   taskIndex: number;
   isEditing: boolean;
+  isViewing: boolean;
   tasksFetchedSub: Subscription;
   tasksChangedSub: Subscription;
   editingSub: Subscription;
@@ -79,11 +80,19 @@ export class TaskModalComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  showModal(index?: number) {
+  showModal(index?: number, isViewing?: boolean) {
     if (index === undefined) {
+      this.taskForm.enable();
       this.isEditing = false;
-    } else if (index !== undefined ) {
+      this.isViewing = false;
+    } else if (index !== undefined && isViewing) {
+      this.taskForm.disable();
+      this.isViewing = true;
+      this.fillForm(index);
+    } else if (index !== undefined) {
+      this.taskForm.enable();
       this.isEditing = true;
+      this.isViewing = false;
       this.taskIndex = index;
       this.fillForm(index);
     }
