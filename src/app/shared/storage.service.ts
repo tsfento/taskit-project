@@ -185,6 +185,8 @@ export class StorageService {
     this.tasks[index].status = splitStatus[0];
     this.tasks[index].statusNumber = +splitStatus[1];
 
+    this.storeTasks(this.tasks.slice());
+
     this.tasksChanged.next({
       tasks: this.tasks.slice(),
       task: this.tasks[index],
