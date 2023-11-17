@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { Router } from '@angular/router';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, Subject, tap } from 'rxjs';
 import { User } from './user.model';
 import { StorageService } from './storage.service';
 
@@ -48,6 +48,7 @@ export interface IAuthData {
 export class AuthService {
   currentUser = new BehaviorSubject<User | null>(null);
   private tokenExpirationTimer: any;
+  userToast = new Subject<string>();
 
   constructor(private http: HttpClient, private router: Router, private storageService: StorageService) {}
 
@@ -115,6 +116,7 @@ export class AuthService {
 
   logout() {
     this.currentUser.next(null);
+    this.userToast.next('Session over. Please login to continue.');
     this.router.navigate(['/']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {

@@ -6,11 +6,11 @@ import { Subject } from "rxjs";
 import { UserInfo } from "./userinfo.model";
 import { Task } from "./task.model";
 
+type toastData = { tasks: Task[]; task: Task; action: string; }
+
 const API_KEY = environment.apiUrl;
 const UPDATE_USER_URL = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${API_KEY}`;
 const LOOKUP_USER_URL = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${API_KEY}`;
-
-type taskChange = { tasks: Task[]; task: Task; action: string; }
 
 interface IStoreUserResponseData {
   localId: string;
@@ -54,7 +54,7 @@ export class StorageService {
   tasks: Task[] = [];
   taskIndex: number;
 
-  tasksChanged = new Subject<taskChange>();
+  tasksChanged = new Subject<toastData>();
   tasksFetched = new Subject<Task[]>();
   changePage = new Subject<number>();
   isEditing = new Subject<boolean>();

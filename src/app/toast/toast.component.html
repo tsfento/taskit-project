@@ -1,8 +1,11 @@
-<div class="toast-container position-absolute top-0 start-50 translate-middle-x p-3">
+<div class="toast-container position-absolute top-0 start-50 translate-middle-x p-3 text-center">
   <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="d-flex">
-      <div class="toast-body ms-2">
+      <div class="toast-body ms-2" *ngIf="!isSignUpOrLogin">
         <span>Task '{{ taskTitle }}' {{ actionTaken }}.</span>
+      </div>
+      <div class="toast-body ms-2" *ngIf="isSignUpOrLogin">
+        <span>{{ userMessage }}</span>
       </div>
       <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
