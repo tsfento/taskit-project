@@ -15,6 +15,7 @@ export class LandingComponent implements OnInit {
   signupForm: FormGroup;
   loginForm: FormGroup;
   authObservable: Observable<IResponseData>;
+  error: string = null;
 
   constructor(private authService: AuthService) {}
 
@@ -33,6 +34,7 @@ export class LandingComponent implements OnInit {
   }
 
   hasAccount(bool: boolean) {
+    this.error = null;
     const container = document.querySelector('.container');
     const signupDiv = document.querySelector('.signup-div');
     const loginDiv = document.querySelector('.login-div');
@@ -65,11 +67,13 @@ export class LandingComponent implements OnInit {
   }
 
   onSignupSubmit(form: FormGroup) {
+    this.error = null;
     this.authObservable = this.authService.signUpOrLogin(form.value, false);
     this.authSub(form);
   }
 
   onLoginSubmit(form: FormGroup) {
+    this.error = null;
     this.authObservable = this.authService.signUpOrLogin(form.value, true);
     this.authSub(form);
   }
@@ -77,13 +81,30 @@ export class LandingComponent implements OnInit {
   authSub(form: FormGroup) {
     this.authObservable.subscribe({
       next: (data: IResponseData) => {
-        this.authService.navigateToUserPage();
       },
       error: (errorResponse: HttpErrorResponse) => {
-        console.log(errorResponse);
+        // console.log(errorResponse);
+        switch (errorResponse.error.error.message) {
+          case 'EMAIL_EXISTS':
+            this.error = 'E-mail or password incorrect.';
+            break;
+          case 'INVALID_LOGIN_CREDENTIALS':
+            this.error = 'E-mail or password incorrect.';
+            break;
+          case 'TOO_MANY_ATTEMPTS_TRY_LATER':
+            this.error = 'Too many failed login attempts. Please try again later.';
+            break;
+          case 'ADMIN_ONLY_OPERATION':
+            this.error = 'Sign up unavailable at this time.';
+            break;
+          default:
+            this.error = 'An error occurred. Please try again later.';
+            break;
+        }
       },
       complete: () => {
         form.reset();
+        this.authService.navigateToUserPage();
       }
     });
   }

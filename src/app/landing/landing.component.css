@@ -154,3 +154,12 @@
 input.ng-invalid.ng-touched {
   border: 1px solid red;
 }
+
+.error {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 350px;
+  text-align: center;
+  line-height: 1;
+}

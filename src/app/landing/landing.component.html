@@ -19,6 +19,9 @@
   </div>
 </div>
 <!-- End Welcome -->
+<div class="alert alert-danger mt-5 error" *ngIf="error">
+  <span>{{ error }}</span>
+</div>
 <!-- Auth -->
 <div class="vertical-center">
   <div class="container auth-container info-box entering">
