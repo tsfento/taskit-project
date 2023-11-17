@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { TaskModalComponent } from './task-modal/task-modal.component';
 import { StorageService } from '../shared/storage.service';
 import { FormatDatePipe } from '../shared/pipes/format-date.pipe';
-import { GeneratePagesPipe } from '../shared/pipes/generate-pages.pipe';
 
 declare var window;
 
