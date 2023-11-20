@@ -24,9 +24,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
   tasksFetchedSub: Subscription;
   tasksChangedSub: Subscription;
   pageSub: Subscription;
-  taskSort: string = 'unformattedDate';
+  taskSort: string; // = 'unformattedDate';
   formatDatePipe = new FormatDatePipe;
-  taskSortDir: string = 'asc';
+  taskSortDir: string; // = 'asc';
   dueDateFilter: string;
   priorityFilter: number;
   statusFilter: number;
@@ -67,6 +67,8 @@ export class TasksListComponent implements OnInit, OnDestroy {
 
     this.pageSub = this.storageService.changePage.subscribe(
       (page: number) => {
+        this.taskSort = 'unformattedDate';
+        this.taskSortDir = 'asc';
         this.pageNum = page;
       }
     );

@@ -5,6 +5,7 @@ import { IAuthData } from "./auth.service";
 import { Subject } from "rxjs";
 import { UserInfo } from "./userinfo.model";
 import { Task } from "./task.model";
+import { SortTasksPipe } from "./pipes/sort-tasks.pipe";
 
 type toastData = { tasks: Task[]; task: Task; action: string; }
 
@@ -53,6 +54,7 @@ export class StorageService {
   userId: string;
   tasks: Task[] = [];
   taskIndex: number;
+  sortPipe = new SortTasksPipe;
 
   tasksChanged = new Subject<toastData>();
   tasksFetched = new Subject<Task[]>();
@@ -139,12 +141,16 @@ export class StorageService {
 
   addTask(sentTask: Task) {
     this.tasks.push(sentTask);
+    this.sortTasksByTitle();
+    this.sortTasksByDate();
     this.tasksChanged.next({
       tasks: this.tasks.slice(),
       task: sentTask,
       action: 'was added',
     });
-    this.changePage.next(Math.ceil(this.tasks.length / 15));
+    const sentTaskIndex = this.findTaskIndex(sentTask.id);
+    this.changePage.next(Math.ceil(sentTaskIndex / 15));
+    // this.changePage.next(Math.ceil(this.tasks.length / 15));
     this.storeTasks(this.tasks.slice());
   }
 
@@ -155,6 +161,8 @@ export class StorageService {
     this.tasks[index].dueDate = editedTask.dueDate;
     this.tasks[index].priority = editedTask.priority;
     this.tasks[index].status = editedTask.status;
+    this.sortTasksByTitle();
+    this.sortTasksByDate();
     this.tasksChanged.next({
       tasks: this.tasks.slice(),
       task: this.tasks[index],
@@ -165,12 +173,22 @@ export class StorageService {
   deleteTask(index: number) {
     const tempTask = this.tasks[index];
     this.tasks.splice(index, 1);
+    this.sortTasksByTitle();
+    this.sortTasksByDate();
     this.tasksChanged.next({
       tasks: this.tasks.slice(),
       task: tempTask,
       action: 'was deleted',
     });
     this.storeTasks(this.tasks.slice());
+  }
+
+  sortTasksByTitle() {
+    this.tasks = this.sortPipe.transform(this.tasks, 'title', 'asc');
+  }
+
+  sortTasksByDate() {
+    this.tasks = this.sortPipe.transform(this.tasks, 'unformattedDate', 'asc');
   }
 
   findTaskIndex(taskId: number) {

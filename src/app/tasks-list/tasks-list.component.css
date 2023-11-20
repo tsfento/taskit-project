@@ -75,6 +75,10 @@ td.title {
   transition: background-color .3s, box-shadow .3s, color .3s;
 }
 
+tr {
+  height: 42px;
+}
+
 th, td {
   border: none;
 }
