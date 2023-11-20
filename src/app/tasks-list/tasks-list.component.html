@@ -71,8 +71,8 @@
       </thead>
       <tbody>
         <!-- slice:((pageNum - 1) * 15):((pageNum - 1) * 15 + 15) -->
-        <tr class="border-bottom"
-        *ngFor="let task of tasks | filterTasks:dueDateFilter:priorityFilter:statusFilter | sortTasks:taskSort:taskSortDir | slice:((pageNum - 1) * 15):((pageNum - 1) * 15 + 15) | generatePages; let i = index;">
+        <tr
+        *ngFor="let task of tasks | filterTasks:dueDateFilter:priorityFilter:statusFilter | sortTasks:taskSort:taskSortDir | slice:((pageNum - 1) * 15):((pageNum - 1) * 15 + 15) | generatePages; let i = index;" class="border-bottom" id="a{{task.id}}">
           <ng-container>
             <!-- *ngIf="i >= ((pageNum - 1) * 15) && i < ((pageNum - 1) * 15 + 15)"> -->
             <td class="title" scope="row">{{ task.title }}</td>

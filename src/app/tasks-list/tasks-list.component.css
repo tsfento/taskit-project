@@ -13,7 +13,7 @@
   border-spacing: 0;
   border-radius: 10px;
   overflow: hidden;
-  background-color: white;
+  /* background-color: white; */
 }
 
 td.title {
@@ -36,10 +36,6 @@ td.title {
 .select-box-filtered {
   color: black;
 }
-
-/* .option-text {
-  color: black;
-} */
 
 .dropdown-item {
   cursor: pointer;
