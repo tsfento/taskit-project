@@ -50,7 +50,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   priorityFilter: number;
   statusFilter: number;
   dueDates: string[] = [];
-  taskIdToHighlight: number = null;
+  taskIdToHighlight: number;
 
   constructor(private storageService: StorageService) {}
 

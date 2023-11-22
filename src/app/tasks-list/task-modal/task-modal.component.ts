@@ -74,7 +74,7 @@ export class TaskModalComponent implements OnInit, OnDestroy {
       task.dueDate = this.formatDatePipe.transform(task.dueDate);
 
       this.storageService.addTask(task);
-      this.router.navigate(['../', 'tasks-list'], { relativeTo: this.route});
+      // this.router.navigate(['../', 'tasks-list'], { relativeTo: this.route});
     }
 
     this.resetForm();
