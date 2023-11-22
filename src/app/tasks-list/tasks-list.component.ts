@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { TaskModalComponent } from './task-modal/task-modal.component';
 import { StorageService } from '../shared/storage.service';
 import { FormatDatePipe } from '../shared/pipes/format-date.pipe';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 
 declare var window;
 
@@ -12,6 +13,24 @@ declare var window;
   selector: 'app-tasks-list',
   templateUrl: './tasks-list.component.html',
   styleUrls: ['./tasks-list.component.css'],
+  animations: [
+    trigger('highlightTask', [
+      transition('void => true', animate(3000, keyframes([
+        style({
+          'background-color': 'transparent',
+          offset: 0
+        }),
+        style({
+          'background-color': 'limegreen',
+          offset: 0.3
+        }),
+        style({
+          'background-color': 'transparent',
+          offset: 1
+        })
+      ]))),
+    ])
+  ]
 })
 export class TasksListComponent implements OnInit, OnDestroy {
   @ViewChild(TaskModalComponent) taskModal: TaskModalComponent;
@@ -31,6 +50,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   priorityFilter: number;
   statusFilter: number;
   dueDates: string[] = [];
+  taskIdToHighlight: number = null;
 
   constructor(private storageService: StorageService) {}
 
@@ -57,16 +77,23 @@ export class TasksListComponent implements OnInit, OnDestroy {
       (changedTasks) => {
         this.tasks = changedTasks.tasks;
 
+
         this.generateDates();
 
         this.totalPages = Math.ceil(this.tasks.length / 15);
 
         this.generatePage();
+
+        if (changedTasks.action === 'was added') {
+          this.taskIdToHighlight = changedTasks.task.id;
+
+          // this.highlightTask(this.taskIdToHighlight);
+        }
       }
     );
 
     this.pageSub = this.storageService.changePage.subscribe(
-      (page: number) => {
+      (page) => {
         this.taskSort = 'unformattedDate';
         this.taskSortDir = 'asc';
         this.pageNum = page;
@@ -78,6 +105,22 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.tasksChangedSub.unsubscribe();
     this.pageSub.unsubscribe();
   }
+
+  // highlightTask(taskId: number) {
+  //   let taskDiv: HTMLTableRowElement;
+
+  //   setTimeout(() => {
+  //     taskDiv = document.querySelector(`#a${taskId}`);
+
+  //     for (var i = 0, cell; cell = taskDiv.cells[i]; i++) {
+  //       // cell.style.backgroundColor = 'limegreen';
+  //       // cell.setAttribute('[@highlightTask]', '');
+  //     }
+
+  //     // console.log(taskDiv);
+  //     // console.log('highlight called');
+  //   }, 500);
+  // }
 
   onTaskModal(taskId?: number, isViewing?: boolean) {
     const index = this.storageService.findTaskIndex(taskId);
@@ -113,6 +156,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   prevPage() {
+    this.taskIdToHighlight = null;
     if (this.pageNum !== 1) {
       this.pageNum--;
 
@@ -121,6 +165,7 @@ export class TasksListComponent implements OnInit, OnDestroy {
   }
 
   nextPage() {
+    this.taskIdToHighlight = null;
     if (this.pageNum !== (Math.ceil(this.tasks.length / 15))) {
       this.pageNum++;
 
