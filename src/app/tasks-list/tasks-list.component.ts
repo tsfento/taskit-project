@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { TaskModalComponent } from './task-modal/task-modal.component';
 import { StorageService } from '../shared/storage.service';
 import { FormatDatePipe } from '../shared/pipes/format-date.pipe';
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 
 declare var window;
 
@@ -43,9 +43,9 @@ export class TasksListComponent implements OnInit, OnDestroy {
   tasksFetchedSub: Subscription;
   tasksChangedSub: Subscription;
   pageSub: Subscription;
-  taskSort: string; // = 'unformattedDate';
+  taskSort: string;
   formatDatePipe = new FormatDatePipe;
-  taskSortDir: string; // = 'asc';
+  taskSortDir: string;
   dueDateFilter: string;
   priorityFilter: number;
   statusFilter: number;
@@ -77,18 +77,15 @@ export class TasksListComponent implements OnInit, OnDestroy {
       (changedTasks) => {
         this.tasks = changedTasks.tasks;
 
+        if (changedTasks.action !== 'was deleted') {
+          this.taskIdToHighlight = changedTasks.task.id;
+        }
 
         this.generateDates();
 
         this.totalPages = Math.ceil(this.tasks.length / 15);
 
         this.generatePage();
-
-        if (changedTasks.action === 'was added') {
-          this.taskIdToHighlight = changedTasks.task.id;
-
-          // this.highlightTask(this.taskIdToHighlight);
-        }
       }
     );
 
@@ -105,22 +102,6 @@ export class TasksListComponent implements OnInit, OnDestroy {
     this.tasksChangedSub.unsubscribe();
     this.pageSub.unsubscribe();
   }
-
-  // highlightTask(taskId: number) {
-  //   let taskDiv: HTMLTableRowElement;
-
-  //   setTimeout(() => {
-  //     taskDiv = document.querySelector(`#a${taskId}`);
-
-  //     for (var i = 0, cell; cell = taskDiv.cells[i]; i++) {
-  //       // cell.style.backgroundColor = 'limegreen';
-  //       // cell.setAttribute('[@highlightTask]', '');
-  //     }
-
-  //     // console.log(taskDiv);
-  //     // console.log('highlight called');
-  //   }, 500);
-  // }
 
   onTaskModal(taskId?: number, isViewing?: boolean) {
     const index = this.storageService.findTaskIndex(taskId);
